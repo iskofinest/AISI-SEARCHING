@@ -103,7 +103,7 @@ public class CreateAccount extends javax.swing.JFrame {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if(component.getText().equals("")) {
+                            if(component.getText().isEmpty()) {
                                 System.out.println("RED");
                                 labels[index].setForeground(Color.RED);
                             } else {
@@ -551,7 +551,7 @@ public class CreateAccount extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 27, Short.MAX_VALUE)
+                .addGap(0, 3, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -581,7 +581,7 @@ public class CreateAccount extends javax.swing.JFrame {
         int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,errorIcon);
         if(confirmation == JOptionPane.YES_OPTION){ 
             this.dispose();
-            previousForm.setVisible(true);
+             previousForm.setVisible(true);
         }else{
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }    
