@@ -9,6 +9,7 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
+import Services.ExcelReportService;
 import Services.ProductService;
 import Services.SupplierService;
 import java.math.BigDecimal;
@@ -426,8 +427,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMoreSupplierActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        // TODO add your handling code here:
-
+        ExcelReportService.printSingleProduct(product);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed

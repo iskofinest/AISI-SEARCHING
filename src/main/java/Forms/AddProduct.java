@@ -375,7 +375,7 @@ public class AddProduct extends javax.swing.JFrame {
             String unit = txtUnit.getText().trim();
             Date product_date = txtProductDate.getDate();
             String factor = "";
-            BigDecimal originalPrice = BigDecimal.valueOf(Double.parseDouble(txtReference.getText().trim()));
+            BigDecimal originalPrice = BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText().trim()));
             BigDecimal sellingPrice = BigDecimal.valueOf(0.0);
             String agent = txtAgent.getText().trim();
             String supplierName = txtSupplierName.getText().trim();

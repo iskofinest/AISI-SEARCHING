@@ -5,11 +5,14 @@
  */
 package Services;
 
-import Forms.ProductsTable;
+import Entities.Product;
+import Entities.Supplier;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -17,9 +20,11 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
  *
@@ -27,21 +32,14 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
  */
 public class ExcelReportService {
     
+    static String[] columns = new String[]{"REFERENCE", "ITEM", "DESCRIPTION", "BRAND", "MODEL", 
+                "QTY / Unit" , "QUOTATION DATE", "ORIGINAL PRICE", "AGENT", "SUPPLIER NAME",
+            "CONTACT PERSON","CONTACT DETAILS"};
     
-    public static void printProducts(String[] columns, String[][] productData) {
-        
-        System.out.println("***************************************************");
-        for(String[] row : productData) {
-            int index = 0;
-            for(int i=0; i<12; i++) {
-                System.out.println(index + columns[index] + "" + row[i]);
-                index += 1;
-            }
-        }
-        System.out.println("***************************************************");
+    public static void printProducts(String[][] productData) {
         
         HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Sample Sheet");
+        HSSFSheet sheet = workbook.createSheet("Product Report Sheet");
         sheet.getPrintSetup().setLandscape(true);
         sheet.setColumnWidth(0, 4000);
         sheet.setColumnWidth(1, 4000);
@@ -85,58 +83,92 @@ public class ExcelReportService {
                     value = value.substring(value.indexOf(" ")+1);
                 }
                 message += value;
-                
-                
-//                do {
-//                    if(value.length()<1) break;
-//                    if(value.length()>1 && value.contains(" ")) {
-//                        message += value.substring(0, value.indexOf(" ")) + " ";
-//                    } else if(value.length()>0 && !value.contains(" ")) {
-//                        message += value;
-//                        break;
-//                    }
-//                    value = value.substring(value.indexOf(" ")).trim();
-//                    System.out.println(message);
-//                }while(value.contains(" "));
-//                StringTokenIterator str = new StringTokenIterator(values[column-1], " ");
-//                while(str.hasNext()) {
-//                    String temp = "";
-//                    while(temp.length() < 100) {
-//                        temp += String.valueOf(str.next()) + " ";
-//                        System.out.println("|" + temp.trim() + "| : " + temp.length());
-//                    }
-//                    message += temp + "\n";
-//                }
                 cell.setCellValue(message);
-//                cell.setCellValue(values[column-1]);
                 HSSFCellStyle style = cell.getCellStyle();
                 style.setWrapText(true);
                 style.setAlignment(HorizontalAlignment.LEFT);
-//                style.setBorderBottom(BorderStyle.THICK);
-//                style.setBorderTop(BorderStyle.THICK);
-//                style.setBorderRight(BorderStyle.THIN);
-//                style.setBorderLeft(BorderStyle.THIN);
                 style.setVerticalAlignment(VerticalAlignment.CENTER);
-//                sheetRow.setRowStyle(style);
-//                cell.setCellStyle(style);
+
             }
         }
-        try {
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\IPC\\Downloads\\sample.xls");
+        try { 
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyyy-mm-dd");
+            String fileName = dt1.format(new Date()) + ".xls";
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\IPC\\Downloads\\" + fileName);
             workbook.write(fileOut);
             workbook.close();
             fileOut.close();
-//            Runtime runTime = Runtime.getRuntime();
-//            Process process = runTime.exec("C:\\Users\\IPC\\Downloads\\sample.xls");
             System.out.println("PRINT SUCCESSFULL!!");
-            Desktop.getDesktop().open(new File("C:\\Users\\IPC\\Downloads\\sample.xls"));
+            Desktop.getDesktop().open(new File("C:\\Users\\IPC\\Downloads\\" + fileName));
             System.out.println("OPENED!!");
         } catch (IOException ex) {
-            Logger.getLogger(ProductsTable.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcelReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void printSingleProduct(Product product) {
+        String data[] = new String[12];
+        data[0] = product.getTransaction().getReferenceNumber();
+        data[1] = product.getName();
+        data[2] = product.getDescription().trim();
+        data[3] = product.getBrand();
+        data[4] = product.getModel();
+        data[5] = product.getQuantity() + " "+ product.getUnit();
+        data[6] = String.valueOf(product.getProduct_date());
+        data[7] = String.valueOf(product.getOriginalPrice());
+        data[8] = product.getAgent();
+        data[9] = ((Supplier) product.getSuppliers().toArray()[0]).getName().trim();
+        data[10] = ((Supplier) product.getSuppliers().toArray()[0]).getContactPerson().trim();
+        data[11] = ((Supplier) product.getSuppliers().toArray()[0]).getContactDetails().trim();
         
-        
-        
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet(product.getName());
+        HSSFRow sheetRow;
+        // selecting the region in Worksheet for merging data
+        CellRangeAddress regionText = CellRangeAddress.valueOf("B2:C2");
+        CellRangeAddress regionHeader = CellRangeAddress.valueOf("B3:C3");
+        // merging the region
+        sheet.addMergedRegion(regionText);
+        sheet.addMergedRegion(regionHeader);
+        HSSFCell headerText = sheet.createRow(1).createCell(1);
+        HSSFCell headerName = sheet.createRow(2).createCell(1);
+        headerText.setCellValue("REPORT FOR");
+        HSSFCellStyle headerTextStyle = headerText.getCellStyle();
+        headerTextStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerName.setCellValue(product.getName());
+        sheet.autoSizeColumn(1, true);
+        sheet.autoSizeColumn(2, true);
+        sheet.autoSizeColumn(3, true);
+        int rowIndex = 4;
+        sheet.setColumnWidth(2, 8000);
+        sheet.setColumnWidth(1, 8000);
+        sheet.setColumnWidth(3, 8000);
+        for(int i=0; i<columns.length; i++){
+            HSSFRow row = sheet.createRow(rowIndex++);
+            HSSFCell cellTitle = row.createCell(1);
+            HSSFCell cellValue = row.createCell(2);
+            cellTitle.setCellValue(columns[i]);
+            cellValue.setCellValue(data[i]);
+            CellStyle style = cellValue.getCellStyle();
+            style.setWrapText(true);
+            style.setVerticalAlignment(VerticalAlignment.CENTER);
+            style.setAlignment(HorizontalAlignment.LEFT);
+            CellStyle labelStyle = cellValue.getCellStyle();
+            labelStyle.setWrapText(true);
+            labelStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+            labelStyle.setAlignment(HorizontalAlignment.LEFT);
+        }
+
+        try {
+            String fileName = product.getName() + ".xls";
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\IPC\\Downloads\\" + fileName);
+            workbook.write(fileOut);
+            workbook.close();
+            fileOut.close();
+            Desktop.getDesktop().open(new File("C:\\Users\\IPC\\Downloads\\" + fileName));
+        } catch (IOException ex) {
+            Logger.getLogger(ExcelReportService.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
