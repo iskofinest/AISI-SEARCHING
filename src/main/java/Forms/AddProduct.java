@@ -10,9 +10,11 @@ import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
 import Services.ProductService;
+import Services.SupplierService;
 import Services.TransactionServices;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,6 +35,10 @@ public class AddProduct extends javax.swing.JFrame {
     AddProduct(javax.swing.JFrame previousForm) {
         this.previousForm = previousForm;
         initComponents();
+        List<Supplier> list = SupplierService.findAll();
+        for(Supplier value : list) {
+            txtSupplierName.addItem(value.getName());
+        }
     }
 
     /**
@@ -65,7 +71,6 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         txtUnit = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        txtSupplierName = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         txtContactPerson = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
@@ -76,6 +81,7 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         txtCategory = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
+        txtSupplierName = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -146,13 +152,6 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel23.setText("SUPPLIER NAME:  ");
-
-        txtSupplierName.setToolTipText("SUPPLIER NAME");
-        txtSupplierName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSupplierNameActionPerformed(evt);
-            }
-        });
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -252,12 +251,16 @@ public class AddProduct extends javax.swing.JFrame {
                                             .addComponent(txtOrigPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtContactPerson, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                    .addComponent(txtSupplierName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                    .addComponent(txtContactDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                                    .addComponent(txtAgent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(txtContactPerson, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                            .addComponent(txtContactDetails, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                                            .addComponent(txtAgent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtSupplierName, 0, 205, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,11 +312,12 @@ public class AddProduct extends javax.swing.JFrame {
                     .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSupplierName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,10 +350,6 @@ public class AddProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtSupplierNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupplierNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSupplierNameActionPerformed
-
     private void txtContactPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactPersonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContactPersonActionPerformed
@@ -378,7 +378,7 @@ public class AddProduct extends javax.swing.JFrame {
             BigDecimal originalPrice = BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText().trim()));
             BigDecimal sellingPrice = BigDecimal.valueOf(0.0);
             String agent = txtAgent.getText().trim();
-            String supplierName = txtSupplierName.getText().trim();
+            String supplierName = txtSupplierName.getSelectedItem().toString().trim();
             String contactPerson = txtContactPerson.getText().trim();
             String contactDetails = txtContactDetails.getText().trim();
             Transactions transaction = new Transactions();
@@ -396,7 +396,7 @@ public class AddProduct extends javax.swing.JFrame {
                 txtOrigPrice.setText("");
                 txtQuantity.setText("");
                 txtUnit.setText("");
-                txtSupplierName.setText("");
+                txtSupplierName.setSelectedIndex(-1);
                 txtContactPerson.setText("");
                 txtContactDetails.setText("");
                 txtAgent.setText("");
@@ -486,7 +486,7 @@ public class AddProduct extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser txtProductDate;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtReference;
-    private javax.swing.JTextField txtSupplierName;
+    private javax.swing.JComboBox<String> txtSupplierName;
     private javax.swing.JTextField txtUnit;
     // End of variables declaration//GEN-END:variables
 }

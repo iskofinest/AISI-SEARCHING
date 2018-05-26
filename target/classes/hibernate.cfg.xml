@@ -47,23 +47,47 @@ Contributor(s):
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"></property>
   
-    <!-- JDBC connection pool (user the built in) -->
+     <!--JDBC connection pool (user the built in)--> 
   <property name="connection.pool_size">1</property>
   
-  <!-- Disable the second level cache -->
+   <!--Disable the second level cache--> 
   <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
   
-  <!-- Echo all executed SQL to stdout -->
+   <!--Echo all executed SQL to stdout--> 
   <property name="show_sql">true</property>
   <property name="hbm2ddl.auto">update</property>
   <!--<property name="hbm2ddl.auto">create-drop</property>-->
   
-  <!-- Mention here all the model classes along with their package name  -->
+   <!--Mention here all the model classes along with their package name-->  
   <mapping class="Entities.User"/>
   <mapping class="Entities.Product"/>
   <mapping class="Entities.Supplier"/>
   <mapping class="Entities.Transactions"/>
   </session-factory>
+  
+<!--    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class"> net.ucanaccess.jdbc.UcanaccessDriver</property>
+        <property name="hibernate.connection.url">jdbc:ucanaccess://C:\\Users\\IPC\Documents\\NetBeansProjects\\AISI-SEARCHING\\absoluteindustrialsolutionsincorporated.accdb</property>
+        <property name="hibernate.connection.username"> </property>
+        <property name="hibernate.connection.password"> </property>
+             JDBC connection pool (user the built in) 
+        <property name="connection.pool_size">1</property>
+  
+   Disable the second level cache 
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+         Echo all executed SQL to stdout 
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">update</property>
+
+         Mention here all the model classes along with their package name  
+        <mapping class="Entities.User"/>
+        <mapping class="Entities.Product"/>
+        <mapping class="Entities.Supplier"/>
+        <mapping class="Entities.Transactions"/>
+    </session-factory>-->
   
   
 </hibernate-configuration>

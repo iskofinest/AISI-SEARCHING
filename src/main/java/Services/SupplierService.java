@@ -8,6 +8,7 @@ package Services;
 import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
+import java.util.List;
 import org.hibernate.Transaction;
 
 /**
@@ -51,6 +52,10 @@ public class SupplierService {
             System.out.println(ex.toString());
         }
         return saved;
+    }
+
+    public static List<Supplier> findAll() {
+         return ProductTable.session.createQuery("from Supplier").list(); 
     }
     
 }

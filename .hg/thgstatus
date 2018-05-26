@@ -8,6 +8,5 @@ mtarget
 mtarget/classes/Entities
 rtarget/classes/Forms
 mtarget/classes/Services
-mtarget/classes/Utilities
 mtarget/classes/absoluteindustrialsolutions/absoluteindustrialsolutions
 mtarget/maven-archiver
