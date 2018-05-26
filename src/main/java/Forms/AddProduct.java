@@ -30,7 +30,7 @@ public class AddProduct extends javax.swing.JFrame {
         initComponents();
     }
 
-    AddProduct(ViewProductInfo previousForm) {
+    AddProduct(javax.swing.JFrame previousForm) {
         this.previousForm = previousForm;
         initComponents();
     }

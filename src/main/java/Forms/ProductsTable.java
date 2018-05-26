@@ -189,6 +189,7 @@ public class ProductsTable extends javax.swing.JFrame {
         dataTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        btnAddProduct = new javax.swing.JMenuItem();
         printMenu = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
@@ -431,6 +432,14 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         });
 
+        btnAddProduct.setText("Add Product");
+        btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProductActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAddProduct);
+
         printMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         printMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\IPC\\Documents\\NetBeansProjects\\AISI-SYSTEM\\src\\POWERSEARCHING\\FORMS\\ICONS\\print.png")); // NOI18N
         printMenu.setText("Print Table Report");
@@ -606,6 +615,12 @@ public class ProductsTable extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_dataTableMouseClicked
+
+    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+        // TODO add your handling code here:
+        setEnabled(false);
+        new AddProduct(this).setVisible(true);
+    }//GEN-LAST:event_btnAddProductActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
@@ -652,6 +667,7 @@ public class ProductsTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
+    private javax.swing.JMenuItem btnAddProduct;
     private javax.swing.JTable dataTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
