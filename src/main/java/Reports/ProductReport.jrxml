@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CoaMonthlySummary" language="groovy" pageWidth="949" pageHeight="936" columnWidth="909" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="3" uuid="2d2dce6d-ab95-4610-82e7-ce5e3c6cbe14">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="58cec680-054a-4142-923d-257c506fb6f4"/>
+	<parameter name="year" class="java.lang.String"/>
+	<parameter name="month" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="DATES" class="java.lang.String"/>
+	<field name="BANCNET_TRAN" class="java.math.BigDecimal"/>
+	<field name="BANCNET_TOTAL" class="java.math.BigDecimal"/>
+	<field name="GCASH_TRAN" class="java.math.BigDecimal"/>
+	<field name="GCASH_TOTAL" class="java.math.BigDecimal"/>
+	<field name="LBP_TRAN" class="java.math.BigDecimal"/>
+	<field name="LBP_TOTAL" class="java.math.BigDecimal"/>
+	<field name="COMPUTED_TOTAL" class="java.math.BigDecimal"/>
+	<field name="COMPUTED_TOTAL_NET" class="java.math.BigDecimal"/>
+	<variable name="gcash_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{GCASH_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="bancnet_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{BANCNET_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="computed_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMPUTED_TOTAL}]]></variableExpression>
+	</variable>
+	<variable name="computed_total_net_dst" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMPUTED_TOTAL_NET}]]></variableExpression>
+	</variable>
+	<variable name="lbp_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{LBP_TOTAL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="225" y="0" width="460" height="35" uuid="e23ce7f8-57cc-4f67-8a11-e847e9b5fc33"/>
+				<box>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Product Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="375" y="0" width="97" height="20" uuid="326b71d7-6c63-4510-b5e0-2f3c88d84912"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="72" height="20" uuid="8c3cfe7a-c2ae-4767-9701-2b89e46f1348"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{year}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="101" height="31" uuid="42a87e91-64c1-4482-8bce-c8e0174fc420"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REFERENCE NUMBER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="0" width="101" height="31" uuid="f96dfd0c-f670-48b4-872c-b8ad4853a388"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ITEM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="0" width="101" height="31" uuid="120788d1-a240-4051-b7de-0892c7a41b18"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="101" height="31" uuid="980e466d-35ae-48c3-b892-358057a5811f"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[BRAND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="0" width="101" height="31" uuid="c3a78d64-a574-4020-8ba8-df2ccb5139c2"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="0" width="101" height="31" uuid="fc9e3636-31eb-42d1-a152-e1eab2856019"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="606" y="0" width="101" height="31" uuid="64676e34-fc93-4cd1-9285-070c46081461"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="707" y="0" width="101" height="31" uuid="89cb7e7a-d3a0-4c75-acbd-cbaea0fc4021"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCT DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="808" y="0" width="101" height="31" uuid="40fdf272-249a-41d5-b3ca-2cfc0896e215"/>
+				<box leftPadding="10">
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGINAL PRICE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="101" height="25" uuid="5cffc03e-44db-4827-a939-1de005de33bf"/>
+				<box leftPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="101" y="0" width="101" height="25" uuid="35b002d2-3e08-4b78-b16d-da1a06cde8fe"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BANCNET_TRAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="202" y="0" width="101" height="25" uuid="e4e904a9-1768-46c3-acfc-cb067d5097c3"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{BANCNET_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="303" y="0" width="101" height="25" uuid="04a430a8-73c0-4390-a727-48f6b9aec8a1"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GCASH_TRAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="404" y="0" width="101" height="25" uuid="dc509a31-a4d8-474d-9d09-64235f9237a4"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{GCASH_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="505" y="0" width="101" height="25" uuid="20a9d3a0-16a0-4bfd-8596-101897fa80a5"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LBP_TRAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="707" y="0" width="101" height="25" uuid="31f0a20c-4559-4bd8-8801-93c2c99c0a0d"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMPUTED_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="606" y="0" width="101" height="25" uuid="0644abe9-94fc-4a3f-8dc1-3e3894631be6"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{LBP_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="808" y="0" width="101" height="25" uuid="8ea37df3-1223-4657-a3c4-d8c81ffec19f"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COMPUTED_TOTAL_NET}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField pattern="₱#,##0.00">
+				<reportElement x="404" y="0" width="101" height="25" uuid="506f907f-cec1-4f8a-8aab-b702313602e5"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{gcash_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="202" y="0" width="101" height="25" uuid="6ed9e37b-3c04-4223-8265-a560bc9fb740"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{bancnet_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="808" y="0" width="101" height="25" uuid="9800b0d9-3543-4b60-950f-01f17d8c08b3"/>
+				<box leftPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{computed_total_net_dst}]]></textFieldExpression>
+			</textField>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="707" y="0" width="101" height="25" uuid="7f706bfd-92c0-46d9-8709-26133f2b128f"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{computed_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="202" height="25" uuid="f606939e-c623-4f83-a15d-626893aa355f"/>
+				<box leftPadding="10" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="101" height="25" uuid="03a52a98-c350-44c4-a8fa-82f147a5f422"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="0" width="101" height="25" uuid="050b607b-5f6c-4a1a-80f3-c9d264da5e0a"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="₱#,##0.00">
+				<reportElement x="606" y="0" width="101" height="25" uuid="cb8a9423-75bb-4481-89c8-bcb377dc53c8"/>
+				<box leftPadding="10" rightPadding="10">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{lbp_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch"/>
+	</summary>
+</jasperReport>

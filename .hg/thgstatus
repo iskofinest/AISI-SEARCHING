@@ -1,0 +1,13 @@
+m
+msrc/main/java/Entities
+rsrc/main/java/Forms
+asrc/main/java/Forms/icons
+msrc/main/java/Services
+msrc/main/java/absoluteindustrialsolutions/absoluteindustrialsolutions
+mtarget
+mtarget/classes/Entities
+rtarget/classes/Forms
+mtarget/classes/Services
+mtarget/classes/Utilities
+mtarget/classes/absoluteindustrialsolutions/absoluteindustrialsolutions
+mtarget/maven-archiver
