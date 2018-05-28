@@ -39,6 +39,8 @@ public class CreateAccount extends javax.swing.JFrame {
     private final static Logger logger = Logger.getLogger(CreateAccount.class.getName());
     
     private static EmailValidator emailValidator;
+    private IconGenerator iconGenerator;
+    
     
     //String messages
     String requiredMessage = "field is required.";
@@ -62,8 +64,6 @@ public class CreateAccount extends javax.swing.JFrame {
         initComponents();
         setLimitOnTextFields();
         prepareForm();
-        
-       
     }
     
     public CreateAccount(javax.swing.JFrame previousForm) {
