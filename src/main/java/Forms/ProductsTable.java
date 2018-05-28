@@ -214,16 +214,19 @@ public class ProductsTable extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 204, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("A   B   S   O   L   U   T   E");
+        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 204, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Industiral  Solutions Inc");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Absolute Solution for your Bussiness needs");
+        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jPanel4.setBackground(new java.awt.Color(0, 51, 51));
 
