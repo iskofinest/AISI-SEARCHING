@@ -52,7 +52,7 @@ public class Supplier {
     
 //    @Column(name="products", length=50, nullable=true)
 //    @ManyToMany(cascade = CascadeType.ALL, mappedBy="suppliers")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(name = "product_supplier",
 //            joinColumns = @JoinColumn (name = "product_id", referencedColumnName = "id"),
 //            inverseJoinColumns = @JoinColumn (name = "supplier_id", referencedColumnName = "id"))

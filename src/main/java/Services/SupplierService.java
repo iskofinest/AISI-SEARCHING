@@ -9,6 +9,7 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
@@ -32,20 +33,22 @@ public class SupplierService {
         return suppliers;
     }
 
-    public static Supplier findSupplierByProductId(int supplierID) {
+    public static Supplier findSupplierById(int supplierID) {
         Supplier supplier = new Supplier();
-//        ProductTable.session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        supplier = (Supplier)ProductTable.session.get(Supplier.class, supplierID);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        supplier = (Supplier) session.get(Supplier.class, supplierID);
+        session.close();
         return supplier;
     }
     
     public static boolean updateSupplier(Supplier supplier) {
         boolean saved = false;
         try{
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = ProductTable.session.beginTransaction();
-            ProductTable.session.update(supplier);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            session.update(supplier);
             tx.commit();
+            session.close();
             saved = true;
         } catch(Exception ex) {
             saved = false;
@@ -55,7 +58,8 @@ public class SupplierService {
     }
 
     public static List<Supplier> findAll() {
-         return ProductTable.session.createQuery("from Supplier").list(); 
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        return session.createQuery("from Supplier").list(); 
     }
     
 }

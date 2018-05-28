@@ -34,7 +34,7 @@ public class ViewSuppliers extends javax.swing.JFrame {
     ViewSuppliers(javax.swing.JFrame previousForm, int supplierID) {
         initComponents();
         this.previousForm = previousForm;
-        supplier = SupplierService.findSupplierByProductId(supplierID);
+        supplier = SupplierService.findSupplierById(supplierID);
         initializeData();
         enableFields(false);
     }

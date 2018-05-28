@@ -71,7 +71,8 @@ public class TransactionServices {
     public static boolean isTransactionExist(Transactions transactions) {
         int rowNumber = 0;
         try {
-            Criteria criteria = ProductTable.session.createCriteria(Transaction.class);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Transaction.class);
 //            Criteria criteria = Utilities.HibernateUtil.getSessionFactory()
 //                    .openSession().createCriteria(Transaction.class);
             criteria.add(Restrictions.eq(Transactions.REFERENCE_NUMBER, transactions.getReferenceNumber()));

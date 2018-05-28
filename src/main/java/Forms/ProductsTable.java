@@ -5,35 +5,30 @@
  */
 package Forms;
 
+//<editor-fold desc="IMPORTS" defaultstate="collapsed">
 import Entities.ProductTable;
 import Services.ExcelReportService;
 import Services.ProductService;
-import java.awt.Desktop;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import Services.UserService;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+//</editor-fold>
+
 /**
  *
  * @author Jovanie
  */
 public class ProductsTable extends javax.swing.JFrame {
 
+    //<editor-fold desc="VARIABLE DECLARATIONS" defaultstate="collapsed">
     JFrame previousForm;
     JTextField searchFields[];
     String month[] = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
@@ -42,7 +37,10 @@ public class ProductsTable extends javax.swing.JFrame {
                 "QTY / Unit" , "QUOTATION DATE", "ORIGINAL PRICE", "AGENT", "SUPPLIER NAME",
             "CONTACT PERSON","CONTACT DETAILS"};
     String[][] productList;
+    String[][] userList;
     boolean isAdmin = false;
+    boolean productsTableMode = true;
+    //</editor-fold>
     
     /**
      * Creates new form Products
@@ -54,19 +52,21 @@ public class ProductsTable extends javax.swing.JFrame {
 //          setIcon();
     }
 
+    //<editor-fold desc="REAL TIME CONSTRUCTOR" defaultstate="collapsed">
     public ProductsTable(JFrame previousForm) {
         initComponents();
         this.previousForm = previousForm;
         initializeData();
         isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
         System.out.println(ProductTable.currentUser.getAuthority());
-        btnAddProduct.setEnabled(isAdmin);
-//        disableResizeFrame(this);
-//        dataTable.setEditingRow(ABORT);
-//          setIcon();
+        if(!isAdmin) {
+            jMenu1.remove(btnAddProduct);
+            jMenuBar1.remove(btnView);
+        }
     }
+    //</editor-fold>
     
-    /**********************************CUSTOM METHODS**********************************/
+    //<editor-fold desc="CUSTOM METHODS" defaultstate="collapsed">
     
     // initialize custom changes
     private void initializeData() {
@@ -125,6 +125,8 @@ public class ProductsTable extends javax.swing.JFrame {
         System.out.println("PRODUCTS FORM RELOADED!!!");
     }
     
+    
+    
     private void searchProducts() {
         String reference = txtSearchReference.getText().trim();
         String name = txtSearchItemName.getText().trim();
@@ -140,12 +142,20 @@ public class ProductsTable extends javax.swing.JFrame {
         dataTable.setModel(model);
     }
     
+    private void enableSearchFields(boolean enability) {
+        txtSearchReference.setEditable(enability);
+        txtSearchItemName.setEditable(enability);
+        txtSearchBrand.setEditable(enability);
+        txtSearchUnit.setEditable(enability);
+        txtSearchSupplierName.setEditable(enability);
+    }
     
+    public void updateUserTable() {
+        userList = UserService.getAllUsers();
+    }
     
-    /**********************************CUSTOM METHODS**********************************/
-    
-    
-    
+    //</editor-fold>
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,9 +192,11 @@ public class ProductsTable extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         btnAddProduct = new javax.swing.JMenuItem();
         printMenu = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        btnView = new javax.swing.JMenu();
+        btnProductView = new javax.swing.JMenuItem();
+        btnUserView = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PRODUCTS TABLE");
         setExtendedState(6);
         setSize(new java.awt.Dimension(0, 0));
@@ -411,11 +423,6 @@ public class ProductsTable extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Options");
-        jMenu1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu1ActionPerformed(evt);
-            }
-        });
 
         btnAddProduct.setText("Add Product");
         btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
@@ -436,8 +443,26 @@ public class ProductsTable extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        btnView.setText("View");
+
+        btnProductView.setText("Product View");
+        btnProductView.setEnabled(false);
+        btnProductView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductViewActionPerformed(evt);
+            }
+        });
+        btnView.add(btnProductView);
+
+        btnUserView.setText("User View");
+        btnUserView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserViewActionPerformed(evt);
+            }
+        });
+        btnView.add(btnUserView);
+
+        jMenuBar1.add(btnView);
 
         setJMenuBar(jMenuBar1);
 
@@ -455,6 +480,8 @@ public class ProductsTable extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    //<editor-fold desc="OBJECT RESPONSIVE METHODS" defaultstate="collapsed">
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
@@ -464,9 +491,7 @@ public class ProductsTable extends javax.swing.JFrame {
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }    
     }//GEN-LAST:event_formWindowClosing
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:        
-    }//GEN-LAST:event_jMenu1ActionPerformed
+
     private void printMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuActionPerformed
         int[] rows = dataTable.getSelectedRows();
         String[][] productData = new String[rows.length][12];
@@ -480,27 +505,55 @@ public class ProductsTable extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(evt.getClickCount()>1) {
             JTable source = (JTable)evt.getSource();
-            int row = source.rowAtPoint( evt.getPoint() );
-            ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]));
+            int row = source.rowAtPoint( evt.getPoint());
             setEnabled(false);
-            viewProductInfo.setVisible(true);    
+            if(productsTableMode) {
+                ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), this);
+                viewProductInfo.setVisible(true);
+            } else {
+                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]));
+                viewUserInfo.setVisible(true);
+            }
         }
         
     }//GEN-LAST:event_dataTableMouseClicked
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
+        productsTableMode = true;
         setEnabled(false);
         new AddProduct(this).setVisible(true);
     }//GEN-LAST:event_btnAddProductActionPerformed
+
+    private void btnUserViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserViewActionPerformed
+        // TODO add your handling code here:
+        productsTableMode = false;
+        String[] userColumn = new String[]{"Employee ID", "Username", "Authority", "Last Name", "First Name", "Middle Name", "Contact", "E-mail", "Address"};
+        userList = UserService.getAllUsers();
+        DefaultTableModel model = new DefaultTableModel(userList, userColumn);
+        dataTable.setModel(model);
+        System.out.println("User Table RELOADED!!!");
+        btnUserView.setEnabled(false);
+        btnProductView.setEnabled(true);
+        enableSearchFields(false);
+    }//GEN-LAST:event_btnUserViewActionPerformed
+
+    private void btnProductViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductViewActionPerformed
+        // TODO add your handling code here:
+        enableSearchFields(true);
+        btnUserView.setEnabled(true);
+        btnProductView.setEnabled(false);
+        reloadTable();
+    }//GEN-LAST:event_btnProductViewActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
     private void disableResizeFrame(javax.swing.JFrame frame) {
        frame.setResizable(false);
     }
+    // </editor-fold>
     
-    
+    //<editor-fold desc="MAIN METHOD" defaultstate="collapsed">
     /**
      * @param args the command line arguments
      */
@@ -527,7 +580,6 @@ public class ProductsTable extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ProductsTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -536,10 +588,15 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         });
     }
-
+    //</editor-fold>
+    
+    //<editor-fold desc="OBJECT DECLARATIONS" defaultstate="collapsed">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JMenuItem btnAddProduct;
+    private javax.swing.JMenuItem btnProductView;
+    private javax.swing.JMenuItem btnUserView;
+    private javax.swing.JMenu btnView;
     private javax.swing.JTable dataTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -551,7 +608,6 @@ public class ProductsTable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -567,4 +623,5 @@ public class ProductsTable extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearchSupplierName;
     private javax.swing.JTextField txtSearchUnit;
     // End of variables declaration//GEN-END:variables
+//</editor-fold>
 }

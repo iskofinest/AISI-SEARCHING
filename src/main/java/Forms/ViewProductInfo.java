@@ -9,6 +9,7 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
+import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.SupplierService;
@@ -36,7 +37,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
         initComponents();
     }
 
-    ViewProductInfo(int productID) {
+    ViewProductInfo(int productID, JFrame previousForm) {
         initComponents();
         this.previousForm = previousForm;
         components = new JComponent[]{txtReference, txtItem, txtBrand, txtModel, txtQuantity, txtProductDate, 
@@ -457,6 +458,11 @@ public class ViewProductInfo extends javax.swing.JFrame {
                 product.setOriginalPrice(BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText())));
                 product.setAgent(txtAgent.getText());
                 if(ProductService.updateProduct(product)) {
+                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+                        NetworkHandlerService.serverSendMessage("reload");
+                    } else {
+                        NetworkHandlerService.clientSendMessage("reload");
+                    }
                     JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
                     ProductTable.productsTableForm.reloadTable();
                 } else {
@@ -466,13 +472,18 @@ public class ViewProductInfo extends javax.swing.JFrame {
             btnPrint.setEnabled(true);
             btnDelete.setEnabled(true);
             enableFields(false);
+            btnBack.setText("Back");
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(ProductService.deleteProduct(product)) {
-            
+            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+                NetworkHandlerService.serverSendMessage("reload");
+            } else {
+                NetworkHandlerService.clientSendMessage("reload");
+            }
             JOptionPane.showMessageDialog(null, lblItem.getText() + "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
         } else {
             JOptionPane.showMessageDialog(null, lblItem.getText() + " Unable to Delete!!", "DELETE FAILED", 0);

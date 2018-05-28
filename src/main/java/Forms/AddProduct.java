@@ -9,6 +9,7 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
+import Network.NetworkHandlerService;
 import Services.ProductService;
 import Services.SupplierService;
 import Services.TransactionServices;
@@ -208,6 +209,14 @@ public class AddProduct extends javax.swing.JFrame {
             }
         });
 
+        txtSupplierName.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                txtSupplierNameCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,7 +373,7 @@ public class AddProduct extends javax.swing.JFrame {
 
     private void btnSaveProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveProductActionPerformed
         // TODO add your handling code here:
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to add this product?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             String reference = txtReference.getText().trim();
             String name = txtItem.getText().trim();
             String category = txtCategory.getText().trim();
@@ -401,6 +410,11 @@ public class AddProduct extends javax.swing.JFrame {
                 txtContactDetails.setText("");
                 txtAgent.setText("");
                 txtDescription.setText("");
+                if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+                    NetworkHandlerService.serverSendMessage("reload");
+                } else {
+                    NetworkHandlerService.clientSendMessage("reload");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Save Failed!", "SAVE FAILED", 1);
             }
@@ -419,6 +433,11 @@ public class AddProduct extends javax.swing.JFrame {
         previousForm.setEnabled(true);
         dispose();
     }//GEN-LAST:event_formWindowClosed
+
+    private void txtSupplierNameCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtSupplierNameCaretPositionChanged
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, evt.toString());
+    }//GEN-LAST:event_txtSupplierNameCaretPositionChanged
 
     /**
      * @param args the command line arguments
