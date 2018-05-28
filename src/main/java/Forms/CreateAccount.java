@@ -55,10 +55,11 @@ public class CreateAccount extends javax.swing.JFrame {
     
     int errorIcon = JOptionPane.ERROR_MESSAGE;
     int validIcon = JOptionPane.INFORMATION_MESSAGE;
+    int questionIcon = JOptionPane.QUESTION_MESSAGE;
     
     JFrame previousForm;
     
-    private boolean catchRequired = false;
+//    private boolean catchRequired = false;
     
     public CreateAccount() {
         initComponents();
@@ -71,7 +72,7 @@ public class CreateAccount extends javax.swing.JFrame {
         this.previousForm = previousForm;
         setLimitOnTextFields();        
         prepareForm();
-       
+      
     }
     
     //void confirmation password
@@ -95,6 +96,7 @@ public class CreateAccount extends javax.swing.JFrame {
         lblMiddleName, lblLastName, lblEmailAddress, lblContactNumber, lblAddress};
         int i =0;
         for(JTextComponent component : fields) {
+            //
 //            component.setBackground(Color.RED);
 //            component.addFocusListener(new java.awt.event.FocusAdapter() {
 //                public void focusGained(java.awt.event.FocusEvent evt) {
