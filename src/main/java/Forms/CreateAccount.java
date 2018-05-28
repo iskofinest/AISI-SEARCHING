@@ -38,6 +38,8 @@ public class CreateAccount extends javax.swing.JFrame {
     
     private final static Logger logger = Logger.getLogger(CreateAccount.class.getName());
     
+    private static EmailValidator emailValidator;
+    
     //String messages
     String requiredMessage = "field is required.";
     String errorMessage = "invalid input.";
@@ -60,6 +62,8 @@ public class CreateAccount extends javax.swing.JFrame {
         initComponents();
         setLimitOnTextFields();
         prepareForm();
+        
+       
     }
     
     public CreateAccount(javax.swing.JFrame previousForm) {
@@ -67,6 +71,7 @@ public class CreateAccount extends javax.swing.JFrame {
         this.previousForm = previousForm;
         setLimitOnTextFields();        
         prepareForm();
+       
     }
     
     //void confirmation password
@@ -103,7 +108,7 @@ public class CreateAccount extends javax.swing.JFrame {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if(component.getText().equals("")) {
+                            if(component.getText().isEmpty()) {
                                 System.out.println("RED");
                                 labels[index].setForeground(Color.RED);
                             } else {
@@ -128,7 +133,7 @@ public class CreateAccount extends javax.swing.JFrame {
         txtUsername.setDocument(new JTextFieldLimit((20)));
         txtPassword.setDocument(new JTextFieldLimit((20)));
         txtConfirmPassword.setDocument(new JTextFieldLimit((20)));
-         
+        txtEmailAddress.setDocument(new JTextFieldLimit((40)));
     }
        
     private void txtfieldValidation(){
@@ -205,7 +210,6 @@ public class CreateAccount extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAddress = new javax.swing.JTextArea();
         lblErrorMessage = new javax.swing.JLabel();
-        btnBack = new javax.swing.JButton();
         lblEmployeeNo = new javax.swing.JLabel();
         txtEmployeeNo = new javax.swing.JTextField();
         btnCreateAccount = new javax.swing.JButton();
@@ -215,7 +219,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CreateAccount"); // NOI18N
         setIconImage(getIconImage());
         setIconImages(null);
@@ -331,11 +335,11 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(txtMiddleName, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(txtEmailAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(txtContactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                    .addComponent(txtMiddleName)
+                    .addComponent(txtLastName)
+                    .addComponent(txtEmailAddress)
+                    .addComponent(txtContactNumber)
+                    .addComponent(txtUsername)
                     .addComponent(txtPassword)
                     .addComponent(txtConfirmPassword))
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -405,13 +409,6 @@ public class CreateAccount extends javax.swing.JFrame {
         lblErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblErrorMessage.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnBack.setText("BACK");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
         lblEmployeeNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblEmployeeNo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEmployeeNo.setLabelFor(txtUsername);
@@ -430,31 +427,24 @@ public class CreateAccount extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEmployeeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAuthority, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnBack))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblEmployeeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblAuthority, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbxAuthority, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEmployeeNo))))
+                            .addComponent(cbxAuthority, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEmployeeNo))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(btnBack)
-                .addGap(8, 8, 8)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmployeeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEmployeeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -466,7 +456,7 @@ public class CreateAccount extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(lblErrorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -506,12 +496,10 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\IPC\\Documents\\NetBeansProjects\\AISI-SYSTEM\\src\\POWERSEARCHING\\FORMS\\ICONS\\absIcon.png")); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("A    B    S   O   L   U   T   E");
+        jLabel1.setText("A    B    S    O   L   U   T   E");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 204, 0));
@@ -527,7 +515,6 @@ public class CreateAccount extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -540,12 +527,13 @@ public class CreateAccount extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 11, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jLabel3)
                 .addGap(1, 1, 1)
@@ -568,8 +556,8 @@ public class CreateAccount extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 27, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 3, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -577,27 +565,13 @@ public class CreateAccount extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-   //validating the email
-    private boolean isValidEmail(){
-        if (!(Pattern.matches("^[a-zA-Z0-9]+[@]{1}+[a-zA-Z0-9]+[.]{1}+[a-zA-Z0-9]+$", txtEmailAddress.getText()))) { 
-//            JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE); 
-            return false;
-        }
-        else { 
-            return true;
-//            JOptionPane.showMessageDialog(null, "The email is valid", "Good!", JOptionPane.INFORMATION_MESSAGE);
-        
-        }
-    }
    
-    
-    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Todo add your handling here:
         int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,errorIcon);
         if(confirmation == JOptionPane.YES_OPTION){ 
             this.dispose();
+            new Login().setVisible(true);
         }else{
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }    
@@ -610,13 +584,15 @@ public class CreateAccount extends javax.swing.JFrame {
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
         // TODO add your handling code here:
         txtfieldValidation();
-        //        allRequired();
-//        JOptionPane.showMessageDialog(null,"SAVE");
-        
-        if(someFieldEmpty()) {
+
+        //Todo make a boolean for email validation
+       boolean validEmail = emailValidator.validateEmail(txtEmailAddress.getText());    
+
+       if(someFieldEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill up all required text fields", "INCOMPLETE FORM", 0);
-        } else if(!isValidEmail()) {
+        } else if(!validEmail) {
             JOptionPane.showMessageDialog(null, "Please enter a valid e-mail", "INVALID EMAIL", 0);
+            logger.log(Level.SEVERE, "email not valid.", validEmail);
         } else if(!isPasswordMatched()) {
             JOptionPane.showMessageDialog(null, "Password not matched!!", "UNMATCHED PASSWORD", 0);
         } else if(UserService.isUsernameExists(txtUsername.getText().trim())){
@@ -657,12 +633,6 @@ public class CreateAccount extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnCreateAccountActionPerformed
-
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        previousForm.setVisible(true);
-    }//GEN-LAST:event_btnBackActionPerformed
        
     
     /**
@@ -702,7 +672,6 @@ public class CreateAccount extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCreateAccount;
     private javax.swing.JComboBox<String> cbxAuthority;
     private javax.swing.JLabel jLabel1;
@@ -739,29 +708,4 @@ public class CreateAccount extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    public class JTextFieldLimit extends PlainDocument{
-    
-//    private final static Logger logger = Logger.getLogger(JTextFieldLimit.class.getName());
-    private int limit;
-    public JTextFieldLimit( int limit) {
-        super();
-        this.limit = limit;
-        logger.log(Level.SEVERE,"JTextFiledLimit", limit);
-    }
-
-    //void
-    public void insertString(int offset, String str, AttributeSet a) throws BadLocationException{
-        if(str == null){
-            return;
-            
-        }
-            
-        if((getLength() + str.length()) <= limit){
-            logger.info("getLength" + str.length());
-            super.insertString(offset, str, a);
-        } 
-    }
-}
-    
-    
 }
