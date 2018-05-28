@@ -8,6 +8,7 @@ package Forms;
 //import com.sun.istack.internal.logging.Logger;
 import Entities.ProductTable;
 import Entities.User;
+import Network.NetworkHandlerService;
 import Services.UserService;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -66,6 +67,23 @@ public class Login extends javax.swing.JFrame {
                 dispose();
                 ProductsTable products = new ProductsTable(this);
                 products.setVisible(true);
+                if(cbxAuthority.getSelectedItem().toString().equals("ADMIN")){
+                    ProductTable.networkThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NetworkHandlerService.runAsServer();                        
+                        }
+                    });
+                }
+                else {
+                    ProductTable.networkThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NetworkHandlerService.runAsClient();
+                        }
+                    });
+                }
+                ProductTable.networkThread.start();
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid username or password", "ACCESS DENIED", 0);
             }

@@ -39,8 +39,8 @@ public class ProductService {
     
     public static String[][] getAllProducts() {
         String hql = "FROM Product";
-//        session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        Query query = ProductTable.session.createQuery(hql);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
         List<Product> products = query.list();      // no ClassCastException here
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
@@ -89,11 +89,12 @@ public class ProductService {
 //            session = Utilities.HibernateUtil.getSessionFactory().openSession();
             if(isProductExist(product)) {
                 int quantity = product.getQuantity();
-                Criteria criteria = ProductTable.session.createCriteria(Product.class)
+                Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+                Criteria criteria = session.createCriteria(Product.class)
                     .setProjection(Projections.projectionList()
                     .add(Projections.property(Product.NAME), product.getName()))
                     .setResultTransformer(Transformers.aliasToBean(Product.class));
-                
+                session.close();
             }
             if(isSupplierExist(supplier)) {
                 System.out.println(supplier.getName() + " EXISTS");
@@ -108,11 +109,12 @@ public class ProductService {
     public static void createProduct(Product product) { 
         try {
             System.out.println(product.toString());
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = ProductTable.session.beginTransaction();
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
 //            session.save(product.getSupplier());
-            ProductTable.session.save(product);
+            session.save(product);
             tx.commit();
+            session.close();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
@@ -121,11 +123,12 @@ public class ProductService {
     public static void createProduct(Supplier supplier) { 
         try {
             System.out.println(supplier.toString());
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = ProductTable.session.beginTransaction();
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
 //            session.save(product.getSupplier());
-            ProductTable.session.save(supplier);
+            session.save(supplier);
             tx.commit();
+            session.close();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
@@ -155,9 +158,10 @@ public class ProductService {
     public static String[][] getQueryList(String search) {
         List list = null;
         String hql = "FROM Product Where name LIKE '%" + search + "%'";
-//        session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        Query query = ProductTable.session.createQuery(hql);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
         List<Product> products = query.list();      // no ClassCastException here
+        session.close();
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
             Product product = products.get(i);
@@ -182,11 +186,12 @@ public class ProductService {
     public static boolean isSupplierExist(Supplier supplier) {
         int rowNumber = 0;
         try {
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Criteria criteria = ProductTable.session.createCriteria(Supplier.class);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Supplier.class);
             criteria.add(Restrictions.eq(Supplier.NAME, supplier.getName()));
             criteria.setProjection(Projections.rowCount());
             rowNumber = Integer.parseInt(criteria.uniqueResult().toString());
+            session.close();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "ISSUPPLIEREXISTS(): " + e.toString(), "ERROR OCCURRED", 0);
         }
@@ -196,8 +201,8 @@ public class ProductService {
     public static boolean isProductExist(Product product) {
         int rowNumber = 0;
         try {
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Criteria criteria = ProductTable.session.createCriteria(Product.class);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Product.class);
             criteria.add(Restrictions.eq(Product.NAME, product.getName()));
             criteria.setProjection(Projections.rowCount());
             rowNumber = Integer.parseInt(criteria.uniqueResult().toString());
@@ -210,17 +215,20 @@ public class ProductService {
     public static Product getProduct(int id) {
         Product product = new Product();
 //        ProductTable.session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        product = (Product)ProductTable.session.get(Product.class, id);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        product = (Product) session.get(Product.class, id);
+        session.close();
         return product;
     }
     
     public static boolean updateProduct(Product product) {
         boolean saved = false;
         try{
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = ProductTable.session.beginTransaction();
-            ProductTable.session.update(product);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
+            session.update(product);
             tx.commit();
+            session.close();
             saved = true;
         } catch(Exception ex) {
             saved = false;
@@ -230,20 +238,21 @@ public class ProductService {
     }
     
     public static boolean deleteProduct(Product product) {
-        boolean saved = false;
+        boolean deleted = false;
         try{
-//            session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = ProductTable.session.beginTransaction();
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = session.beginTransaction();
             product.setSupplier(new HashSet<Supplier>());
             product.setTransaction(new Transactions());
-            ProductTable.session.delete(product);
+            session.delete(product);
             tx.commit();
-            saved = true;
+            session.close();
+            deleted = true;
         } catch(Exception ex) {
-            saved = false;
+            deleted = false;
             System.out.println(ex.toString());
         }
-        return saved;
+        return deleted;
     }
     
     public static boolean saveProduct(Transactions transactions, Product product, Supplier supplier) { 
@@ -294,11 +303,13 @@ public class ProductService {
     public static boolean isTransactionExist(Transactions transactions) {
         int rowNumber = 0;
         try {
-            Criteria criteria = ProductTable.session.createCriteria(Transaction.class);
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Transaction.class);
 //            Criteria criteria = Utilities.HibernateUtil.getSessionFactory()
 //                    .openSession().createCriteria(Transaction.class);
             criteria.add(Restrictions.eq(Transactions.REFERENCE_NUMBER, transactions.getReferenceNumber()));
             criteria.setProjection(Projections.rowCount());
+            session.close();
             rowNumber = Integer.parseInt(criteria.uniqueResult().toString());
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "isTransactionExist(): " + e.toString(), "ERROR OCCURRED", 0);
@@ -326,8 +337,10 @@ public class ProductService {
                 + "and s.name LIKE '%" + supplier + "%' "
                 + "and t.referenceNumber LIKE '%" + reference + "%' and p.brand LIKE '%" + brand + "%' "
                 + "and p.unit LIKE '%" + unit + "%'";
-        Query query = ProductTable.session.createQuery(hql);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
         List<Product> products = query.list();
+        session.close();
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
             Product product = products.get(i);
@@ -351,7 +364,8 @@ public class ProductService {
     public static String[][] findProductBySupplierID(int id) {
         String hql = "Select p from Product p join p.suppliers s "
                 + "where s.id=" + id;
-        Query query = ProductTable.session.createQuery(hql);
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
         List<Product> products = query.list();
         String[][] data = new String[products.size()][5];
         for(int i=0; i<products.size(); i++) {

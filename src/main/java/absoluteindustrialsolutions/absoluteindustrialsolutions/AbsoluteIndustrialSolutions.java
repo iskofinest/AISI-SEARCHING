@@ -69,9 +69,10 @@ public class AbsoluteIndustrialSolutions {
 //            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         
-        ProductTable.session = Utilities.HibernateUtil.getSessionFactory().openSession();
+//        ProductTable.session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Login login = new Login();
         login.setVisible(true);
+        System.out.println("sl;dfkjalskdfj");
         
     }
     

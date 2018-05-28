@@ -17,8 +17,9 @@ import org.hibernate.Session;
 public class ProductTable {
     
     public static User currentUser = new User();
-    public static Session session;
+//    public static Session session;
     public static ProductsTable productsTableForm;
+    public static Thread networkThread;
     String reference;
     String name;
     String category = "";
