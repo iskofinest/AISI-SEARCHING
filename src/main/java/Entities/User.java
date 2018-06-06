@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.Email;
  */
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User {
     
     public static final String EMPLOYEE_ID = "employee_id";
@@ -41,35 +41,35 @@ public class User {
     @Column(name="id", length=10, nullable=false)
     private int id;
     
-    @Column(name="Employee_ID", length=20, nullable=false)
+    @Column(name="employee_ID", length=20, nullable=false)
     private String employee_id;
     
-    @Column(name="Username", length=20, nullable=false)
+    @Column(name="username", length=20, nullable=false)
     private String username;
     
-    @Column(name="Password", length=20, nullable=false)
+    @Column(name="password", length=20, nullable=false)
     private String password;
     
-    @Column(name="FirstName", length=50, nullable=false)
+    @Column(name="firstName", length=50, nullable=false)
     private String firstName;
     
-    @Column(name="MiddleName", length=20, nullable=false)
+    @Column(name="middleName", length=20, nullable=false)
     private String middleName;
     
-    @Column(name="LastName", length=20, nullable=false)
+    @Column(name="lastname", length=20, nullable=false)
     private String lastName;
     
     @Column(name="authority", length=20, nullable=false)
     private String authority;
     
     @Email(message="Please provide a valid email address")
-    @Column(name="Email", length=50, nullable=false)
+    @Column(name="email", length=50, nullable=false)
     private String email;
     
-    @Column(name="Contact", length=20, nullable=false)
+    @Column(name="contact", length=20, nullable=false)
     private String contact;
     
-    @Column(name="Address", length=150, nullable=false)
+    @Column(name="address", length=150, nullable=false)
     private String address;
     
     public User(){}

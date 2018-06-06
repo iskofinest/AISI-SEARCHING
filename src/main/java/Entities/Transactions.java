@@ -23,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 //@Indexed
-@Table(name="Transaction")
+@Table(name="transaction")
 public class Transactions {
     
     public static final String REFERENCE_NUMBER = "referenceNumber";

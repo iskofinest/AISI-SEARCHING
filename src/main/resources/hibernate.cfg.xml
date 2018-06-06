@@ -43,9 +43,10 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/AbsoluteIndustrialSolutions?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>
+    <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.8.25:3306/AbsoluteIndustrialSolutions?zeroDateTimeBehavior=convertToNull</property>-->
+    <property name="hibernate.connection.url">jdbc:mysql://107.180.54.180:3306/absoluteindustrialsolutions</property>
+    <property name="hibernate.connection.username">scope_user_aisi</property>
+    <property name="hibernate.connection.password">aisi10xyz20</property>
   
      <!--JDBC connection pool (user the built in)--> 
   <property name="connection.pool_size">1</property>
@@ -54,9 +55,9 @@ Contributor(s):
   <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
   
    <!--Echo all executed SQL to stdout--> 
-  <property name="show_sql">false</property>
+  <property name="show_sql">true</property>
+  <!--<property name="hbm2ddl.auto">update</property>-->
   <property name="hbm2ddl.auto">update</property>
-  <!--<property name="hbm2ddl.auto">create-drop</property>-->
   
    <!--Mention here all the model classes along with their package name-->  
   <mapping class="Entities.User"/>

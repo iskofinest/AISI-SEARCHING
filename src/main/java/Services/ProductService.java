@@ -37,10 +37,12 @@ public class ProductService {
     
 //    static Session session;
     
-    public static String[][] getAllProducts() {
+    public static String[][] getAllProducts(int start, int max) {
         String hql = "FROM Product";
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery(hql);
+        query.setFirstResult(start);
+        query.setMaxResults(max);
         List<Product> products = query.list();      // no ClassCastException here
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
@@ -54,10 +56,22 @@ public class ProductService {
             data[i][6] = product.getProduct_date().toString();
             data[i][7] = product.getOriginalPrice().toString();
             data[i][8] = product.getAgent();
-            data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-            data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
-            data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
             data[i][12] = product.getId() + "";
+            try{
+                data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
+            } catch(ArrayIndexOutOfBoundsException ex) {
+                
+            }
+            try{
+                data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+            } catch(ArrayIndexOutOfBoundsException ex) {
+                
+            }
+            try{
+                data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
+            } catch(ArrayIndexOutOfBoundsException ex) {
+                
+            }
         }
         return data;
     }
@@ -331,7 +345,7 @@ public class ProductService {
         return supplier;
     }
     
-    public static String[][] searchMultipleFields(String reference, String name, String brand, String unit, String supplier ) {
+    public static String[][] searchMultipleFields(String reference, String name, String brand, String unit, String supplier, int start) {
         String hql = "Select p from Product p join p.suppliers s join p.transaction t "
                 + "where p.name LIKE '%" + name + "%' "
                 + "and s.name LIKE '%" + supplier + "%' "
@@ -339,6 +353,8 @@ public class ProductService {
                 + "and p.unit LIKE '%" + unit + "%'";
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery(hql);
+        query.setFirstResult(start);
+        query.setMaxResults(28);
         List<Product> products = query.list();
         session.close();
         String[][] data = new String[products.size()][13];
@@ -377,6 +393,29 @@ public class ProductService {
             data[i][4] = product.getId() + "";
         }
         return data;
+    }
+    
+    public static int countAllProduct() {
+        String hql="select count(*) from  Product";
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query= session.createQuery(hql);
+        int count= Integer.parseInt(String.valueOf(query.uniqueResult()));
+        session.close();
+        return count;
+    }
+    
+    public static int countMultipleFields(String reference, String name, String brand, String unit, String supplier ) {
+        String hql = "Select count(p) from Product p join p.suppliers s join p.transaction t "
+                + "where p.name LIKE '%" + name + "%' "
+                + "and s.name LIKE '%" + supplier + "%' "
+                + "and t.referenceNumber LIKE '%" + reference + "%' and p.brand LIKE '%" + brand + "%' "
+                + "and p.unit LIKE '%" + unit + "%'";
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery(hql);
+        int count= Integer.parseInt(String.valueOf(query.uniqueResult()));
+        session.close();
+        System.out.println("COUNT MULTIPLE FIELDS: " + count);
+        return count;
     }
     
 }

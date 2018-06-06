@@ -182,7 +182,7 @@ public class Login extends javax.swing.JFrame {
         logFramePanelLayout.setHorizontalGroup(
             logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logFramePanelLayout.createSequentialGroup()
-                .addGap(0, 315, Short.MAX_VALUE)
+                .addGap(0, 297, Short.MAX_VALUE)
                 .addComponent(jLabel4))
             .addGroup(logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(logFramePanelLayout.createSequentialGroup()
@@ -198,7 +198,7 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(42, Short.MAX_VALUE)))
+                    .addContainerGap(24, Short.MAX_VALUE)))
         );
         logFramePanelLayout.setVerticalGroup(
             logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +229,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Log in as:");
 
         cbxAuthority.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        cbxAuthority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "EMPLOYEE", " " }));
+        cbxAuthority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "EMPLOYEE" }));
         cbxAuthority.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
@@ -247,7 +247,9 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(jLabel3))
                             .addComponent(cbxAuthority, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(88, 88, 88)))
-                .addComponent(logFramePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logFramePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,7 +270,9 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 627, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

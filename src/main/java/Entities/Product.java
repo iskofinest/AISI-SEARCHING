@@ -30,7 +30,7 @@ import javax.persistence.TemporalType;
  * @author IPC
  */
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
     
     
@@ -102,7 +102,7 @@ public class Product {
 //    )
     
     @JoinTable(
-        name = "Product_Supplier", 
+        name = "product_supplier", 
         joinColumns = { @JoinColumn(name = "product_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "supplier_id") }
     )

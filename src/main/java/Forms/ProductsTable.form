@@ -278,7 +278,11 @@
                               <Component id="txtSearchUnit" min="-2" pref="240" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtSearchSupplierName" min="-2" pref="240" max="-2" attributes="0"/>
-                              <EmptySpace pref="204" max="32767" attributes="0"/>
+                              <EmptySpace pref="48" max="32767" attributes="0"/>
+                              <Component id="btnPrevious" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnNext" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -290,6 +294,8 @@
                               <Component id="txtSearchBrand" alignment="3" max="32767" attributes="0"/>
                               <Component id="txtSearchSupplierName" alignment="3" max="32767" attributes="0"/>
                               <Component id="txtSearchUnit" alignment="3" max="32767" attributes="0"/>
+                              <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPrevious" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -334,6 +340,22 @@
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnNext">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="NEXT"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNextActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnPrevious">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="PREVIOUS"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreviousActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

@@ -40,6 +40,10 @@ public class ProductsTable extends javax.swing.JFrame {
     String[][] userList;
     boolean isAdmin = false;
     boolean productsTableMode = true;
+    boolean searching = false;
+    int start = 0;
+    int max = 28;
+    int listCount = 0;
     //</editor-fold>
     
     /**
@@ -76,8 +80,9 @@ public class ProductsTable extends javax.swing.JFrame {
         reloadTable();  // FOR UPDATING THE TABLE
         ProductTable.productsTableForm = this;   // SAVING THIS FORM TO THE CONSTANT HANDLER
         dataTable.setDefaultEditor(Object.class, null); // DISABLING THE JTABLE EDIT
-        
         searchFields = new JTextField[]{txtSearchReference, txtSearchItemName, txtSearchBrand, txtSearchUnit, txtSearchSupplierName};
+        btnPrevious.setEnabled(false);
+        listCount = ProductService.countAllProduct();
         for(JTextField searchField : searchFields) {
             searchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -85,7 +90,27 @@ public class ProductsTable extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                            searchProducts();
+                            if( txtSearchBrand.getText().trim().equals("") && txtSearchItemName.getText().trim().equals("") &&
+                                    txtSearchReference.getText().trim().equals("") && txtSearchUnit.getText().trim().equals("") &&
+                                    txtSearchSupplierName.getText().trim().equals("")) {
+                                listCount = ProductService.countAllProduct();
+                                reloadTable();
+                                searching = false;
+                            } else {
+                                String reference = txtSearchReference.getText().trim();
+                                String name = txtSearchItemName.getText().trim();
+                                String brand = txtSearchBrand.getText().trim();
+                                String unit = txtSearchUnit.getText().trim();
+                                String supplier = txtSearchSupplierName.getText().trim();
+                                start = 0;
+                                listCount = ProductService.countMultipleFields(reference, name, brand, unit, supplier);
+                                if(listCount < 28) {
+                                    btnPrevious.setEnabled(false);
+                                    btnNext.setEnabled(false);
+                                }
+                                searching = true;
+                                searchProducts();
+                            }
                         }
                     }
                 });
@@ -119,10 +144,9 @@ public class ProductsTable extends javax.swing.JFrame {
     
     // reload product data table for update
     public void reloadTable() {
-        productList = ProductService.getAllProducts();  
+        productList = ProductService.getAllProducts(start, max);
         DefaultTableModel model = new DefaultTableModel(productList, columns);
         dataTable.setModel(model);
-        System.out.println("PRODUCTS FORM RELOADED!!!");
     }
     
     
@@ -133,7 +157,7 @@ public class ProductsTable extends javax.swing.JFrame {
         String brand = txtSearchBrand.getText().trim();
         String unit = txtSearchUnit.getText().trim();
         String supplier = txtSearchSupplierName.getText().trim();
-        productList = ProductService.searchMultipleFields(reference, name, brand, unit, supplier);
+        productList = ProductService.searchMultipleFields(reference, name, brand, unit, supplier, start);
 //        TableModel model = new ProductTableModel(productList);
 //        dataTable.setModel(model);
         
@@ -178,6 +202,8 @@ public class ProductsTable extends javax.swing.JFrame {
         txtSearchReference = new javax.swing.JTextField();
         txtSearchSupplierName = new javax.swing.JTextField();
         txtSearchUnit = new javax.swing.JTextField();
+        btnNext = new javax.swing.JButton();
+        btnPrevious = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -247,6 +273,20 @@ public class ProductsTable extends javax.swing.JFrame {
         txtSearchUnit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtSearchUnit.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        btnNext.setText("NEXT");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+
+        btnPrevious.setText("PREVIOUS");
+        btnPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -261,7 +301,11 @@ public class ProductsTable extends javax.swing.JFrame {
                 .addComponent(txtSearchUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearchSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(btnPrevious)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNext)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +314,9 @@ public class ProductsTable extends javax.swing.JFrame {
                 .addComponent(txtSearchReference)
                 .addComponent(txtSearchBrand)
                 .addComponent(txtSearchSupplierName)
-                .addComponent(txtSearchUnit))
+                .addComponent(txtSearchUnit)
+                .addComponent(btnNext)
+                .addComponent(btnPrevious))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -548,6 +594,35 @@ public class ProductsTable extends javax.swing.JFrame {
         btnProductView.setEnabled(false);
         reloadTable();
     }//GEN-LAST:event_btnProductViewActionPerformed
+
+    private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
+        // TODO add your handling code here:
+        start -= 28;
+        if(start < 1) {
+            start = 0;
+            btnPrevious.setEnabled(false);
+        } else {
+            if(searching){
+                searchProducts();
+            } else {
+                reloadTable();
+            }
+        }
+        btnNext.setEnabled(true);
+    }//GEN-LAST:event_btnPreviousActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        start += 28;
+        btnNext.setEnabled(!(start+28>listCount));
+        btnPrevious.setEnabled(true);
+        if(searching) {
+            searchProducts();
+        } else {
+            reloadTable();
+        }
+        System.out.println(listCount + ": TOTAL LIST COUNT");
+    }//GEN-LAST:event_btnNextActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
@@ -597,6 +672,8 @@ public class ProductsTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JMenuItem btnAddProduct;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrevious;
     private javax.swing.JMenuItem btnProductView;
     private javax.swing.JMenuItem btnUserView;
     private javax.swing.JMenu btnView;

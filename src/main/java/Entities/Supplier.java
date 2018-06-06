@@ -27,7 +27,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="Supplier")
+@Table(name="supplier")
 public class Supplier {
     
     public static final String ID = "id";
