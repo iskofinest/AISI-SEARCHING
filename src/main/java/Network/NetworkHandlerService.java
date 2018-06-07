@@ -81,7 +81,7 @@ public class NetworkHandlerService {
                         }
                     } while(!message.equals(" -CLIENT - END"));
                 } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
                     closeServerConnections(connection, input, output, connectionName);
                 }
             }
@@ -107,7 +107,7 @@ public class NetworkHandlerService {
                 outputs.get(key).flush();
                 System.out.println("sent to " + key);
             } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         serverShowMessage("\n SERVER - " + message);   
@@ -125,7 +125,7 @@ public class NetworkHandlerService {
             System.out.println("closed outputs from " + connectionName);
             outputs.remove(connectionName);
         } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     //</editor-fold>
@@ -203,9 +203,7 @@ public class NetworkHandlerService {
             ProductTable.productsTableForm.reloadTable();
         } else
             System.out.println("\nCLIENT - " + text);
-    }
-    
-        
+    }    
     //</editor-fold>
 
     

@@ -12,7 +12,6 @@ import Network.NetworkHandlerService;
 import Services.UserService;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

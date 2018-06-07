@@ -8,21 +8,13 @@ package Forms;
 import Entities.ProductTable;
 import Entities.User;
 import Services.UserService;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javafx.scene.control.PasswordField;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 /**
  *
@@ -42,7 +34,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
         initComponents();
     }
 
-    ViewUserInfo(int userId) {
+    ViewUserInfo(int userId, JFrame previousForm) {
         initComponents();
         this.previousForm = previousForm;
         components = new JTextComponent[]{txtEmployeeID, txtFirstName, txtMiddleName, txtLastName,
@@ -136,6 +128,11 @@ public class ViewUserInfo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         bg_Panel.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -273,7 +270,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
                     .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -287,7 +284,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
                                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -307,7 +304,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
                                     .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtContact, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtUserRole, javax.swing.GroupLayout.Alignment.TRAILING, 0, 250, Short.MAX_VALUE))))))
+                                    .addComponent(txtUserRole, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -367,18 +364,18 @@ public class ViewUserInfo extends javax.swing.JFrame {
             .addGroup(bg_PanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(5, 5, 5))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg_Panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg_Panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -386,9 +383,6 @@ public class ViewUserInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPasswordActionPerformed
-//        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to VIEW the password of this User?", "CONFIRM VIEW PASSWORD", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-//            JOptionPane.showMessageDialog(null, user.getPassword(), "PASSWORD", 1);
-//        }
         String message = "<html><strong style=\"color: red;\">Please enter your password to<br>view the password of this user.</strong></html";
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1, 5, 10));
@@ -488,14 +482,14 @@ public class ViewUserInfo extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(UserService.deleteUser(user)) {
-            JOptionPane.showMessageDialog(null, lblName.getText() + "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
-        } else {
-            JOptionPane.showMessageDialog(null, lblName.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
-        }
-        
-        ProductTable.productsTableForm.reloadTable();
-        ProductTable.productsTableForm.setEnabled(true);
+                JOptionPane.showMessageDialog(null, lblName.getText() + "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+                ProductTable.productsTableForm.reloadTable();
+                ProductTable.productsTableForm.setEnabled(true);
+                ProductTable.productsTableForm.requestFocus();
         dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, lblName.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+            }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -504,8 +498,12 @@ public class ViewUserInfo extends javax.swing.JFrame {
             dispose();
             if(previousForm != null) {
                 previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
             }else {
                 ProductTable.productsTableForm.setEnabled(true);
+                ProductTable.productsTableForm.setVisible(true);
+                ProductTable.productsTableForm.requestFocus();
             }
         } else {
             btnBack.setText("Back");
@@ -521,6 +519,19 @@ public class ViewUserInfo extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, evt.toString());
     }//GEN-LAST:event_txtUserRoleCaretPositionChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+        if(confirmation == JOptionPane.YES_OPTION){ 
+            this.dispose();
+            previousForm.setEnabled(true);
+            previousForm.setVisible(true);
+            previousForm.requestFocus();
+        }else{
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

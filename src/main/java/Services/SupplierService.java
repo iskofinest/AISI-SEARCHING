@@ -6,7 +6,6 @@
 package Services;
 
 import Entities.Product;
-import Entities.ProductTable;
 import Entities.Supplier;
 import java.util.List;
 import org.hibernate.Session;

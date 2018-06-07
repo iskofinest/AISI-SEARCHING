@@ -5,8 +5,6 @@
  */
 package Services;
 
-import Entities.ProductTable;
-import Entities.Supplier;
 import Entities.User;
 import java.util.List;
 import javax.swing.JOptionPane;

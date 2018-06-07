@@ -560,7 +560,7 @@ public class ProductsTable extends javax.swing.JFrame {
                 ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), this);
                 viewProductInfo.setVisible(true);
             } else {
-                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]));
+                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]), this);
                 viewUserInfo.setVisible(true);
             }
         }

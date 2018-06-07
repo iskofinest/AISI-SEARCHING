@@ -8,7 +8,6 @@ package Entities;
 import Forms.ProductsTable;
 import java.math.BigDecimal;
 import java.util.Date;
-import org.hibernate.Session;
 
 /**
  *

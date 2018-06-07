@@ -14,11 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -50,22 +46,7 @@ public class Supplier {
     @Column(name="contact_details")
     private String contactDetails;
     
-//    @Column(name="products", length=50, nullable=true)
-//    @ManyToMany(cascade = CascadeType.ALL, mappedBy="suppliers")
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "product_supplier",
-//            joinColumns = @JoinColumn (name = "product_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn (name = "supplier_id", referencedColumnName = "id"))
-//    @ManyToMany(cascade = { CascadeType.ALL })
-//    @JoinTable(
-//        name = "Product_Supplier", 
-//        joinColumns = { @JoinColumn(name = "product_id") }, 
-//        inverseJoinColumns = { @JoinColumn(name = "supplier_id") }
-//    )
-//    @ManyToMany( fetch = FetchType.LAZY, mappedBy = "suppliers", cascade = CascadeType.ALL)
-//    @Column(name="products")
-    
-//    @ManyToMany(mappedBy = "suppliers")
     private Set<Product> products = new HashSet<Product>(0);
 
     public Set<Product> getProducts() {

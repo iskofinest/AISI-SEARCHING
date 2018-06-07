@@ -8,7 +8,6 @@ package Services;
 import Entities.Product;
 import Entities.Supplier;
 import Entities.Transactions;
-import absoluteindustrialsolutions.absoluteindustrialsolutions.AbsoluteIndustrialSolutions;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -78,7 +77,7 @@ public class ReadDataService {
                 }
             }
             value = Double.parseDouble(number);
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, exception);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, exception);
         }
         return value;
     }
@@ -126,7 +125,7 @@ public class ReadDataService {
                 }
             }
             value = Double.parseDouble(number);
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, exception);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, exception);
         }
         return value;
     }
@@ -146,7 +145,7 @@ public class ReadDataService {
             }
         } catch(IllegalStateException ex) {
             message += ex.toString() +"\n";
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Date(sdf.format(date));
     }
@@ -165,7 +164,7 @@ public class ReadDataService {
             }
         } catch(IllegalStateException ex) {
             message += ex.toString() +"\n";
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Date(sdf.format(date));
     }
@@ -324,7 +323,7 @@ public class ReadDataService {
                                 sellingPrice = BigDecimal.valueOf(getInt(cell, index));
                             } catch(NumberFormatException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             break;
                             
@@ -337,10 +336,10 @@ public class ReadDataService {
                                 unit = value.substring(value.lastIndexOf(" ")+1);
                             }catch(StringIndexOutOfBoundsException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             } catch(NumberFormatException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             break;
                             
@@ -392,7 +391,7 @@ public class ReadDataService {
         } catch(Exception e) {
             System.out.println(e.toString());
             message += e.toString() + "\n";
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, e);
     }
             
     /*******************************READING AND SAVING DATA PURPOSE*******************************************/
@@ -400,7 +399,7 @@ public class ReadDataService {
             writer.flush();
             writer.close();
         } catch (IOException ex) {
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void readXLSXData(FileInputStream xlsxFile){
@@ -562,7 +561,7 @@ public class ReadDataService {
                                 sellingPrice = BigDecimal.valueOf(getXLSXInt(cell, index));
                             } catch(NumberFormatException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             break;
                             
@@ -575,10 +574,10 @@ public class ReadDataService {
                                 unit = value.substring(value.lastIndexOf(" ")+1);
                             }catch(StringIndexOutOfBoundsException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             } catch(NumberFormatException ex) {
                                 System.out.println(ex.toString());
-                                Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             break;
                             
@@ -630,7 +629,7 @@ public class ReadDataService {
         } catch(Exception e) {
             System.out.println(e.toString());
             message += e.toString() + "\n";
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, e);
     }
             
     /*******************************READING AND SAVING DATA PURPOSE*******************************************/
@@ -638,7 +637,7 @@ public class ReadDataService {
             writer.flush();
             writer.close();
         } catch (IOException ex) {
-            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ReadDataService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

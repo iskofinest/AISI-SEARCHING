@@ -6,22 +6,15 @@
 package Services;
 
 import Entities.Product;
-import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
-import Entities.User;
-import static Services.TransactionServices.isSupplierExist;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.hibernate.Criteria;
-import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
