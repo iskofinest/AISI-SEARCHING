@@ -459,7 +459,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
         } else {
             btnEdit.setText("Edit");
             btnBack.setText("Back");
-            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to add product?", "CONFIRM ADD", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update product?", "CONFIRM ADD", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
                 Transactions transaction = product.getTransaction();
                 transaction = product.getTransaction();
                 transaction.setReferenceNumber(txtReference.getText());
@@ -474,11 +474,11 @@ public class ViewProductInfo extends javax.swing.JFrame {
                 product.setOriginalPrice(BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText())));
                 product.setAgent(txtAgent.getText());
                 if(ProductService.updateProduct(product)) {
-                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
-                        NetworkHandlerService.serverSendMessage("reload");
-                    } else {
-                        NetworkHandlerService.clientSendMessage("reload");
-                    }
+//                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+//                        NetworkHandlerService.serverSendMessage("reload");
+//                    } else {
+//                        NetworkHandlerService.clientSendMessage("reload");
+//                    }
                     JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
                     ProductTable.productsTableForm.reloadTable();
                 } else {
