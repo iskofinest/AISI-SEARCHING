@@ -36,7 +36,7 @@ public class ExcelReportService {
                 "QTY / Unit" , "QUOTATION DATE", "ORIGINAL PRICE", "AGENT", "SUPPLIER NAME",
             "CONTACT PERSON","CONTACT DETAILS"};
     
-    public static void printProducts(String[][] productData) {
+    public static void printProducts(String filePath, String[][] productData) {
         
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Product Report Sheet");
@@ -92,21 +92,22 @@ public class ExcelReportService {
             }
         }
         try { 
-            SimpleDateFormat dt1 = new SimpleDateFormat("yyyyy-mm-dd");
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
             String fileName = dt1.format(new Date()) + ".xls";
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\IPC\\Downloads\\" + fileName);
+            FileOutputStream fileOut = new FileOutputStream(filePath + "\\" + fileName);
             workbook.write(fileOut);
             workbook.close();
             fileOut.close();
             System.out.println("PRINT SUCCESSFULL!!");
-            Desktop.getDesktop().open(new File("C:\\Users\\IPC\\Downloads\\" + fileName));
+            File reportFile = new File(filePath + "\\" + fileName);
+            Desktop.getDesktop().open(reportFile);
             System.out.println("OPENED!!");
         } catch (IOException ex) {
             Logger.getLogger(ExcelReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static void printSingleProduct(Product product) {
+    public static void printSingleProduct(String filePath, Product product) {
         String data[] = new String[12];
         data[0] = product.getTransaction().getReferenceNumber();
         data[1] = product.getName();
@@ -161,11 +162,11 @@ public class ExcelReportService {
 
         try {
             String fileName = product.getName() + ".xls";
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\IPC\\Downloads\\" + fileName);
+            FileOutputStream fileOut = new FileOutputStream(filePath + "\\" + fileName);
             workbook.write(fileOut);
             workbook.close();
             fileOut.close();
-            Desktop.getDesktop().open(new File("C:\\Users\\IPC\\Downloads\\" + fileName));
+            Desktop.getDesktop().open(new File(filePath + "\\" + fileName));
         } catch (IOException ex) {
             Logger.getLogger(ExcelReportService.class.getName()).log(Level.SEVERE, null, ex);
         }

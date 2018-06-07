@@ -13,8 +13,10 @@ import Services.ProductService;
 import Services.UserService;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -552,7 +554,16 @@ public class ProductsTable extends javax.swing.JFrame {
         for(int i=0; i<rows.length; i++) {
             productData[i] = productList[rows[i]];
         }
-        ExcelReportService.printProducts(productData);
+        String filePath = "";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            filePath = selectedFile.getAbsolutePath();
+            ExcelReportService.printProducts(filePath, productData);
+        }
     }//GEN-LAST:event_printMenuActionPerformed
 
     private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
