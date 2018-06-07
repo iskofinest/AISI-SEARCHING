@@ -128,6 +128,39 @@ public class NetworkHandlerService {
             Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public static void closeAllServerConnections() {
+        connections.forEach((key, connection) -> {
+            try {
+                connection.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            connections.remove(connection);
+        });
+
+        inputs.forEach((key, input) -> {
+            try {
+                input.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            inputs.remove(input);
+        });
+
+        outputs.forEach((key, output) -> {
+            try {
+                output.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            outputs.remove(output);
+        });
+        try {
+            server.close();
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkHandlerService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     //</editor-fold>
     
     //<editor-fold desc="CLIENT SIDE METHODS" defaultstate="collapsed">
@@ -204,6 +237,17 @@ public class NetworkHandlerService {
         } else
             System.out.println("\nCLIENT - " + text);
     }    
+    
+    public static void closeConnection() {
+        try {
+            input.close();
+            output.close();
+            connection.close();
+        } catch(IOException iOException) {
+            iOException.printStackTrace();
+        }
+    }
+    
     //</editor-fold>
 
     

@@ -43,12 +43,12 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-<!--    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>-->
-    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.112:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.password"></property>
+<!--    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.112:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">aisidata</property>
-    <property name="hibernate.connection.password">password!1</property>
+    <property name="hibernate.connection.password">password!1</property>-->
   
      <!--JDBC connection pool (user the built in)--> 
   <property name="connection.pool_size">1</property>

@@ -53,7 +53,7 @@ public class Login extends javax.swing.JFrame {
         String password = String.valueOf(txtPassword.getPassword());
         if(username.equals("admin") && password.equals("admin")) {
             dispose();
-            ProductsTable products = new ProductsTable(this);
+            ProductsTable products = new ProductsTable();
             products.setVisible(true);
         } else {
             List list = UserService.getUserLogin(username, password, authority);
@@ -65,7 +65,7 @@ public class Login extends javax.swing.JFrame {
                 String name = user.getFirstName() + " " + user.getLastName();
                 JOptionPane.showMessageDialog(null, "Welcome " + name, "LOGIN SUCCESSFUL", 1);
                 dispose();
-                ProductsTable products = new ProductsTable(this);
+                ProductsTable products = new ProductsTable();
                 products.setVisible(true);
                 if(cbxAuthority.getSelectedItem().toString().equals("ADMIN")){
                     ProductTable.networkThread = new Thread(new Runnable() {

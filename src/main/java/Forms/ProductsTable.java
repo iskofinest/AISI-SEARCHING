@@ -7,6 +7,7 @@ package Forms;
 
 //<editor-fold desc="IMPORTS" defaultstate="collapsed">
 import Entities.ProductTable;
+import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.UserService;
@@ -29,7 +30,6 @@ import javax.swing.table.DefaultTableModel;
 public class ProductsTable extends javax.swing.JFrame {
 
     //<editor-fold desc="VARIABLE DECLARATIONS" defaultstate="collapsed">
-    JFrame previousForm;
     JTextField searchFields[];
     String month[] = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
     String day[] = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
@@ -49,17 +49,10 @@ public class ProductsTable extends javax.swing.JFrame {
     /**
      * Creates new form Products
      */
+    //<editor-fold desc="REAL TIME CONSTRUCTOR" defaultstate="collapsed">
+
     public ProductsTable() {
         initComponents();
-//        disableResizeFrame(this);
-//        dataTable.setEditingRow(ABORT);
-//          setIcon();
-    }
-
-    //<editor-fold desc="REAL TIME CONSTRUCTOR" defaultstate="collapsed">
-    public ProductsTable(JFrame previousForm) {
-        initComponents();
-        this.previousForm = previousForm;
         initializeData();
         isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
         System.out.println(ProductTable.currentUser.getAuthority());
@@ -68,6 +61,8 @@ public class ProductsTable extends javax.swing.JFrame {
             jMenuBar1.remove(btnView);
         }
     }
+
+    
     //</editor-fold>
     
     //<editor-fold desc="CUSTOM METHODS" defaultstate="collapsed">
@@ -218,6 +213,7 @@ public class ProductsTable extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         btnAddProduct = new javax.swing.JMenuItem();
         printMenu = new javax.swing.JMenuItem();
+        btnLogout = new javax.swing.JCheckBoxMenuItem();
         btnView = new javax.swing.JMenu();
         btnProductView = new javax.swing.JMenuItem();
         btnUserView = new javax.swing.JMenuItem();
@@ -490,6 +486,15 @@ public class ProductsTable extends javax.swing.JFrame {
         });
         jMenu1.add(printMenu);
 
+        btnLogout.setSelected(true);
+        btnLogout.setText("Log Out");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnLogout);
+
         jMenuBar1.add(jMenu1);
 
         btnView.setText("View");
@@ -623,6 +628,22 @@ public class ProductsTable extends javax.swing.JFrame {
         }
         System.out.println(listCount + ": TOTAL LIST COUNT");
     }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to Logout your account?","CONFIRM LOGOUT",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(confirmation == JOptionPane.YES_OPTION){ 
+            this.dispose();
+            Login login = new Login();
+            login.setVisible(true);
+            login.requestFocus();
+            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
+            else NetworkHandlerService.closeConnection();
+            ProductTable.currentUser = null;
+        }else{
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }    
+    }//GEN-LAST:event_btnLogoutActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
@@ -672,6 +693,7 @@ public class ProductsTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JMenuItem btnAddProduct;
+    private javax.swing.JCheckBoxMenuItem btnLogout;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JMenuItem btnProductView;
