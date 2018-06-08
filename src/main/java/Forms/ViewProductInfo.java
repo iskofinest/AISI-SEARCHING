@@ -84,7 +84,11 @@ public class ViewProductInfo extends javax.swing.JFrame {
         txtProductDate.setDate(product.getProduct_date());
         txtOrigPrice.setText(String.valueOf(product.getOriginalPrice()));
         txtAgent.setText(product.getAgent());
-        txtSupplier.setText(((Supplier)product.getSuppliers().toArray()[0]).getName());
+        try { 
+            txtSupplier.setText(((Supplier)product.getSuppliers().toArray()[0]).getName());
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            System.out.println(ex.toString());
+        }
     }
     
     

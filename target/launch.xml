@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\AISI-IVY\Downloads\Developers Folder\GitHub\target\AISI-SEARCHING-1.0-SNAPSHOT.jar</jar>
+  <outfile>C:\Users\AISI-IVY\Downloads\Developers Folder\GitHub\target\aisi.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\AISI-IVY\Downloads\Developers Folder\icons\logo_6gL_icon.ico</icon>
+  <jre>
+    <path>jre</path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>nil</txtFileVersion>
+    <fileDescription>aisi</fileDescription>
+    <copyright>aisi</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>nil</txtProductVersion>
+    <productName>aisi</productName>
+    <companyName>aisi</companyName>
+    <internalName>aisi</internalName>
+    <originalFilename>aisi.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>

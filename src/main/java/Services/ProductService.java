@@ -344,6 +344,7 @@ public class ProductService {
                 + "and s.name LIKE '%" + supplier + "%' "
                 + "and t.referenceNumber LIKE '%" + reference + "%' and p.brand LIKE '%" + brand + "%' "
                 + "and p.unit LIKE '%" + unit + "%'";
+        System.out.println(hql);
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery(hql);
         query.setFirstResult(start);

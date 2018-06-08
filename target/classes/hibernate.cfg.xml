@@ -43,9 +43,9 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"></property>
+    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.42:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">aisioffice</property>
+    <property name="hibernate.connection.password">aisioffice</property>
 <!--    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.112:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">aisidata</property>
     <property name="hibernate.connection.password">password!1</property>-->
@@ -53,8 +53,8 @@ Contributor(s):
      <!--JDBC connection pool (user the built in)--> 
   <property name="connection.pool_size">1</property>
   
-   <!--Disable the second level cache--> 
-  <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+   <!--Enable the second level cache--> 
+  <property name="cache.provider_class">net.sf.ehcache.hibernate.Provider</property>
   
    <!--Echo all executed SQL to stdout--> 
   <property name="show_sql">true</property>
