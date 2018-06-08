@@ -7,7 +7,7 @@ package Forms;
 
 //<editor-fold desc="IMPORTS" defaultstate="collapsed">
 import Entities.ProductTable;
-import Network.NetworkHandlerService;
+//import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.UserService;
@@ -72,7 +72,7 @@ public class ProductsTable extends javax.swing.JFrame {
     
     // initialize custom changes
     private void initializeData() {
-        setTime().start();  // FOR DATE AND TIME DISPLAY
+//        setTime().start();  // FOR DATE AND TIME DISPLAY
         lblCurrentUser.setText("LOGGED IN AS: " +   // FOR CURRENT USER DISPLAY 
                 ProductTable.currentUser.getFirstName() + " " + ProductTable.currentUser.getLastName());
         reloadTable();  // FOR UPDATING THE TABLE
@@ -542,8 +542,8 @@ public class ProductsTable extends javax.swing.JFrame {
         // TODO add your handling code here:
         int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(confirmation == JOptionPane.YES_OPTION){
-            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
-            else NetworkHandlerService.closeConnection();
+//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
+//            else NetworkHandlerService.closeConnection();
             ProductTable.currentUser = null;
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.dispose();
@@ -652,8 +652,8 @@ public class ProductsTable extends javax.swing.JFrame {
             Login login = new Login();
             login.setVisible(true);
             login.requestFocus();
-            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
-            else NetworkHandlerService.closeConnection();
+//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
+//            else NetworkHandlerService.closeConnection();
             ProductTable.currentUser = null;
         }else{
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

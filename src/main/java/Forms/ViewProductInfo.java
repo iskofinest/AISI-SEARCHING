@@ -9,7 +9,7 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
-import Network.NetworkHandlerService;
+//import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.SupplierService;
@@ -499,11 +499,11 @@ public class ViewProductInfo extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(ProductService.deleteProduct(product)) {
-            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
-                NetworkHandlerService.serverSendMessage("reload");
-            } else {
-                NetworkHandlerService.clientSendMessage("reload");
-            }
+//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+//                NetworkHandlerService.serverSendMessage("reload");
+//            } else {
+//                NetworkHandlerService.clientSendMessage("reload");
+//            }
             JOptionPane.showMessageDialog(null, lblItem.getText() + "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
             ProductTable.productsTableForm.reloadTable();
             ProductTable.productsTableForm.setEnabled(true);

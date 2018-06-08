@@ -9,7 +9,6 @@ import Entities.Product;
 import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
-import Network.NetworkHandlerService;
 import Services.ProductService;
 import Services.SupplierService;
 import java.math.BigDecimal;
@@ -409,11 +408,6 @@ public class AddProduct extends javax.swing.JFrame {
                 txtContactDetails.setText("");
                 txtAgent.setText("");
                 txtDescription.setText("");
-                if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
-                    NetworkHandlerService.serverSendMessage("reload");
-                } else {
-                    NetworkHandlerService.clientSendMessage("reload");
-                }
             } else {
                 JOptionPane.showMessageDialog(null, "Save Failed!", "SAVE FAILED", 1);
             }
