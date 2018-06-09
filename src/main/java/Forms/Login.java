@@ -307,11 +307,11 @@ public class Login extends javax.swing.JFrame {
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-        CreateAccount createAccount = new CreateAccount(this);
-        createAccount.setVisible(true);
+//        this.dispose();
+//        CreateAccount createAccount = new CreateAccount(this);
+//        createAccount.setVisible(true);
 
-//        JOptionPane.showMessageDialog(null, "Please contact system admin for new registration", "UNABLE TO SIGNUP", 0);
+        JOptionPane.showMessageDialog(null, "Please contact system admin for new registration", "UNABLE TO SIGNUP", 0);
 
     }//GEN-LAST:event_lblSignUpMouseClicked
     

@@ -86,6 +86,7 @@ public class ProductsTable extends javax.swing.JFrame {
         searchFields = new JTextField[]{txtSearchReference, txtSearchItemName, txtSearchBrand, txtSearchUnit, txtSearchSupplierName};
         btnPrevious.setEnabled(false);
         listCount = ProductService.countAllProduct();
+        btnNext.setEnabled(listCount > 28);
         for(JTextField searchField : searchFields) {
             searchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -222,6 +223,7 @@ public class ProductsTable extends javax.swing.JFrame {
         btnAddProduct = new javax.swing.JMenuItem();
         printMenu = new javax.swing.JMenuItem();
         btnLogout = new javax.swing.JCheckBoxMenuItem();
+        btnAddProduct1 = new javax.swing.JMenuItem();
         btnView = new javax.swing.JMenu();
         btnProductView = new javax.swing.JMenuItem();
         btnUserView = new javax.swing.JMenuItem();
@@ -502,6 +504,14 @@ public class ProductsTable extends javax.swing.JFrame {
         });
         jMenu1.add(btnLogout);
 
+        btnAddProduct1.setText("Add User");
+        btnAddProduct1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProduct1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAddProduct1);
+
         jMenuBar1.add(jMenu1);
 
         btnView.setText("View");
@@ -616,6 +626,11 @@ public class ProductsTable extends javax.swing.JFrame {
                 reloadTable();
             }
         }
+        if(searching){
+                searchProducts();
+        } else {
+            reloadTable();
+        }
         btnNext.setEnabled(true);
     }//GEN-LAST:event_btnPreviousActionPerformed
 
@@ -663,6 +678,13 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_dataTableMouseClicked
+
+    private void btnAddProduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProduct1ActionPerformed
+        // TODO add your handling code here:     
+        this.dispose();
+        CreateAccount createAccount = new CreateAccount(this);
+        createAccount.setVisible(true);
+    }//GEN-LAST:event_btnAddProduct1ActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
@@ -712,6 +734,7 @@ public class ProductsTable extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
     private javax.swing.JMenuItem btnAddProduct;
+    private javax.swing.JMenuItem btnAddProduct1;
     private javax.swing.JCheckBoxMenuItem btnLogout;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;

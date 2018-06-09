@@ -3,7 +3,7 @@
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
   <jar>C:\Users\AISI-SAM\Desktop\Development\Staging\AISI-SEARCHING\target\AISI-SEARCHING-1.0-SNAPSHOT.jar</jar>
-  <outfile>C:\Users\AISI-SAM\Desktop\Development\Staging\FinalSetupII\aisi-searching.exe</outfile>
+  <outfile>C:\Users\AISI-SAM\Desktop\Development\Staging\FinalSetup\aisi.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -25,15 +25,15 @@
   </jre>
   <versionInfo>
     <fileVersion>1.0.0.0</fileVersion>
-    <txtFileVersion>aisi</txtFileVersion>
-    <fileDescription>Power Searching for AISI</fileDescription>
+    <txtFileVersion>AISI</txtFileVersion>
+    <fileDescription>power search for aisi</fileDescription>
     <copyright>2018</copyright>
     <productVersion>1.0.0.0</productVersion>
-    <txtProductVersion>aisi</txtProductVersion>
-    <productName>Power Searching</productName>
-    <companyName>aisi</companyName>
-    <internalName>aisi</internalName>
-    <originalFilename>aisi-searching.exe</originalFilename>
+    <txtProductVersion>AISI</txtProductVersion>
+    <productName>AISI_POWERSEARCH</productName>
+    <companyName>AISI</companyName>
+    <internalName>AISI</internalName>
+    <originalFilename>aisi_powersearch.exe</originalFilename>
     <trademarks></trademarks>
     <language>ENGLISH_US</language>
   </versionInfo>

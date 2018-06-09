@@ -253,11 +253,15 @@ public class ProductService {
         try{
             
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Query query = session.createQuery("delete from product_supplier where product_id=" + product.getId());
-            query.executeUpdate();
+//            Query query = session.createQuery("delete from product_supplier where product_id=" + product.getId());
+//            query.executeUpdate();
             Transaction tx = session.beginTransaction();
             product.setSupplier(new HashSet<Supplier>());
+            product.getSuppliers().forEach((supplier) -> {
+                product.getSuppliers().remove(supplier);
+            });
             product.setTransaction(new Transactions());
+            session.update(product);
             session.delete(product);
             tx.commit();
             session.close();

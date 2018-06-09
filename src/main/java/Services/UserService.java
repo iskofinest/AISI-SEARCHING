@@ -97,7 +97,7 @@ public class UserService {
     }
     
     public static String[][] getAllUsers() {
-        String hql = "FROM User";
+        String hql = "FROM Users";
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery(hql);
         List<Users> users = query.list();      // no ClassCastException here
