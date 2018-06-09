@@ -34,6 +34,7 @@ public class AddProduct extends javax.swing.JFrame {
     AddProduct(javax.swing.JFrame previousForm) {
         this.previousForm = previousForm;
         initComponents();
+        txtSupplierName.setEditable(true);
         List<Supplier> list = SupplierService.findAll();
         for(Supplier value : list) {
             txtSupplierName.addItem(value.getName());
@@ -83,6 +84,7 @@ public class AddProduct extends javax.swing.JFrame {
         txtSupplierName = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

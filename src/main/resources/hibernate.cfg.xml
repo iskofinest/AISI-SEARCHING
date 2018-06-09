@@ -44,9 +44,9 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.8.42:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>-->
-    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.46:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">aisioffice</property>
-    <property name="hibernate.connection.password">aisioffice</property>
+    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.48:3306/absoluteindustrialsolutionsincorporated?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">development</property>
+    <property name="hibernate.connection.password">development</property>
 <!--    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.112:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">aisidata</property>
     <property name="hibernate.connection.password">password!1</property>-->
@@ -63,7 +63,7 @@ Contributor(s):
   <property name="hbm2ddl.auto">update</property>
   
    <!--Mention here all the model classes along with their package name-->  
-  <mapping class="Entities.User"/>
+  <mapping class="Entities.Users"/>
   <mapping class="Entities.Product"/>
   <mapping class="Entities.Supplier"/>
   <mapping class="Entities.Transactions"/>

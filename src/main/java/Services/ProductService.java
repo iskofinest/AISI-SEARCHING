@@ -232,6 +232,10 @@ public class ProductService {
         boolean saved = false;
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            
+            Query query = session.createQuery("delete from product_supplier where product_id =" + product.getId());
+            query.executeUpdate();
+
             Transaction tx = session.beginTransaction();
             session.update(product);
             tx.commit();
@@ -247,7 +251,10 @@ public class ProductService {
     public static boolean deleteProduct(Product product) {
         boolean deleted = false;
         try{
+            
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("delete from product_supplier where product_id=" + product.getId());
+            query.executeUpdate();
             Transaction tx = session.beginTransaction();
             product.setSupplier(new HashSet<Supplier>());
             product.setTransaction(new Transactions());

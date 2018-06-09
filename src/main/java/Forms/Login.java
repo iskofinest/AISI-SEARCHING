@@ -7,7 +7,7 @@ package Forms;
 
 //import com.sun.istack.internal.logging.Logger;
 import Entities.ProductTable;
-import Entities.User;
+import Entities.Users;
 import Services.UserService;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -29,6 +29,7 @@ public class Login extends javax.swing.JFrame {
 //        lblClose.setIcon(new javax.swing.ImageIcon("C:\\Users\\AISI-IVY\\Downloads\\Developers Folder\\GitHub\\src\\main\\java\\Forms\\icons\\cancel.png"));
         lblClose.setIcon(new javax.swing.ImageIcon("extra-resources\\cancel.png"));
         lblLogo.setIcon(new javax.swing.ImageIcon("extra-resources\\LOGO.jpg"));
+        setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
         cbxAuthority.setFocusable(true);
         disableResizeFrame(this);
         txtUsername.setFocusable(true);
@@ -53,7 +54,9 @@ public class Login extends javax.swing.JFrame {
         String authority = String.valueOf(cbxAuthority.getSelectedItem().toString());
         String username = txtUsername.getText().trim();
         String password = String.valueOf(txtPassword.getPassword());
-        if(username.equals("admin") && password.equals("admin")) {
+        
+        //use for default mockup prod.
+        if(username.equals("default") && password.equals("default")) {
             dispose();
             ProductsTable products = new ProductsTable();
             products.setVisible(true);
@@ -61,7 +64,7 @@ public class Login extends javax.swing.JFrame {
             List list = UserService.getUserLogin(username, password, authority);
         
             if(list.size() > 0) {
-                User user = (User) list.get(0);
+                Users user = (Users) list.get(0);
                 ProductTable.currentUser = user;
                 System.out.println(user.toString());
                 String name = user.getFirstName() + " " + user.getLastName();
@@ -139,6 +142,7 @@ public class Login extends javax.swing.JFrame {
         logFramePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lblClose.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblClose.setPreferredSize(new java.awt.Dimension(3, 3));
         lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseMouseClicked(evt);
@@ -183,8 +187,8 @@ public class Login extends javax.swing.JFrame {
         logFramePanelLayout.setHorizontalGroup(
             logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logFramePanelLayout.createSequentialGroup()
-                .addGap(0, 293, Short.MAX_VALUE)
-                .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 303, Short.MAX_VALUE)
+                .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(logFramePanelLayout.createSequentialGroup()
                     .addGap(56, 56, 56)
@@ -199,12 +203,12 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(42, Short.MAX_VALUE)))
+                    .addContainerGap(60, Short.MAX_VALUE)))
         );
         logFramePanelLayout.setVerticalGroup(
             logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logFramePanelLayout.createSequentialGroup()
-                .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(logFramePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(logFramePanelLayout.createSequentialGroup()
@@ -237,22 +241,24 @@ public class Login extends javax.swing.JFrame {
         bgPanel.setLayout(bgPanelLayout);
         bgPanelLayout.setHorizontalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(bgPanelLayout.createSequentialGroup()
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
-                        .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bgPanelLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel3))
-                            .addComponent(cbxAuthority, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92))
                     .addGroup(bgPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(logFramePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(bgPanelLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(bgPanelLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(cbxAuthority, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(logFramePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         bgPanelLayout.setVerticalGroup(
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,14 +266,14 @@ public class Login extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(24, 24, 24)
+                        .addGroup(bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxAuthority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(96, Short.MAX_VALUE))
+                        .addContainerGap(159, Short.MAX_VALUE))
                     .addComponent(logFramePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -275,7 +281,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 651, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,6 +310,9 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
         CreateAccount createAccount = new CreateAccount(this);
         createAccount.setVisible(true);
+
+//        JOptionPane.showMessageDialog(null, "Please contact system admin for new registration", "UNABLE TO SIGNUP", 0);
+
     }//GEN-LAST:event_lblSignUpMouseClicked
     
     private void maxlength(){

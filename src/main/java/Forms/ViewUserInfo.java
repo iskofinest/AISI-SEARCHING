@@ -6,7 +6,7 @@
 package Forms;
 
 import Entities.ProductTable;
-import Entities.User;
+import Entities.Users;
 import Services.UserService;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
@@ -23,7 +23,7 @@ import javax.swing.text.JTextComponent;
 public class ViewUserInfo extends javax.swing.JFrame {
 
     
-    User user;
+    Users user;
     JTextComponent components[];
     private JFrame previousForm = null;
     

@@ -57,7 +57,12 @@ public class ProductsTable extends javax.swing.JFrame {
         initComponents();
         initializeData();
         printMenu.setIcon(new javax.swing.ImageIcon("extra-resources\\print.png"));
-        isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
+        setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
+        try {
+            isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
+        } catch(NullPointerException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
         System.out.println(ProductTable.currentUser.getAuthority());
         if(!isAdmin) {
             jMenu1.remove(btnAddProduct);
@@ -244,7 +249,7 @@ public class ProductsTable extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 204, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Industiral  Solutions Inc");
+        jLabel7.setText("Industrial  Solutions Inc");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -272,6 +277,7 @@ public class ProductsTable extends javax.swing.JFrame {
         txtSearchUnit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtSearchUnit.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        btnNext.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         btnNext.setText("NEXT");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,6 +285,7 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         });
 
+        btnPrevious.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         btnPrevious.setText("PREVIOUS");
         btnPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,11 +307,11 @@ public class ProductsTable extends javax.swing.JFrame {
                 .addComponent(txtSearchUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearchSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPrevious)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNext)
-                .addContainerGap())
+                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,7 +380,7 @@ public class ProductsTable extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         lblTime.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -450,9 +457,7 @@ public class ProductsTable extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
@@ -466,8 +471,8 @@ public class ProductsTable extends javax.swing.JFrame {
             bgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgPanelLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Options");
@@ -570,23 +575,6 @@ public class ProductsTable extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_printMenuActionPerformed
 
-    private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount()>1) {
-            JTable source = (JTable)evt.getSource();
-            int row = source.rowAtPoint( evt.getPoint());
-            setEnabled(false);
-            if(productsTableMode) {
-                ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), this);
-                viewProductInfo.setVisible(true);
-            } else {
-                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]), this);
-                viewUserInfo.setVisible(true);
-            }
-        }
-        
-    }//GEN-LAST:event_dataTableMouseClicked
-
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
         productsTableMode = true;
@@ -659,6 +647,22 @@ public class ProductsTable extends javax.swing.JFrame {
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }    
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()>1) {
+            JTable source = (JTable)evt.getSource();
+            int row = source.rowAtPoint( evt.getPoint());
+            setEnabled(false);
+            if(productsTableMode) {
+                ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), this);
+                viewProductInfo.setVisible(true);
+            } else {
+                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]), this);
+                viewUserInfo.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_dataTableMouseClicked
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }

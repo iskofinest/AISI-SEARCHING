@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class ProductTable {
     
-    public static User currentUser = new User();
+    public static Users currentUser = new Users();
 //    public static Session session;
     public static ProductsTable productsTableForm;
     public static Thread networkThread;

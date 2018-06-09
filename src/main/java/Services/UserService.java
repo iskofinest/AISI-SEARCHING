@@ -5,7 +5,7 @@
  */
 package Services;
 
-import Entities.User;
+import Entities.Users;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Criteria;
@@ -22,9 +22,9 @@ public class UserService {
     
     public static List getUserLogin(String username, String password) {
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq(User.USERNAME, username));
-        criteria.add(Restrictions.eq(User.PASSWORD, password));
+        Criteria criteria = session.createCriteria(Users.class);
+        criteria.add(Restrictions.eq(Users.USERNAME, username));
+        criteria.add(Restrictions.eq(Users.PASSWORD, password));
         List list = criteria.list();
 //        session.close();
         return list;
@@ -34,10 +34,10 @@ public class UserService {
         System.out.println("USERNAME: " + username);
         System.out.println("PASSWORD: " + password);
         System.out.println("AUTHORITY: " + authority);
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq(User.USERNAME, username));
-        criteria.add(Restrictions.eq(User.PASSWORD, password));
-        criteria.add(Restrictions.eq(User.AUTHORITY, authority));
+        Criteria criteria = session.createCriteria(Users.class);
+        criteria.add(Restrictions.eq(Users.USERNAME, username));
+        criteria.add(Restrictions.eq(Users.PASSWORD, password));
+        criteria.add(Restrictions.eq(Users.AUTHORITY, authority));
         List list = criteria.list();
         session.close();
         return list;
@@ -45,7 +45,7 @@ public class UserService {
     
     public static boolean createUser(String employee_id, String username, String password, String firstName, String middleName, String lastName, String authority, String email, String contact, String address) {
         try{
-            User user = new User(employee_id, username, 
+            Users user = new Users(employee_id, username, 
                     password, firstName, middleName, 
                     lastName, authority,
                 email, contact, address);
@@ -81,8 +81,8 @@ public class UserService {
         boolean exists = false;
         try {
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            Criteria criteria = session.createCriteria(User.class);
-            criteria.add(Restrictions.eq(User.USERNAME, username));
+            Criteria criteria = session.createCriteria(Users.class);
+            criteria.add(Restrictions.eq(Users.USERNAME, username));
             List list = criteria.list();
             session.close();
             if(list.size()>0) {
@@ -100,10 +100,10 @@ public class UserService {
         String hql = "FROM User";
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery(hql);
-        List<User> users = query.list();      // no ClassCastException here
+        List<Users> users = query.list();      // no ClassCastException here
         String[][] data = new String[users.size()][11];
         for(int i=0; i<users.size(); i++) {
-            User user = users.get(i);
+            Users user = users.get(i);
             data[i][0] = user.getEmployee_id();
             data[i][1] = user.getUsername();
             data[i][2] = user.getAuthority();
@@ -119,15 +119,15 @@ public class UserService {
         return data;
     }
 
-    public static User getUserBy(int userId) {
-        User user = new User();
+    public static Users getUserBy(int userId) {
+        Users user = new Users();
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        user = (User) session.get(User.class, userId);
+        user = (Users) session.get(Users.class, userId);
         session.close();
         return user;
     }
 
-    public static boolean updateUser(User user) {
+    public static boolean updateUser(Users user) {
         boolean updated = false;
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
@@ -143,7 +143,7 @@ public class UserService {
         return updated;
     }
 
-    public static boolean deleteUser(User user) {
+    public static boolean deleteUser(Users user) {
         boolean deleted = false;
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
@@ -161,7 +161,7 @@ public class UserService {
 
     public static boolean updateUserPassword(int id, String newPassword) {
         boolean passwordChanged = false;
-        User user = getUserBy(id);
+        Users user = getUserBy(id);
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
             user.setPassword(newPassword);
