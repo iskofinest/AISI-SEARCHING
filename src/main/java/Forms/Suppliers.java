@@ -173,15 +173,19 @@ public class Suppliers extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
+//        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+//        if(confirmation == JOptionPane.YES_OPTION){ 
+//            this.dispose();
+//            previousForm.setEnabled(true);
+//            previousForm.setVisible(true);
+//            previousForm.requestFocus();
+//        }else{
+//            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//        }
             this.dispose();
             previousForm.setEnabled(true);
             previousForm.setVisible(true);
             previousForm.requestFocus();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

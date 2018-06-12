@@ -44,9 +44,9 @@ Contributor(s):
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.8.42:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>-->
-    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.48:3306/absoluteindustrialsolutionsincorporated?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">development</property>
-    <property name="hibernate.connection.password">development</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password"></property>
 <!--    <property name="hibernate.connection.url">jdbc:mysql://192.168.8.112:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">aisidata</property>
     <property name="hibernate.connection.password">password!1</property>-->
@@ -59,6 +59,7 @@ Contributor(s):
   
    <!--Echo all executed SQL to stdout--> 
   <property name="show_sql">true</property>
+  
   <!--<property name="hbm2ddl.auto">update</property>-->
   <property name="hbm2ddl.auto">update</property>
   

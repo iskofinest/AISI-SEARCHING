@@ -138,6 +138,8 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("PRODUCT DATE:  ");
 
+        txtProductDate.setDateFormatString("MMMM-dd-yyyy");
+
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel21.setText("QTY:  ");

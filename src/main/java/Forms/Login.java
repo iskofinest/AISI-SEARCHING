@@ -280,7 +280,7 @@ public class Login extends javax.swing.JFrame {
         
         int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to exit program", "Warning",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(confirmation == 0){
-            this.dispose();
+            System.exit(0);
         }else{
             setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         }

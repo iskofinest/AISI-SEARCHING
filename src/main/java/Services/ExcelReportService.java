@@ -7,6 +7,7 @@ package Services;
 
 import Entities.Product;
 import Entities.Supplier;
+//import Mapper.ExcelReportServiceMapper;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,14 +31,13 @@ import org.apache.poi.ss.util.CellRangeAddress;
  *
  * @author IPC
  */
-public class ExcelReportService {
+public class ExcelReportService{
     
     static String[] columns = new String[]{"REFERENCE", "ITEM", "DESCRIPTION", "BRAND", "MODEL", 
                 "QTY / Unit" , "QUOTATION DATE", "ORIGINAL PRICE", "AGENT", "SUPPLIER NAME",
             "CONTACT PERSON","CONTACT DETAILS"};
     
     public static void printProducts(String filePath, String[][] productData) {
-        
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Product Report Sheet");
         sheet.getPrintSetup().setLandscape(true);

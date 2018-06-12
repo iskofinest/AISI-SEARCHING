@@ -30,6 +30,8 @@ public class ProductService {
     
 //    static Session session;
     
+    private final static Logger logger = Logger.getLogger(ProductService.class.getName());
+    
     public static String[][] getAllProducts(int start, int max) {
         String hql = "FROM Product";
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
@@ -39,31 +41,23 @@ public class ProductService {
         List<Product> products = query.list();      // no ClassCastException here
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
-            Product product = products.get(i);
-            data[i][0] = product.getTransaction().getReferenceNumber();
-            data[i][1] = product.getName();
-            data[i][2] = product.getDescription();
-            data[i][3] = product.getBrand();
-            data[i][4] = product.getModel();
-            data[i][5] = product.getQuantity() + " "+ product.getUnit();
-            data[i][6] = product.getProduct_date().toString();
-            data[i][7] = product.getOriginalPrice().toString();
-            data[i][8] = product.getAgent();
-            data[i][12] = product.getId() + "";
             try{
+                Product product = products.get(i);
+                data[i][0] = product.getTransaction().getReferenceNumber();
+                data[i][1] = product.getName();
+                data[i][2] = product.getDescription();
+                data[i][3] = product.getBrand();
+                data[i][4] = product.getModel();
+                data[i][5] = product.getQuantity() + " "+ product.getUnit();
+                data[i][6] = product.getProduct_date().toString();
+                data[i][7] = product.getOriginalPrice().toString();
+                data[i][8] = product.getAgent();
+                data[i][12] = product.getId() + "";  
                 data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-            } catch(ArrayIndexOutOfBoundsException ex) {
-                
-            }
-            try{
                 data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
-            } catch(ArrayIndexOutOfBoundsException ex) {
-                
-            }
-            try{
                 data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
-            } catch(ArrayIndexOutOfBoundsException ex) {
-                
+            }catch(ArrayIndexOutOfBoundsException ex){
+                logger.log(Level.SEVERE, ex.toString());
             }
         }
         return data;

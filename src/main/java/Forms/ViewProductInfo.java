@@ -292,6 +292,8 @@ public class ViewProductInfo extends javax.swing.JFrame {
         txtBrand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtBrand.setToolTipText("");
 
+        txtProductDate.setDateFormatString("MMMM-dd-yyyy");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(

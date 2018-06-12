@@ -74,7 +74,7 @@ public class CreateAccount extends javax.swing.JFrame {
     //void confirmation password
     private boolean isPasswordMatched(){
          boolean confirm= false;
-          if(Arrays.equals(txtPassword.getPassword(), txtConfirmPassword.getPassword())){
+          if(!String.valueOf(txtPassword.getPassword()).equals(txtConfirmPassword.getPassword())){
               confirm = true;
               consolePrint("tama yung password");
           }else{
@@ -82,6 +82,12 @@ public class CreateAccount extends javax.swing.JFrame {
               consolePrint("Error yung password.");
           }
           return confirm;
+    }
+    
+    
+    //mobile number validation
+    public static boolean validPhoneNumber(String mobile){
+        return mobile.charAt(0) == '0' && mobile.length() == 11 && mobile.matches("[0-9]+");
     }
     
     private void prepareForm() {
@@ -507,7 +513,7 @@ public class CreateAccount extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 204, 0));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Industiral  Solutions Inc");
+        jLabel4.setText("Industrial   Solutions Inc");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -612,7 +618,9 @@ public class CreateAccount extends javax.swing.JFrame {
             logger.log(Level.SEVERE, "email not valid.", validEmail);
         } else if(!isPasswordMatched()) {
             JOptionPane.showMessageDialog(null, "Password not matched!!", "UNMATCHED PASSWORD", 0);
-        } else if(UserService.isUsernameExists(txtUsername.getText().trim())){
+        }else if(!validPhoneNumber(txtContactNumber.getText())) {
+            JOptionPane.showMessageDialog(null, "Mobile Number invalid.", "Invalid Phone Number", 0);
+        }else if(UserService.isUsernameExists(txtUsername.getText().trim())){
             JOptionPane.showMessageDialog(null, "Username already exists", "USERNAME EXISTS", 0);
         } else {
             if(JOptionPane.showConfirmDialog(null, "Are you sure you want to create this user?", "CONFIRM CREATE USER", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {

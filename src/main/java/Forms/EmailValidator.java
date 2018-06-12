@@ -24,7 +24,6 @@ public class EmailValidator {
     //global boolean for email validation
     public static boolean validateEmail(String email){
         boolean status = false;
-        
         //regex for all invalid characters of email
         String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\""
             + "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")"
@@ -35,13 +34,10 @@ public class EmailValidator {
          
         //pattern
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
-    
         //matcher
         Matcher matcher = pattern.matcher(email);
-        
         //status if match in regex true or false;
         status = (matcher.matches())? true : false;
-       
         return status;
         
     }

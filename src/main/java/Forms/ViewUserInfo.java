@@ -62,16 +62,22 @@ public class ViewUserInfo extends javax.swing.JFrame {
     
     // initialize fields with product passed
     private void initializeData() {
-        lblName.setText(user.getFirstName() + " " + user.getMiddleName().charAt(0) + "." + user.getLastName());
-        txtEmployeeID.setText(user.getEmployee_id());
-        txtFirstName.setText(user.getFirstName());
-        txtMiddleName.setText(user.getMiddleName());
-        txtLastName.setText(user.getLastName());
-        txtAddress.setText(user.getAddress());
-        txtUserRole.setSelectedIndex(((user.getAuthority().equals("ADMIN"))?1:0));
-        txtUsername.setText(user.getUsername());
-        txtEmail.setText(user.getEmail());
-        txtContact.setText(user.getContact());
+        try{
+            lblName.setText(user.getFirstName() + " " + user.getMiddleName().charAt(0) + "." + user.getLastName());
+            txtEmployeeID.setText(user.getEmployee_id());
+            txtFirstName.setText(user.getFirstName());
+            txtMiddleName.setText(user.getMiddleName());
+            txtLastName.setText(user.getLastName());
+            txtAddress.setText(user.getAddress());
+            txtUserRole.setSelectedIndex(((user.getAuthority().equals("ADMIN"))?1:0));
+            txtUsername.setText(user.getUsername());
+            txtEmail.setText(user.getEmail());
+            txtContact.setText(user.getContact());
+            
+        }catch(StringIndexOutOfBoundsException ex){
+            System.err.println(ex);
+        }
+
     }
     
     
@@ -480,7 +486,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(UserService.deleteUser(user)) {
                 JOptionPane.showMessageDialog(null, lblName.getText() + "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
                 ProductTable.productsTableForm.reloadTable();

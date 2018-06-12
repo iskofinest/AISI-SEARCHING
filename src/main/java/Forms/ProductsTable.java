@@ -7,6 +7,7 @@ package Forms;
 
 //<editor-fold desc="IMPORTS" defaultstate="collapsed">
 import Entities.ProductTable;
+//import Mapper.ExcelReportServiceMapper;
 //import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
@@ -58,6 +59,7 @@ public class ProductsTable extends javax.swing.JFrame {
         initializeData();
         printMenu.setIcon(new javax.swing.ImageIcon("extra-resources\\print.png"));
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
+        btnLogout.setIcon(new javax.swing.ImageIcon("extra-resources\\iconLogOut.png"));
         try {
             isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
         } catch(NullPointerException ex) {
@@ -67,6 +69,7 @@ public class ProductsTable extends javax.swing.JFrame {
         if(!isAdmin) {
             jMenu1.remove(btnAddProduct);
             jMenuBar1.remove(btnView);
+            btnAddAccountUser.setVisible(isAdmin);
         }
     }
 
@@ -78,7 +81,7 @@ public class ProductsTable extends javax.swing.JFrame {
     // initialize custom changes
     private void initializeData() {
 //        setTime().start();  // FOR DATE AND TIME DISPLAY
-        lblCurrentUser.setText("LOGGED IN AS: " +   // FOR CURRENT USER DISPLAY 
+        lblCurrentUser.setText("Logged in as: " +   // FOR CURRENT USER DISPLAY 
                 ProductTable.currentUser.getFirstName() + " " + ProductTable.currentUser.getLastName());
         reloadTable();  // FOR UPDATING THE TABLE
         ProductTable.productsTableForm = this;   // SAVING THIS FORM TO THE CONSTANT HANDLER
@@ -193,6 +196,11 @@ public class ProductsTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        myUsersModal = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        UsersTable = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         bgPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -221,14 +229,54 @@ public class ProductsTable extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btnAddProduct = new javax.swing.JMenuItem();
+        btnAddAccountUser = new javax.swing.JMenuItem();
         printMenu = new javax.swing.JMenuItem();
         btnLogout = new javax.swing.JCheckBoxMenuItem();
-        btnAddProduct1 = new javax.swing.JMenuItem();
         btnView = new javax.swing.JMenu();
         btnProductView = new javax.swing.JMenuItem();
         btnUserView = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        UsersTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(UsersTable);
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout myUsersModalLayout = new javax.swing.GroupLayout(myUsersModal.getContentPane());
+        myUsersModal.getContentPane().setLayout(myUsersModalLayout);
+        myUsersModalLayout.setHorizontalGroup(
+            myUsersModalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+            .addGroup(myUsersModalLayout.createSequentialGroup()
+                .addGap(339, 339, 339)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap(488, Short.MAX_VALUE))
+        );
+        myUsersModalLayout.setVerticalGroup(
+            myUsersModalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(myUsersModalLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(myUsersModalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(25, 25, 25))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PRODUCTS TABLE");
         setExtendedState(6);
         setSize(new java.awt.Dimension(0, 0));
@@ -479,6 +527,7 @@ public class ProductsTable extends javax.swing.JFrame {
 
         jMenu1.setText("Options");
 
+        btnAddProduct.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         btnAddProduct.setText("Add Product");
         btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -486,6 +535,15 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         });
         jMenu1.add(btnAddProduct);
+
+        btnAddAccountUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        btnAddAccountUser.setText("Add Account User");
+        btnAddAccountUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddAccountUserActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btnAddAccountUser);
 
         printMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         printMenu.setText("Print Table Report");
@@ -496,6 +554,7 @@ public class ProductsTable extends javax.swing.JFrame {
         });
         jMenu1.add(printMenu);
 
+        btnLogout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         btnLogout.setText("Log Out");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -503,14 +562,6 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         });
         jMenu1.add(btnLogout);
-
-        btnAddProduct1.setText("Add User");
-        btnAddProduct1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddProduct1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(btnAddProduct1);
 
         jMenuBar1.add(jMenu1);
 
@@ -627,7 +678,7 @@ public class ProductsTable extends javax.swing.JFrame {
             }
         }
         if(searching){
-                searchProducts();
+            searchProducts();
         } else {
             reloadTable();
         }
@@ -650,7 +701,7 @@ public class ProductsTable extends javax.swing.JFrame {
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to Logout your account?","CONFIRM LOGOUT",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
+        if(confirmation == 0){ 
             this.dispose();
             Login login = new Login();
             login.setVisible(true);
@@ -679,12 +730,12 @@ public class ProductsTable extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dataTableMouseClicked
 
-    private void btnAddProduct1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProduct1ActionPerformed
+    private void btnAddAccountUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAccountUserActionPerformed
         // TODO add your handling code here:     
         this.dispose();
         CreateAccount createAccount = new CreateAccount(this);
         createAccount.setVisible(true);
-    }//GEN-LAST:event_btnAddProduct1ActionPerformed
+    }//GEN-LAST:event_btnAddAccountUserActionPerformed
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
     }
@@ -732,9 +783,10 @@ public class ProductsTable extends javax.swing.JFrame {
     
     //<editor-fold desc="OBJECT DECLARATIONS" defaultstate="collapsed">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable UsersTable;
     private javax.swing.JPanel bgPanel;
+    private javax.swing.JMenuItem btnAddAccountUser;
     private javax.swing.JMenuItem btnAddProduct;
-    private javax.swing.JMenuItem btnAddProduct1;
     private javax.swing.JCheckBoxMenuItem btnLogout;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
@@ -742,6 +794,8 @@ public class ProductsTable extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnUserView;
     private javax.swing.JMenu btnView;
     private javax.swing.JTable dataTable;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -758,8 +812,10 @@ public class ProductsTable extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCurrentUser;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JDialog myUsersModal;
     private javax.swing.JMenuItem printMenu;
     private javax.swing.JTextField txtSearchBrand;
     private javax.swing.JTextField txtSearchItemName;

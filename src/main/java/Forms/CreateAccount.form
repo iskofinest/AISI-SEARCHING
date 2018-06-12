@@ -667,7 +667,7 @@
               <Color blue="0" green="cc" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Industiral  Solutions Inc"/>
+            <Property name="text" type="java.lang.String" value="Industrial   Solutions Inc"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
