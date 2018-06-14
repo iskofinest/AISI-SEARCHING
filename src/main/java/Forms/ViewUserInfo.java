@@ -132,7 +132,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -486,9 +486,9 @@ public class ViewUserInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+" "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(UserService.deleteUser(user)) {
-                JOptionPane.showMessageDialog(null, lblName.getText() + "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+                JOptionPane.showMessageDialog(null, lblName.getText()+" "+ "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
                 ProductTable.productsTableForm.reloadTable();
                 ProductTable.productsTableForm.setEnabled(true);
                 ProductTable.productsTableForm.requestFocus();

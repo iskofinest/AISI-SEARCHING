@@ -226,15 +226,14 @@ public class ProductService {
         boolean saved = false;
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            
-            Query query = session.createQuery("delete from product_supplier where product_id =" + product.getId());
-            query.executeUpdate();
-
+//            Query query = session.createQuery("update Product set product = :prod where product_id =" + product.getId());
+//            query.executeUpdate()
             Transaction tx = session.beginTransaction();
             session.update(product);
             tx.commit();
             session.close();
             saved = true;
+            
         } catch(Exception ex) {
             saved = false;
             System.out.println(ex.toString());
@@ -358,20 +357,25 @@ public class ProductService {
         session.close();
         String[][] data = new String[products.size()][13];
         for(int i=0; i<products.size(); i++) {
-            Product product = products.get(i);
-            data[i][0] = product.getTransaction().getReferenceNumber();
-            data[i][1] = product.getName();
-            data[i][2] = product.getDescription();
-            data[i][3] = product.getBrand();
-            data[i][4] = product.getModel();
-            data[i][5] = product.getQuantity() + " "+ product.getUnit();
-            data[i][6] = product.getProduct_date().toString();
-            data[i][7] = product.getOriginalPrice().toString();
-            data[i][8] = product.getAgent();
-            data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-            data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
-            data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
-            data[i][12] = product.getId() + "";
+            try{
+                Product product = products.get(i);
+                data[i][0] = product.getTransaction().getReferenceNumber();
+                data[i][1] = product.getName();
+                data[i][2] = product.getDescription();
+                data[i][3] = product.getBrand();
+                data[i][4] = product.getModel();
+                data[i][5] = product.getQuantity() + " "+ product.getUnit();
+                data[i][6] = product.getProduct_date().toString();
+                data[i][7] = product.getOriginalPrice().toString();
+                data[i][8] = product.getAgent();
+                data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
+                data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+                data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
+                data[i][12] = product.getId() + ""; 
+            }catch(ArrayIndexOutOfBoundsException ex){
+                System.err.println(ex);
+            }
+            
         }
         return data;
     }
@@ -417,4 +421,6 @@ public class ProductService {
         return count;
     }
     
+    
+  
 }

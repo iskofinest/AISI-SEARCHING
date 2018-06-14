@@ -8,6 +8,7 @@ package Services;
 import Entities.Product;
 import Entities.Supplier;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -60,5 +61,13 @@ public class SupplierService {
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
         return session.createQuery("from Supplier").list(); 
     }
+    
+      public static List<Supplier> searchSupplier(String supplier){
+            String hql = "select * from supplier where name like '%"+ supplier +"%'";
+            Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery(hql).list();
+    }
+    
+    
     
 }

@@ -6,16 +6,23 @@
 package Forms;
 
 //<editor-fold desc="IMPORTS" defaultstate="collapsed">
+import Entities.Product;
 import Entities.ProductTable;
+import Entities.Supplier;
+import Entities.Transactions;
 //import Mapper.ExcelReportServiceMapper;
 //import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.UserService;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -24,6 +31,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
 //</editor-fold>
 
 /**
@@ -34,6 +42,7 @@ public class ProductsTable extends javax.swing.JFrame {
 
     //<editor-fold desc="VARIABLE DECLARATIONS" defaultstate="collapsed">
     JTextField searchFields[];
+    JTextComponent [] textField;
     String month[] = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
     String day[] = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
     String[] columns = new String[]{"REFERENCE", "ITEM", "DESCRIPTION", "BRAND", "MODEL", 
@@ -60,6 +69,8 @@ public class ProductsTable extends javax.swing.JFrame {
         printMenu.setIcon(new javax.swing.ImageIcon("extra-resources\\print.png"));
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
         btnLogout.setIcon(new javax.swing.ImageIcon("extra-resources\\iconLogOut.png"));
+        btnAddProduct.setIcon(new javax.swing.ImageIcon("extra-resources\\addproduct.png"));
+        btnAddAccountUser.setIcon(new javax.swing.ImageIcon("extra-resources\\usersicon.png"));
         try {
             isAdmin = ProductTable.currentUser.getAuthority().equals("ADMIN");
         } catch(NullPointerException ex) {
@@ -496,6 +507,9 @@ public class ProductsTable extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 dataTableMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dataTableMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(dataTable);
 
@@ -736,9 +750,16 @@ public class ProductsTable extends javax.swing.JFrame {
         CreateAccount createAccount = new CreateAccount(this);
         createAccount.setVisible(true);
     }//GEN-LAST:event_btnAddAccountUserActionPerformed
-    private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
-    }
+
+    private void dataTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseEntered
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_dataTableMouseEntered
+    
+    
+//    private void setIcon() {
+//        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("absIcon.png")));
+//    }
     private void disableResizeFrame(javax.swing.JFrame frame) {
        frame.setResizable(false);
     }

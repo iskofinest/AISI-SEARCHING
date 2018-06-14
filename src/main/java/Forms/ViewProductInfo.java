@@ -13,6 +13,7 @@ import Entities.Transactions;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.SupplierService;
+import java.awt.Color;
 import java.io.File;
 import java.math.BigDecimal;
 import javax.swing.JComponent;
@@ -147,7 +148,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -205,7 +206,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         btnMoreSupplier.setBackground(new java.awt.Color(0, 0, 0));
         btnMoreSupplier.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMoreSupplier.setForeground(new java.awt.Color(0, 153, 0));
+        btnMoreSupplier.setForeground(new java.awt.Color(0, 204, 0));
         btnMoreSupplier.setText("View More Supplier");
         btnMoreSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,8 +237,16 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         btnPrint.setBackground(new java.awt.Color(0, 0, 0));
         btnPrint.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnPrint.setForeground(new java.awt.Color(0, 153, 51));
+        btnPrint.setForeground(new java.awt.Color(0, 204, 0));
         btnPrint.setText("Print");
+        btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPrintMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnPrintMouseExited(evt);
+            }
+        });
         btnPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrintActionPerformed(evt);
@@ -246,8 +255,16 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         btnEdit.setBackground(new java.awt.Color(0, 0, 0));
         btnEdit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(0, 153, 51));
+        btnEdit.setForeground(new java.awt.Color(51, 255, 0));
         btnEdit.setText("Edit");
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+        });
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -260,8 +277,16 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         btnDelete.setBackground(new java.awt.Color(0, 0, 0));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(0, 153, 0));
+        btnDelete.setForeground(new java.awt.Color(51, 204, 0));
         btnDelete.setText("Delete");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseExited(evt);
+            }
+        });
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -499,22 +524,22 @@ public class ViewProductInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete"+" "+"'"+lblItem.getText()+"'"+" "+"product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
             if(ProductService.deleteProduct(product)) {
 //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
 //                NetworkHandlerService.serverSendMessage("reload");
 //            } else {
 //                NetworkHandlerService.clientSendMessage("reload");
 //            }
-            JOptionPane.showMessageDialog(null, lblItem.getText() + "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+            JOptionPane.showMessageDialog(null, lblItem.getText()+" "+ "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
             ProductTable.productsTableForm.reloadTable();
             ProductTable.productsTableForm.setEnabled(true);
             ProductTable.productsTableForm.setVisible(true);
             ProductTable.productsTableForm.requestFocus();
             dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, lblItem.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
-        }
+            } else {
+                JOptionPane.showMessageDialog(null, lblItem.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+            }
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -550,6 +575,44 @@ public class ViewProductInfo extends javax.swing.JFrame {
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
+        // TODO add your handling code here:
+        btnPrint.setBackground(Color.WHITE);
+        btnPrint.setForeground(Color.BLACK);
+        
+    }//GEN-LAST:event_btnPrintMouseEntered
+
+    private void btnPrintMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseExited
+        // TODO add your handling code here:
+        btnPrint.setBackground(Color.BLACK);
+        btnPrint.setForeground(Color.GREEN);
+    }//GEN-LAST:event_btnPrintMouseExited
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        // TODO add your handling code here:
+        btnEdit.setBackground(Color.WHITE);
+        btnEdit.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        // TODO add your handling code here:
+        btnEdit.setBackground(Color.BLACK);
+        btnEdit.setForeground(Color.GREEN);
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
+        // TODO add your handling code here:
+        btnDelete.setBackground(Color.WHITE);
+        btnDelete.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnDeleteMouseEntered
+
+    private void btnDeleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseExited
+        // TODO add your handling code here:
+        btnDelete.setBackground(Color.BLACK);
+        btnDelete.setForeground(Color.GREEN);
+        
+    }//GEN-LAST:event_btnDeleteMouseExited
 
     /**
      * @param args the command line arguments
