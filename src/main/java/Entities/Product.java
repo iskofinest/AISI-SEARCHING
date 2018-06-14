@@ -6,6 +6,7 @@
 package Entities;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,7 +32,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable{
     
     
     public static final String NAME = "name";

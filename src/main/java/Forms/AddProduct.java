@@ -19,9 +19,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.JTextComponent;
-
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
  *
  * @author IPC
@@ -38,18 +39,25 @@ public class AddProduct extends javax.swing.JFrame {
         JDateChooser chooser = new JDateChooser();
         JTextFieldDateEditor txtProductDate = (JTextFieldDateEditor) chooser.getDateEditor();
         txtProductDate.setEditable(false);
-        fillCombo();
-//         btnAddAccountUser.setIcon(new javax.swing.ImageIcon("extra-resources\\usersicon.png"));
+//        AutoCompleteDecorator.decorate(txtSupplierName);
+        
     }
 
     AddProduct(javax.swing.JFrame previousForm) {
         this.previousForm = previousForm;
         initComponents();
+        AutoCompleteDecorator.decorate(txtSupplierName);
         txtSupplierName.setEditable(true);
-        List<Supplier> list = SupplierService.findAll();
-        for(Supplier value : list) {
-            txtSupplierName.addItem(value.getName());
+//        List<Supplier> list = SupplierService.findAll();
+//        for(Supplier value : list) {
+//            txtSupplierName.addItem(value.getName());
+//        }
+        
+        List<Supplier> list = SupplierService.searchSupplierNames();
+        for(int i = 0; i< list.size(); i ++){
+            txtSupplierName.setModel(new DefaultComboBoxModel(list.toArray()));
         }
+        
     }
 
     /**
@@ -283,14 +291,6 @@ public class AddProduct extends javax.swing.JFrame {
         jLabel25.setText("CONTACT DETAILS:  ");
 
         txtSupplierName.setEditable(true);
-        txtSupplierName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtSupplierNameKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSupplierNameKeyTyped(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -568,31 +568,14 @@ public class AddProduct extends javax.swing.JFrame {
         btnBack.setForeground(Color.GREEN);
     }//GEN-LAST:event_btnBackMouseExited
 
-    private void txtSupplierNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSupplierNameKeyPressed
-        // TODO add your handling code here:
-        List<Supplier> list = SupplierService.searchSupplier(txtSupplierName.getSelectedItem().toString());
-        txtSupplierName.addItem(list.toString());
-    
-    }//GEN-LAST:event_txtSupplierNameKeyPressed
-
-    private void txtSupplierNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSupplierNameKeyTyped
-        // TODO add your handling code here:
-        List<Supplier> list = SupplierService.searchSupplier(txtSupplierName.getSelectedItem().toString());
-        for (Supplier supplier : list) {
-            txtSupplierName.addItem(supplier.getName());
+    private void fillComboBox(){
+        AutoCompleteDecorator.decorate(txtSupplierName);
+        
+        List<Supplier> list = SupplierService.searchSupplierNames();
+        for(int i = 0; i< list.size(); i ++){
+            txtSupplierName.setModel(new DefaultComboBoxModel(list.toArray()));
         }
-       
-    }//GEN-LAST:event_txtSupplierNameKeyTyped
-
-    private void fillCombo(){   
-        try {
-               List<Supplier> list = SupplierService.searchSupplier(txtSupplierName.getSelectedItem().toString());
-                for (Supplier supplier : list) {
-                    txtSupplierName.addItem(supplier.getName());
-                }
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+        
     }
     
     /**

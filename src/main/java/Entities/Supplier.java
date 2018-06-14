@@ -7,6 +7,7 @@ package Entities;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -27,7 +28,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="supplier")
-public class Supplier {
+public class Supplier implements Serializable{
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);

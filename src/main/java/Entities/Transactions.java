@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import javax.persistence.Table;
 @Entity
 //@Indexed
 @Table(name="transaction")
-public class Transactions {
+public class Transactions implements Serializable{
     
     public static final String REFERENCE_NUMBER = "referenceNumber";
     

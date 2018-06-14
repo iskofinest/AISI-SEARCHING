@@ -62,10 +62,11 @@ public class SupplierService {
         return session.createQuery("from Supplier").list(); 
     }
     
-      public static List<Supplier> searchSupplier(String supplier){
-            String hql = "select * from supplier where name like '%"+ supplier +"%'";
+      public static List<Supplier> searchSupplierNames(){
+          
+//            String hql = "select name from supplier";
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery(hql).list();
+            return session.createQuery("select name from Supplier").list();
     }
     
     
