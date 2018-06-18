@@ -93,6 +93,17 @@ public class Product implements Serializable{
     @Column(name="selling_price")
     private BigDecimal sellingPrice;
     
+    @Column(name="currency")
+    private String currency;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+    
     @Column(name="agent")
     private String agent;
     
@@ -120,7 +131,7 @@ public class Product implements Serializable{
     
     public Product(){}
 
-    public Product(String name, String category, String description, String brand, String model, int quantity, String unit, Date product_date, String factor, BigDecimal originalPrice, BigDecimal sellingPrice, String agent) {
+    public Product(String name, String category, String description, String brand, String model, int quantity, String unit, Date product_date, String factor, BigDecimal originalPrice, BigDecimal sellingPrice, String currency, String agent) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -132,6 +143,19 @@ public class Product implements Serializable{
         this.factor = factor;
         this.originalPrice = originalPrice;
         this.sellingPrice = sellingPrice;
+        this.currency = currency;
+        this.agent = agent;
+    }    
+    public Product(String name, String description, String brand, String model, int quantity, String unit, Date product_date, BigDecimal originalPrice, String currency, String agent) {
+        this.name = name;
+        this.description = description;
+        this.brand = brand;
+        this.model = model;
+        this.quantity = quantity;
+        this.unit = unit;
+        this.product_date = product_date;
+        this.originalPrice = originalPrice;
+        this.currency = currency;
         this.agent = agent;
     }    
 

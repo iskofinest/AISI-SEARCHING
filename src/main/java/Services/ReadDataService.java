@@ -377,7 +377,7 @@ public class ReadDataService {
                 Transactions transaction = new Transactions();
                 transaction.setReferenceNumber(reference);
                 supplier = new Supplier(supplierName, contactPerson, contactDetails);
-                product = new Product(name, category, description, brand, model, quantity, unit, product_date, factor, originalPrice, sellingPrice, agent);
+                product = new Product(name, category, description, brand, model, quantity, unit, product_date, factor, originalPrice, sellingPrice,"",  agent);
                 TransactionServices.saveTransaction(transaction, product, supplier);
 //                Set<Supplier> suppliers = product.getSupplier();
 //                suppliers.add(supplier);
@@ -615,7 +615,7 @@ public class ReadDataService {
                 Transactions transaction = new Transactions();
                 transaction.setReferenceNumber(reference);
                 supplier = new Supplier(supplierName, contactPerson, contactDetails);
-                product = new Product(name, category, description, brand, model, quantity, unit, product_date, factor, originalPrice, sellingPrice, agent);
+                product = new Product(name, category, description, brand, model, quantity, unit, product_date, factor, originalPrice, sellingPrice, "",  agent);
                 TransactionServices.saveTransaction(transaction, product, supplier);
 //                Set<Supplier> suppliers = product.getSupplier();
 //                suppliers.add(supplier);

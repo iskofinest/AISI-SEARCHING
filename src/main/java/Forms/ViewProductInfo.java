@@ -16,10 +16,13 @@ import Services.SupplierService;
 import java.awt.Color;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -32,6 +35,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
     Product product;
     JComponent components[];
     private JFrame previousForm = null;
+    String[] currencies = {"PHP", "USD", "EUR", "JPY", "GBP", "KRW", "SGD", "GBP", "CHF", "CAD", "AUD", "NZD", "ZAR"};
     
     /**
      * Creates new form ViewProduct
@@ -42,6 +46,8 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
     ViewProductInfo(int productID, JFrame previousForm) {
         initComponents();
+        AutoCompleteDecorator.decorate(txtCurrency);
+        txtCurrency.setModel(new DefaultComboBoxModel(currencies));
         this.previousForm = previousForm;
         components = new JComponent[]{txtReference, txtItem, txtBrand, txtModel, txtQuantity, txtProductDate, 
             txtOrigPrice, txtAgent, txtSupplier, txtDescription};
@@ -49,11 +55,17 @@ public class ViewProductInfo extends javax.swing.JFrame {
             isAdmin = true;
         }
         txtSupplier.setEditable(false);
-        enableFields(false);    // disable all fields by default
         product = ProductService.getProduct(productID);
+        System.out.println("contains: " + Arrays.asList(currencies).contains("PHP"));
+        System.out.println("CURRENCY: " + product.getCurrency());
+        if(Arrays.asList(currencies).contains(product.getCurrency())) {
+            System.out.println("contains: " + Arrays.asList(currencies).contains(product.getCurrency()));
+            txtCurrency.setSelectedItem(product.getCurrency());
+        } else txtCurrency.setSelectedIndex(-1);
         btnDelete.setEnabled(isAdmin);
         btnEdit.setEnabled(isAdmin);
         initializeData();
+        enableFields(false);    // disable all fields by default
     }
     
     /*****************************************CUSTOME METHODS*****************************************/
@@ -70,6 +82,9 @@ public class ViewProductInfo extends javax.swing.JFrame {
         txtProductDate.setEnabled(enability);
         txtOrigPrice.setEditable(enability);
         txtAgent.setEditable(enability);
+        txtCurrency.setEditable(enability);
+        txtCurrency.setEnabled(enability);
+        
     }
     
     // initialize fields with product passed
@@ -136,6 +151,8 @@ public class ViewProductInfo extends javax.swing.JFrame {
         txtUnit = new javax.swing.JTextField();
         txtBrand = new javax.swing.JTextField();
         txtProductDate = new com.toedter.calendar.JDateChooser();
+        jLabel16 = new javax.swing.JLabel();
+        txtCurrency = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -182,7 +199,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel13.setText("ORIG PRICE:  ");
+        jLabel13.setText("PRICE:  ");
 
         txtOrigPrice.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtOrigPrice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -319,6 +336,12 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
         txtProductDate.setDateFormatString("MMMM-dd-yyyy");
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel16.setText("CURRENCY:  ");
+
+        txtCurrency.setEditable(true);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -329,7 +352,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
                     .addComponent(lblItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -359,20 +382,30 @@ public class ViewProductInfo extends javax.swing.JFrame {
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(txtCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(158, 158, 158)))
+                                        .addGap(156, 156, 156)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtOrigPrice, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtAgent, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtSupplier, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnMoreSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                                    .addComponent(txtProductDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(btnMoreSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                                    .addComponent(txtProductDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtOrigPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -392,7 +425,9 @@ public class ViewProductInfo extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtItem, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtOrigPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -503,6 +538,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
                 product.setDescription(txtDescription.getText());
                 product.setProduct_date(txtProductDate.getDate());
                 product.setOriginalPrice(BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText())));
+                product.setCurrency(txtCurrency.getSelectedItem().toString());
                 product.setAgent(txtAgent.getText());
                 if(ProductService.updateProduct(product)) {
 //                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
@@ -662,6 +698,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -673,6 +710,7 @@ public class ViewProductInfo extends javax.swing.JFrame {
     private javax.swing.JLabel lblItem;
     private javax.swing.JTextField txtAgent;
     private javax.swing.JTextField txtBrand;
+    private javax.swing.JComboBox<String> txtCurrency;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtItem;
     private javax.swing.JTextField txtModel;

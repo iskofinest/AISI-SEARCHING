@@ -8,10 +8,12 @@ package Forms;
 //import com.sun.istack.internal.logging.Logger;
 import Entities.ProductTable;
 import Entities.Users;
+import Services.JSONService;
 import Services.UserService;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -26,6 +28,13 @@ public class Login extends javax.swing.JFrame {
 //    private final static java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CreateAccount.class.getName());
     public Login() {
         initComponents();
+        
+//        JSONObject json = JSONService.getJSONFile();
+//        System.out.println("JSONFILE: " + json.toString());
+//        System.out.println("URL: " + json.get("hibernate.connection.url"));
+//        System.out.println("USERNAME: " + json.get("hibernate.connection.username"));
+//        System.out.println("PASSWORD: " + json.get("hibernate.connection.password"));
+        
 //        lblClose.setIcon(new javax.swing.ImageIcon("C:\\Users\\AISI-IVY\\Downloads\\Developers Folder\\GitHub\\src\\main\\java\\Forms\\icons\\cancel.png"));
         lblClose.setIcon(new javax.swing.ImageIcon("extra-resources\\cancel.png"));
         lblLogo.setIcon(new javax.swing.ImageIcon("extra-resources\\LOGO.jpg"));
@@ -130,6 +139,7 @@ public class Login extends javax.swing.JFrame {
         btn_Login = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         lblSignUp = new javax.swing.JLabel();
+        btnDbSettings = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
@@ -223,6 +233,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        btnDbSettings.setText("DB Settings");
+        btnDbSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDbSettingsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,7 +248,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(bgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblSignUp)
+                        .addGap(0, 72, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,13 +265,8 @@ public class Login extends javax.swing.JFrame {
                                         .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)))
                                 .addGap(50, 50, 50))
-                            .addComponent(lblClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSignUp)
-                        .addGap(0, 72, Short.MAX_VALUE))))
+                            .addComponent(lblClose, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDbSettings, javax.swing.GroupLayout.Alignment.TRAILING)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,10 +283,11 @@ public class Login extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(btn_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(lblSignUp))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(btnDbSettings))
             .addComponent(bgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -298,6 +317,11 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Please Contact the system administrator for new registration.","Unable to Sign Up",0);
     }//GEN-LAST:event_lblSignUpMouseClicked
+
+    private void btnDbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDbSettingsActionPerformed
+        // TODO add your handling code here:
+        JSONService.setJSONFile();
+    }//GEN-LAST:event_btnDbSettingsActionPerformed
     
     private void maxlength(){
         //todo make a maximum length validation into the log in form .
@@ -372,6 +396,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgPanel;
+    private javax.swing.JButton btnDbSettings;
     private javax.swing.JButton btn_Login;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxAuthority;

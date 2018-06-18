@@ -59,14 +59,14 @@ public class SupplierService {
 
     public static List<Supplier> findAll() {
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        return session.createQuery("from Supplier").list(); 
+        return session.createQuery("from Supplier order by name").list(); 
     }
     
       public static List<Supplier> searchSupplierNames(){
           
 //            String hql = "select name from supplier";
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("select name from Supplier").list();
+            return session.createQuery("select name from Supplier order by name").list();
     }
     
     

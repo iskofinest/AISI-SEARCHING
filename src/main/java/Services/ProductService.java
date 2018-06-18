@@ -48,14 +48,23 @@ public class ProductService {
                 data[i][2] = product.getDescription();
                 data[i][3] = product.getBrand();
                 data[i][4] = product.getModel();
-                data[i][5] = product.getQuantity() + " "+ product.getUnit();
+                data[i][5] = product.getQuantity() + " " + product.getUnit();
                 data[i][6] = product.getProduct_date().toString();
-                data[i][7] = product.getOriginalPrice().toString();
+                String currency = "";
+                try {
+                    currency = product.getCurrency();
+                    if(currency.equals(null)) currency = "";
+                } catch(NullPointerException ex) {
+                    currency = "";
+                    System.out.println(ex.toString());
+                }
+                data[i][7] = currency + " " + product.getOriginalPrice().toString();
                 data[i][8] = product.getAgent();
                 data[i][12] = product.getId() + "";  
                 data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
                 data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
                 data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
+                System.out.println("CURRENCY: " + product.getCurrency());
             }catch(ArrayIndexOutOfBoundsException ex){
                 logger.log(Level.SEVERE, ex.toString());
             }
@@ -366,7 +375,15 @@ public class ProductService {
                 data[i][4] = product.getModel();
                 data[i][5] = product.getQuantity() + " "+ product.getUnit();
                 data[i][6] = product.getProduct_date().toString();
-                data[i][7] = product.getOriginalPrice().toString();
+                String currency = "";
+                try {
+                    currency = product.getCurrency();
+                    if(currency.equals(null)) currency = "";
+                } catch(NullPointerException ex) {
+                    currency = "";
+                    System.out.println(ex.toString());
+                }
+                data[i][7] = currency + " " +  product.getOriginalPrice().toString();
                 data[i][8] = product.getAgent();
                 data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
                 data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
