@@ -29,6 +29,7 @@ public class CreateAccount extends javax.swing.JFrame {
     
     JTextComponent[] fields;
     JLabel[] labels;
+    JFrame thisForm;
     
     private final static Logger logger = Logger.getLogger(CreateAccount.class.getName());
     
@@ -60,6 +61,7 @@ public class CreateAccount extends javax.swing.JFrame {
         setLimitOnTextFields();
         prepareForm();
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
+        thisForm = this;
     }
     
     public CreateAccount(javax.swing.JFrame previousForm) {
@@ -68,6 +70,7 @@ public class CreateAccount extends javax.swing.JFrame {
         setLimitOnTextFields();        
         prepareForm();
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
+        thisForm = this;
       
     }
     
@@ -128,8 +131,13 @@ public class CreateAccount extends javax.swing.JFrame {
     }
     
     private void componentFocusGained(JComponent component, java.awt.event.FocusEvent evt) {
-        component.setBackground(color);
-        lblErrorMessage.setText("");
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                component.setBackground(color);
+                lblErrorMessage.setText("");            
+            }
+        }); 
     }
     
     //void setLimitOnFields
@@ -589,15 +597,20 @@ public class CreateAccount extends javax.swing.JFrame {
    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         //Todo add your handling here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,errorIcon);
-        if(confirmation == JOptionPane.YES_OPTION){ 
-            this.dispose();
-            previousForm.setEnabled(true);
-            previousForm.setVisible(true);
-            previousForm.requestFocus();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }    
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,errorIcon);
+                if(confirmation == JOptionPane.YES_OPTION){ 
+                    thisForm.dispose();
+                    previousForm.setEnabled(true);
+                    previousForm.setVisible(true);
+                    previousForm.requestFocus();
+                }else{
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }    
+            }
+        });
     }//GEN-LAST:event_formWindowClosing
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
@@ -606,66 +619,76 @@ public class CreateAccount extends javax.swing.JFrame {
 
     private void btnCreateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAccountActionPerformed
         // TODO add your handling code here:
-        txtfieldValidation();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                txtfieldValidation();
 
-        //Todo make a boolean for email validation
-       boolean validEmail = emailValidator.validateEmail(txtEmailAddress.getText());    
+                //Todo make a boolean for email validation
+               boolean validEmail = emailValidator.validateEmail(txtEmailAddress.getText());    
 
-       if(someFieldEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill up all required text fields", "INCOMPLETE FORM", 0);
-        } else if(!validEmail) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid e-mail", "INVALID EMAIL", 0);
-            logger.log(Level.SEVERE, "email not valid.", validEmail);
-        } else if(!isPasswordMatched()) {
-            JOptionPane.showMessageDialog(null, "Password not matched!!", "UNMATCHED PASSWORD", 0);
-        }else if(!validPhoneNumber(txtContactNumber.getText())) {
-            JOptionPane.showMessageDialog(null, "Mobile Number invalid.", "Invalid Phone Number", 0);
-        }else if(UserService.isUsernameExists(txtUsername.getText().trim())){
-            JOptionPane.showMessageDialog(null, "Username already exists", "USERNAME EXISTS", 0);
-        } else {
-            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to create this user?", "CONFIRM CREATE USER", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-                String employee_id = txtEmployeeNo.getText().trim();
-                String username = txtUsername.getText().trim();
-                String password = String.valueOf(txtPassword.getPassword());
-                String firstName = txtFirstName.getText().trim();
-                String middleName = txtMiddleName.getText().trim();
-                String lastName = txtLastName.getText().trim();
-                String authority = cbxAuthority.getSelectedItem().toString();
-                String email = txtEmailAddress.getText().trim();
-                String contact = txtContactNumber.getText().trim();
-                String address = txtAddress.getText().trim();
-                if(UserService.createUser(employee_id, username, password, firstName, middleName, lastName, authority, email, contact, address)){
-                    String successPrompt = "NEW USER SUCCESSFULLY CREATED: \n" +
-                            "Username: \t" +    username    + "\n" +
-                            "Password: \t" +    password    + "\n" +
-                            "Employee ID: \t" + employee_id + "\n" +
-                            "First Name: \t" +  firstName   + "\n" +
-                            "Middle Name: \t" + middleName  + "\n" +
-                            "Last Name: \t" +   lastName    + "\n" +
-                            "Authority: \t" +   authority   + "\n" +
-                            "E-mail: \t" +      email       + "\n" +
-                            "Contact: \t" +     contact     + "\n" +
-                            "Address: \t" +     address;
-                    for(JTextComponent component : fields) {
-                      component.setText("");
-                    }
-                    JOptionPane.showMessageDialog(null, successPrompt, "CREATE SUCCESS", 1);
+               if(someFieldEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill up all required text fields", "INCOMPLETE FORM", 0);
+                } else if(!validEmail) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid e-mail", "INVALID EMAIL", 0);
+                    logger.log(Level.SEVERE, "email not valid.", validEmail);
+                } else if(!isPasswordMatched()) {
+                    JOptionPane.showMessageDialog(null, "Password not matched!!", "UNMATCHED PASSWORD", 0);
+                }else if(!validPhoneNumber(txtContactNumber.getText())) {
+                    JOptionPane.showMessageDialog(null, "Mobile Number invalid.", "Invalid Phone Number", 0);
+                }else if(UserService.isUsernameExists(txtUsername.getText().trim())){
+                    JOptionPane.showMessageDialog(null, "Username already exists", "USERNAME EXISTS", 0);
                 } else {
-                    JOptionPane.showMessageDialog(null, "USER FAILED TO CREATE\nPLEASE CONTACT THE ADMINISTRATOR!", "CREATE FAILED", 0);
-                }    
+                    if(JOptionPane.showConfirmDialog(null, "Are you sure you want to create this user?", "CONFIRM CREATE USER", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                        String employee_id = txtEmployeeNo.getText().trim();
+                        String username = txtUsername.getText().trim();
+                        String password = String.valueOf(txtPassword.getPassword());
+                        String firstName = txtFirstName.getText().trim();
+                        String middleName = txtMiddleName.getText().trim();
+                        String lastName = txtLastName.getText().trim();
+                        String authority = cbxAuthority.getSelectedItem().toString();
+                        String email = txtEmailAddress.getText().trim();
+                        String contact = txtContactNumber.getText().trim();
+                        String address = txtAddress.getText().trim();
+                        if(UserService.createUser(employee_id, username, password, firstName, middleName, lastName, authority, email, contact, address)){
+                            String successPrompt = "NEW USER SUCCESSFULLY CREATED: \n" +
+                                    "Username: \t" +    username    + "\n" +
+                                    "Password: \t" +    password    + "\n" +
+                                    "Employee ID: \t" + employee_id + "\n" +
+                                    "First Name: \t" +  firstName   + "\n" +
+                                    "Middle Name: \t" + middleName  + "\n" +
+                                    "Last Name: \t" +   lastName    + "\n" +
+                                    "Authority: \t" +   authority   + "\n" +
+                                    "E-mail: \t" +      email       + "\n" +
+                                    "Contact: \t" +     contact     + "\n" +
+                                    "Address: \t" +     address;
+                            for(JTextComponent component : fields) {
+                              component.setText("");
+                            }
+                            JOptionPane.showMessageDialog(null, successPrompt, "CREATE SUCCESS", 1);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "USER FAILED TO CREATE\nPLEASE CONTACT THE ADMINISTRATOR!", "CREATE FAILED", 0);
+                        }    
+                    }
+
+                }
             }
-            
-        }
+        });
         
     }//GEN-LAST:event_btnCreateAccountActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-         previousForm.setEnabled(true);
-         previousForm.setVisible(true);
-         previousForm.requestFocus();
-         dispose();
+         SwingUtilities.invokeLater(new Runnable() {
+             @Override
+             public void run() {
+                previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
+                dispose();
+             }
+         });
     }//GEN-LAST:event_jButton1ActionPerformed
        
     

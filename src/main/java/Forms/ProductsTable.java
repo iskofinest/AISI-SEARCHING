@@ -56,6 +56,7 @@ public class ProductsTable extends javax.swing.JFrame {
     int start = 0;
     int max = 28;
     int listCount = 0;
+    JFrame thisForm;
     //</editor-fold>
     
     /**
@@ -66,6 +67,7 @@ public class ProductsTable extends javax.swing.JFrame {
     public ProductsTable() {
         initComponents();
         initializeData();
+        thisForm = this;
         printMenu.setIcon(new javax.swing.ImageIcon("extra-resources\\print.png"));
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
         btnLogout.setIcon(new javax.swing.ImageIcon("extra-resources\\iconLogOut.png"));
@@ -620,135 +622,156 @@ public class ProductsTable extends javax.swing.JFrame {
     //<editor-fold desc="OBJECT RESPONSIVE METHODS" defaultstate="collapsed">
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){
-//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
-//            else NetworkHandlerService.closeConnection();
-            ProductTable.currentUser = null;
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }    
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if(confirmation == JOptionPane.YES_OPTION){
+    //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
+    //            else NetworkHandlerService.closeConnection();
+                ProductTable.currentUser = null;
+                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.dispose();
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }    
+        });
+        
     }//GEN-LAST:event_formWindowClosing
 
     private void printMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuActionPerformed
-        int[] rows = dataTable.getSelectedRows();
-        String[][] productData = new String[rows.length][12];
-        for(int i=0; i<rows.length; i++) {
-            productData[i] = productList[rows[i]];
-        }
-        String filePath = "";
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            filePath = selectedFile.getAbsolutePath();
-            ExcelReportService.printProducts(filePath, productData);
-        }
+        SwingUtilities.invokeLater(() -> {
+            int[] rows = dataTable.getSelectedRows();
+            String[][] productData = new String[rows.length][12];
+            for(int i=0; i<rows.length; i++) {
+                productData[i] = productList[rows[i]];
+            }
+            String filePath = "";
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                filePath = selectedFile.getAbsolutePath();
+                ExcelReportService.printProducts(filePath, productData);
+            }
+        });
     }//GEN-LAST:event_printMenuActionPerformed
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         // TODO add your handling code here:
-        productsTableMode = true;
-        setEnabled(false);
-        new AddProduct(this).setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            productsTableMode = true;
+            setEnabled(false);
+            new AddProduct(thisForm).setVisible(true);
+        });
     }//GEN-LAST:event_btnAddProductActionPerformed
 
     private void btnUserViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserViewActionPerformed
         // TODO add your handling code here:
-        productsTableMode = false;
-        String[] userColumn = new String[]{"Employee ID", "Username", "Authority", "Last Name", "First Name", "Middle Name", "Contact", "E-mail", "Address"};
-        userList = UserService.getAllUsers();
-        DefaultTableModel model = new DefaultTableModel(userList, userColumn);
-        dataTable.setModel(model);
-        System.out.println("User Table RELOADED!!!");
-        btnUserView.setEnabled(false);
-        btnProductView.setEnabled(true);
-        enableSearchFields(false);
+        SwingUtilities.invokeLater(() -> {
+            productsTableMode = false;
+            String[] userColumn = new String[]{"Employee ID", "Username", "Authority", "Last Name", "First Name", "Middle Name", "Contact", "E-mail", "Address"};
+            userList = UserService.getAllUsers();
+            DefaultTableModel model = new DefaultTableModel(userList, userColumn);
+            dataTable.setModel(model);
+            System.out.println("User Table RELOADED!!!");
+            btnUserView.setEnabled(false);
+            btnProductView.setEnabled(true);
+            enableSearchFields(false);
+        });
     }//GEN-LAST:event_btnUserViewActionPerformed
 
     private void btnProductViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductViewActionPerformed
         // TODO add your handling code here:
-        enableSearchFields(true);
-        btnUserView.setEnabled(true);
-        btnProductView.setEnabled(false);
-        reloadTable();
+        SwingUtilities.invokeLater(() -> {
+            enableSearchFields(true);
+            btnUserView.setEnabled(true);
+            btnProductView.setEnabled(false);
+            reloadTable();
+        });
     }//GEN-LAST:event_btnProductViewActionPerformed
 
     private void btnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousActionPerformed
         // TODO add your handling code here:
-        start -= 28;
-        if(start < 1) {
-            start = 0;
-            btnPrevious.setEnabled(false);
-        } else {
+        SwingUtilities.invokeLater(() -> {
+            start -= 28;
+            if(start < 1) {
+                start = 0;
+                btnPrevious.setEnabled(false);
+            } else {
+                if(searching){
+                    searchProducts();
+                } else {
+                    reloadTable();
+                }
+            }
             if(searching){
                 searchProducts();
             } else {
                 reloadTable();
             }
-        }
-        if(searching){
-            searchProducts();
-        } else {
-            reloadTable();
-        }
-        btnNext.setEnabled(true);
+            btnNext.setEnabled(true);
+        });
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
-        start += 28;
-        btnNext.setEnabled(!(start+28>listCount));
-        btnPrevious.setEnabled(true);
-        if(searching) {
-            searchProducts();
-        } else {
-            reloadTable();
-        }
-        System.out.println(listCount + ": TOTAL LIST COUNT");
+        SwingUtilities.invokeLater(() -> {
+            start += 28;
+            btnNext.setEnabled(!(start+28>listCount));
+            btnPrevious.setEnabled(true);
+            if(searching) {
+                searchProducts();
+            } else {
+                reloadTable();
+            }
+            System.out.println(listCount + ": TOTAL LIST COUNT");
+        });
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to Logout your account?","CONFIRM LOGOUT",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmation == 0){ 
-            this.dispose();
-            Login login = new Login();
-            login.setVisible(true);
-            login.requestFocus();
-//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
-//            else NetworkHandlerService.closeConnection();
-            ProductTable.currentUser = null;
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }    
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to Logout your account?","CONFIRM LOGOUT",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(confirmation == 0){
+                thisForm.dispose();
+                Login login = new Login();
+                login.setVisible(true);
+                login.requestFocus();
+                //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
+                //            else NetworkHandlerService.closeConnection();
+                ProductTable.currentUser = null;
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);    
+            }
+        });
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()>1) {
-            JTable source = (JTable)evt.getSource();
-            int row = source.rowAtPoint( evt.getPoint());
-            setEnabled(false);
-            if(productsTableMode) {
-                ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), this);
-                viewProductInfo.setVisible(true);
-            } else {
-                ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]), this);
-                viewUserInfo.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            if(evt.getClickCount()>1) {
+                JTable source = (JTable)evt.getSource();
+                int row = source.rowAtPoint( evt.getPoint());
+                setEnabled(false);
+                if(productsTableMode) {
+                    ViewProductInfo viewProductInfo = new ViewProductInfo(Integer.parseInt(productList[row][12]), thisForm);
+                    viewProductInfo.setVisible(true);
+                } else {
+                    ViewUserInfo viewUserInfo = new ViewUserInfo(Integer.parseInt(userList[row][10]), thisForm);
+                    viewUserInfo.setVisible(true);
+                }
             }
-        }
+        });
     }//GEN-LAST:event_dataTableMouseClicked
 
     private void btnAddAccountUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAccountUserActionPerformed
         // TODO add your handling code here:     
-        this.dispose();
-        CreateAccount createAccount = new CreateAccount(this);
-        createAccount.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            thisForm.dispose();
+            CreateAccount createAccount = new CreateAccount(thisForm);
+            createAccount.setVisible(true);
+        });
     }//GEN-LAST:event_btnAddAccountUserActionPerformed
 
     private void dataTableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseEntered

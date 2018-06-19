@@ -13,7 +13,8 @@ import Services.UserService;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import org.json.simple.JSONObject;
+import javax.swing.SwingUtilities;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 /**
  *
@@ -61,50 +62,55 @@ public class Login extends javax.swing.JFrame {
     }
     
     public void login() {
-        String authority = String.valueOf(cbxAuthority.getSelectedItem().toString());
-        String username = txtUsername.getText().trim();
-        String password = String.valueOf(txtPassword.getPassword());
-        
-        //use for default mockup prod.
-        if(username.equals("default") && password.equals("default")) {
-            dispose();
-            ProductsTable products = new ProductsTable();
-            products.setVisible(true);
-        } else {
-            List list = UserService.getUserLogin(username, password, authority);
-        
-            if(list.size() > 0) {
-                Users user = (Users) list.get(0);
-                ProductTable.currentUser = user;
-                System.out.println(user.toString());
-                String name = user.getFirstName() + " " + user.getLastName();
-                JOptionPane.showMessageDialog(null, "Welcome " + name, "LOGIN SUCCESSFUL", 1);
-                dispose();
-                ProductsTable products = new ProductsTable();
-                products.setVisible(true);
-//                if(cbxAuthority.getSelectedItem().toString().equals("ADMIN")){
-//                    ProductTable.networkThread = new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            NetworkHandlerService.runAsServer();                        
-//                        }
-//                    });
-//                } else {
-//                    ProductTable.networkThread = new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            NetworkHandlerService.runAsClient();
-//                        }
-//                    });
-//                }
-//                ProductTable.networkThread.start();
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid username or password", "ACCESS DENIED", 0);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                String authority = String.valueOf(cbxAuthority.getSelectedItem().toString());
+                String username = txtUsername.getText().trim();
+                String password = String.valueOf(txtPassword.getPassword());
+
+                //use for default mockup prod.
+                if(username.equals("default") && password.equals("default")) {
+                    dispose();
+                    ProductsTable products = new ProductsTable();
+                    products.setVisible(true);
+                } else {
+                    List list = UserService.getUserLogin(username, password, authority);
+
+                    if(list.size() > 0) {
+                        Users user = (Users) list.get(0);
+                        ProductTable.currentUser = user;
+                        System.out.println(user.toString());
+                        String name = user.getFirstName() + " " + user.getLastName();
+                        JOptionPane.showMessageDialog(null, "Welcome " + name, "LOGIN SUCCESSFUL", 1);
+                        dispose();
+                        ProductsTable products = new ProductsTable();
+                        products.setVisible(true);
+        //                if(cbxAuthority.getSelectedItem().toString().equals("ADMIN")){
+        //                    ProductTable.networkThread = new Thread(new Runnable() {
+        //                        @Override
+        //                        public void run() {
+        //                            NetworkHandlerService.runAsServer();                        
+        //                        }
+        //                    });
+        //                } else {
+        //                    ProductTable.networkThread = new Thread(new Runnable() {
+        //                        @Override
+        //                        public void run() {
+        //                            NetworkHandlerService.runAsClient();
+        //                        }
+        //                    });
+        //                }
+        //                ProductTable.networkThread.start();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid username or password", "ACCESS DENIED", 0);
+                    }
+                }
+
+                txtUsername.setText("");
+                txtPassword.setText("");
             }
-        }
-        
-        txtUsername.setText("");
-        txtPassword.setText("");
+        });
     }
     
     private void disableResizeFrame(javax.swing.JFrame frame) {
@@ -304,23 +310,38 @@ public class Login extends javax.swing.JFrame {
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
         // TODO add your handling code here:
         
-        int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to exit program", "Warning",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmation == 0){
-            System.exit(0);
-        }else{
-            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                int confirmation = JOptionPane.showConfirmDialog(null, "Do you want to exit program", "Warning",JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(confirmation == 0){
+                    System.exit(0);
+                }else{
+                    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                }
+                    }
+        });
         
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Please Contact the system administrator for new registration.","Unable to Sign Up",0);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JOptionPane.showMessageDialog(null,"Please Contact the system administrator for new registration.","Unable to Sign Up",0);
+            }
+        });
     }//GEN-LAST:event_lblSignUpMouseClicked
 
     private void btnDbSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDbSettingsActionPerformed
         // TODO add your handling code here:
-        JSONService.setJSONFile();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JSONService.setJSONFile();
+            }
+        });
     }//GEN-LAST:event_btnDbSettingsActionPerformed
     
     private void maxlength(){

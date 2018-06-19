@@ -12,6 +12,7 @@ import Services.SupplierService;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -298,83 +299,97 @@ public class ViewSupplier extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
-        if(btnOK.getText().equals("OK")){
-            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
-            if(confirmation == JOptionPane.YES_OPTION){ 
-                this.dispose();
-                previousForm.setEnabled(true);
-                previousForm.setVisible(true);
-                previousForm.requestFocus();
-            }else{
-                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        SwingUtilities.invokeLater(() -> {
+            if(btnOK.getText().equals("OK")){
+                int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+                if(confirmation == JOptionPane.YES_OPTION){ 
+                    this.dispose();
+                    previousForm.setEnabled(true);
+                    previousForm.setVisible(true);
+                    previousForm.requestFocus();
+                }else{
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            } else {
+                enableFields(false);
+                btnEdit.setText("Edit");
+                btnOK.setText("OK");
             }
-        } else {
-            enableFields(false);
-            btnEdit.setText("Edit");
-            btnOK.setText("OK");
-        }
+        });
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
 //         TODO add your handling code here:
 
-        if(btnEdit.getText().equals("Edit")) {
-            btnOK.setText("Cancel");
-            btnEdit.setText("Done!");
-            enableFields(true);
-        } else {
-            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-                supplier.setName(txtSupplier.getText().trim());
-                supplier.setContactPerson(txtContactPerson.getText().trim());
-                supplier.setContactDetails(txtContactDetails.getText().trim());
-                if(SupplierService.updateSupplier(supplier)) {
-                    JOptionPane.showMessageDialog(null, "Supplier Successfully Updated!", "UPDATE SUCCESS", 1);
-                    ProductTable.productsTableForm.reloadTable();
-                } else
-                JOptionPane.showMessageDialog(null, "Supplier Failed to Update!", "UPDATE FAILED", 0);
+        SwingUtilities.invokeLater(() -> {
+            if(btnEdit.getText().equals("Edit")) {
+                btnOK.setText("Cancel");
+                btnEdit.setText("Done!");
+                enableFields(true);
+            } else {
+                if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                    supplier.setName(txtSupplier.getText().trim());
+                    supplier.setContactPerson(txtContactPerson.getText().trim());
+                    supplier.setContactDetails(txtContactDetails.getText().trim());
+                    if(SupplierService.updateSupplier(supplier)) {
+                        JOptionPane.showMessageDialog(null, "Supplier Successfully Updated!", "UPDATE SUCCESS", 1);
+                        ProductTable.productsTableForm.reloadTable();
+                    } else
+                    JOptionPane.showMessageDialog(null, "Supplier Failed to Update!", "UPDATE FAILED", 0);
+                }
+                btnOK.setText("OK");
+                btnEdit.setText("Edit");
+                enableFields(false);
             }
-            btnOK.setText("OK");
-            btnEdit.setText("Edit");
-            enableFields(false);
-        }
+        });
 
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
-            previousForm.setEnabled(true);
-            this.dispose();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }    
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if(confirmation == JOptionPane.YES_OPTION){ 
+                previousForm.setEnabled(true);
+                this.dispose();
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }    
+        });
     }//GEN-LAST:event_formWindowClosing
 
     private void btnOKMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOKMouseEntered
         // TODO add your handling code here:
        
-        btnOK.setBackground(Color.WHITE);
-        btnOK.setForeground(Color.BLACK);
+        SwingUtilities.invokeLater(() -> {
+            btnOK.setBackground(Color.WHITE);
+            btnOK.setForeground(Color.BLACK);
+        });
     }//GEN-LAST:event_btnOKMouseEntered
 
     private void btnOKMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOKMouseExited
         // TODO add your handling code here:
-        btnOK.setBackground(Color.BLACK);
-        btnOK.setForeground(Color.GREEN);
+        SwingUtilities.invokeLater(() -> {
+            btnOK.setBackground(Color.BLACK);
+            btnOK.setForeground(Color.GREEN);
+        });
     }//GEN-LAST:event_btnOKMouseExited
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
         // TODO add your handling code here:
         
-        btnEdit.setBackground(Color.WHITE);
-        btnEdit.setForeground(Color.BLACK);
+        SwingUtilities.invokeLater(() -> {
+            btnEdit.setBackground(Color.WHITE);
+            btnEdit.setForeground(Color.BLACK);
+        });
     }//GEN-LAST:event_btnEditMouseEntered
 
     private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
         // TODO add your handling code here:
-        btnEdit.setBackground(Color.BLACK);
-        btnEdit.setForeground(Color.GREEN);
+        SwingUtilities.invokeLater(() -> {
+            btnEdit.setBackground(Color.BLACK);
+            btnEdit.setForeground(Color.GREEN);
+        });
         
     }//GEN-LAST:event_btnEditMouseExited
     

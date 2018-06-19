@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 
 /**
@@ -389,154 +390,166 @@ public class ViewUserInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPasswordActionPerformed
-        String message = "<html><strong style=\"color: red;\">Please enter your password to<br>view the password of this user.</strong></html";
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 1, 5, 10));
-        JLabel label = new JLabel(message);
-        JPasswordField passwordField = new JPasswordField(15);
-        panel.add(label);
-        panel.add(passwordField);
-        Object[] options1 = {"OK", "CHANGE PASSWORD", "CANCEL"};
-        int result = JOptionPane.showOptionDialog(null, panel, "CONFIRM VIEW PASSWORD", 
-                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options1, null);
-        if(result == 2) {
-            
-        }else if(String.valueOf(passwordField.getPassword())
-                        .equals(ProductTable.currentUser.getPassword())) {
-            switch(result) {
-                case 0:
-                    JOptionPane.showMessageDialog(null, "PASSWORD IS: " + user.getPassword());
-                    break;
-                case 1:
-                    JPanel changePasswordPanel = new JPanel();
-                    changePasswordPanel.setLayout(new GridLayout(3, 2, 10, 10));
-                    JLabel oldPasswordLabel = new JLabel("OLD PASSWORD:  ");
-                    oldPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                    JLabel newPasswordLabel = new JLabel("NEW PASSWORD:  ");
-                    newPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                    JLabel confirmNewPasswordLabel = new JLabel("CONFIRM NEW PASSWORD:  ");
-                    confirmNewPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                    JPasswordField oldPasswordField = new JPasswordField(15);
-                    JPasswordField newPasswordField = new JPasswordField(15);
-                    JPasswordField confirmNewPasswordField = new JPasswordField(15);
-                    changePasswordPanel.add(oldPasswordLabel);
-                    changePasswordPanel.add(oldPasswordField);
-                    changePasswordPanel.add(newPasswordLabel);
-                    changePasswordPanel.add(newPasswordField);
-                    changePasswordPanel.add(confirmNewPasswordLabel);
-                    changePasswordPanel.add(confirmNewPasswordField);
-                    int selection = JOptionPane.showOptionDialog(null, changePasswordPanel, "CHANGE PASSWORD", 
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[]{"OK", "CANCEL"}, null);
-                    if(!String.valueOf(oldPasswordField.getPassword()).equals(user.getPassword())) {
-                        JOptionPane.showMessageDialog(null, "OLD PASSWORD DOES NOT MATCHED", "CHANGE PASSWORD FAILED", 0);
-                    } else if(!String.valueOf(newPasswordField.getPassword()).equals(String.valueOf(confirmNewPasswordField.getPassword()))) {
-                        JOptionPane.showMessageDialog(null, "NEW PASSWORD DOES NOT MATCHED", "CHANGE PASSWORD FAILED", 0);
-                    }else {
-                        if(selection == 0) {
-                            if(UserService.updateUserPassword(user.getId(), String.valueOf(newPasswordField.getPassword()))) {
-                                user = UserService.getUserBy(user.getId());
-                                initializeData();
-                                ProductTable.productsTableForm.updateUserTable();
-                                JOptionPane.showMessageDialog(null, "Password successfully changed", "CHANGE PASSWORD SUCCESS" , 1);
-                            } else {
-                                JOptionPane.showMessageDialog(null, "CHANGE PASSWORD FAILED, PLEASE CONTACT TECHNICAL SUPPORT", "CHANGE PASSWORD FAILED", 0);
+        SwingUtilities.invokeLater(() -> {
+            String message = "<html><strong style=\"color: red;\">Please enter your password to<br>view the password of this user.</strong></html";
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(2, 1, 5, 10));
+            JLabel label = new JLabel(message);
+            JPasswordField passwordField = new JPasswordField(15);
+            panel.add(label);
+            panel.add(passwordField);
+            Object[] options1 = {"OK", "CHANGE PASSWORD", "CANCEL"};
+            int result = JOptionPane.showOptionDialog(null, panel, "CONFIRM VIEW PASSWORD", 
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options1, null);
+            if(result == 2) {
+
+            }else if(String.valueOf(passwordField.getPassword())
+                            .equals(ProductTable.currentUser.getPassword())) {
+                switch(result) {
+                    case 0:
+                        JOptionPane.showMessageDialog(null, "PASSWORD IS: " + user.getPassword());
+                        break;
+                    case 1:
+                        JPanel changePasswordPanel = new JPanel();
+                        changePasswordPanel.setLayout(new GridLayout(3, 2, 10, 10));
+                        JLabel oldPasswordLabel = new JLabel("OLD PASSWORD:  ");
+                        oldPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+                        JLabel newPasswordLabel = new JLabel("NEW PASSWORD:  ");
+                        newPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+                        JLabel confirmNewPasswordLabel = new JLabel("CONFIRM NEW PASSWORD:  ");
+                        confirmNewPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+                        JPasswordField oldPasswordField = new JPasswordField(15);
+                        JPasswordField newPasswordField = new JPasswordField(15);
+                        JPasswordField confirmNewPasswordField = new JPasswordField(15);
+                        changePasswordPanel.add(oldPasswordLabel);
+                        changePasswordPanel.add(oldPasswordField);
+                        changePasswordPanel.add(newPasswordLabel);
+                        changePasswordPanel.add(newPasswordField);
+                        changePasswordPanel.add(confirmNewPasswordLabel);
+                        changePasswordPanel.add(confirmNewPasswordField);
+                        int selection = JOptionPane.showOptionDialog(null, changePasswordPanel, "CHANGE PASSWORD", 
+                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[]{"OK", "CANCEL"}, null);
+                        if(!String.valueOf(oldPasswordField.getPassword()).equals(user.getPassword())) {
+                            JOptionPane.showMessageDialog(null, "OLD PASSWORD DOES NOT MATCHED", "CHANGE PASSWORD FAILED", 0);
+                        } else if(!String.valueOf(newPasswordField.getPassword()).equals(String.valueOf(confirmNewPasswordField.getPassword()))) {
+                            JOptionPane.showMessageDialog(null, "NEW PASSWORD DOES NOT MATCHED", "CHANGE PASSWORD FAILED", 0);
+                        }else {
+                            if(selection == 0) {
+                                if(UserService.updateUserPassword(user.getId(), String.valueOf(newPasswordField.getPassword()))) {
+                                    user = UserService.getUserBy(user.getId());
+                                    initializeData();
+                                    ProductTable.productsTableForm.updateUserTable();
+                                    JOptionPane.showMessageDialog(null, "Password successfully changed", "CHANGE PASSWORD SUCCESS" , 1);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "CHANGE PASSWORD FAILED, PLEASE CONTACT TECHNICAL SUPPORT", "CHANGE PASSWORD FAILED", 0);
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Wrong Password", "ACCESS DENIED", 0);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Wrong Password", "ACCESS DENIED", 0);
-        }
+        });
     }//GEN-LAST:event_btnViewPasswordActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        if(btnEdit.getText().equals("Edit")) {
-            btnBack.setText("Cancel");
-            btnEdit.setText("Done!");
-            btnViewPassword.setEnabled(false);
-            btnDelete.setEnabled(false);
-            enableFields(true);
-            
-        } else {
-            btnEdit.setText("Edit");
-            btnBack.setText("Back");
-            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to UPDATE this User?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-                user.setEmployee_id(txtEmployeeID.getText().trim());
-                user.setFirstName(txtFirstName.getText().trim());
-                user.setMiddleName(txtMiddleName.getText().trim());
-                user.setLastName(txtLastName.getText().trim());
-                user.setAuthority(txtUserRole.getSelectedItem().toString());
-                user.setUsername(txtUsername.getText());
-                user.setEmail(txtEmail.getText().trim());
-                user.setContact(txtContact.getText().trim());
-                user.setAddress(txtAddress.getText().trim());
-                if(UserService.updateUser(user)) {    
-                    JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Item failed to update!", "UPDATE FAILED", 1);
-                }
-            } else initializeData();
-            btnViewPassword.setEnabled(true);
-            btnDelete.setEnabled(true);
-            enableFields(false);
-            btnBack.setText("Back");
-        }
+        SwingUtilities.invokeLater(() -> {
+            if(btnEdit.getText().equals("Edit")) {
+                btnBack.setText("Cancel");
+                btnEdit.setText("Done!");
+                btnViewPassword.setEnabled(false);
+                btnDelete.setEnabled(false);
+                enableFields(true);
+
+            } else {
+                btnEdit.setText("Edit");
+                btnBack.setText("Back");
+                if(JOptionPane.showConfirmDialog(null, "Are you sure you want to UPDATE this User?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                    user.setEmployee_id(txtEmployeeID.getText().trim());
+                    user.setFirstName(txtFirstName.getText().trim());
+                    user.setMiddleName(txtMiddleName.getText().trim());
+                    user.setLastName(txtLastName.getText().trim());
+                    user.setAuthority(txtUserRole.getSelectedItem().toString());
+                    user.setUsername(txtUsername.getText());
+                    user.setEmail(txtEmail.getText().trim());
+                    user.setContact(txtContact.getText().trim());
+                    user.setAddress(txtAddress.getText().trim());
+                    if(UserService.updateUser(user)) {    
+                        JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Item failed to update!", "UPDATE FAILED", 1);
+                    }
+                } else initializeData();
+                btnViewPassword.setEnabled(true);
+                btnDelete.setEnabled(true);
+                enableFields(false);
+                btnBack.setText("Back");
+            }
+        });
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+" "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-            if(UserService.deleteUser(user)) {
-                JOptionPane.showMessageDialog(null, lblName.getText()+" "+ "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
-                ProductTable.productsTableForm.reloadTable();
-                ProductTable.productsTableForm.setEnabled(true);
-                ProductTable.productsTableForm.requestFocus();
-        dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, lblName.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+        SwingUtilities.invokeLater(() -> {
+            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+" "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                if(UserService.deleteUser(user)) {
+                    JOptionPane.showMessageDialog(null, lblName.getText()+" "+ "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+                    ProductTable.productsTableForm.reloadTable();
+                    ProductTable.productsTableForm.setEnabled(true);
+                    ProductTable.productsTableForm.requestFocus();
+            dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, lblName.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+                }
             }
-        }
+        });
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        if(btnBack.getText().equals("Back")) {
-            dispose();
-            if(previousForm != null) {
-                previousForm.setEnabled(true);
-                previousForm.setVisible(true);
-                previousForm.requestFocus();
-            }else {
-                ProductTable.productsTableForm.setEnabled(true);
-                ProductTable.productsTableForm.setVisible(true);
-                ProductTable.productsTableForm.requestFocus();
+        SwingUtilities.invokeLater(() -> {
+            if(btnBack.getText().equals("Back")) {
+                dispose();
+                if(previousForm != null) {
+                    previousForm.setEnabled(true);
+                    previousForm.setVisible(true);
+                    previousForm.requestFocus();
+                }else {
+                    ProductTable.productsTableForm.setEnabled(true);
+                    ProductTable.productsTableForm.setVisible(true);
+                    ProductTable.productsTableForm.requestFocus();
+                }
+            } else {
+                btnBack.setText("Back");
+                btnEdit.setText("Edit");
+                btnViewPassword.setEnabled(true);
+                btnDelete.setEnabled(true);
+                initializeData();
+                enableFields(false);   
             }
-        } else {
-            btnBack.setText("Back");
-            btnEdit.setText("Edit");
-            btnViewPassword.setEnabled(true);
-            btnDelete.setEnabled(true);
-            initializeData();
-            enableFields(false);   
-        }
+        });
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void txtUserRoleCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtUserRoleCaretPositionChanged
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, evt.toString());
+        SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(null, evt.toString());
+        });
     }//GEN-LAST:event_txtUserRoleCaretPositionChanged
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
-            this.dispose();
-            previousForm.setEnabled(true);
-            previousForm.setVisible(true);
-            previousForm.requestFocus();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+            if(confirmation == JOptionPane.YES_OPTION){ 
+                this.dispose();
+                previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        });
     }//GEN-LAST:event_formWindowClosing
 
     /**

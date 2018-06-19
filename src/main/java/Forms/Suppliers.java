@@ -8,6 +8,7 @@ package Forms;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -162,13 +163,15 @@ public class Suppliers extends javax.swing.JFrame {
 
     private void dataTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dataTableMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2) {
-            JTable source = (JTable)evt.getSource();
-            int row = source.rowAtPoint( evt.getPoint() );
-            ViewSupplier viewSupplier = new ViewSupplier(this, Integer.parseInt(suppliers[row][3]));
-            setEnabled(false);
-            viewSupplier.setVisible(true);
-        }
+        SwingUtilities.invokeLater(() -> {
+            if(evt.getClickCount() == 2) {
+                JTable source = (JTable)evt.getSource();
+                int row = source.rowAtPoint( evt.getPoint() );
+                ViewSupplier viewSupplier = new ViewSupplier(this, Integer.parseInt(suppliers[row][3]));
+                setEnabled(false);
+                viewSupplier.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_dataTableMouseClicked
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -182,23 +185,27 @@ public class Suppliers extends javax.swing.JFrame {
 //        }else{
 //            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 //        }
-            this.dispose();
-            previousForm.setEnabled(true);
-            previousForm.setVisible(true);
-            previousForm.requestFocus();
+            SwingUtilities.invokeLater(() -> {
+                this.dispose();
+                previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
+            });
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
-            this.dispose();
-            previousForm.setEnabled(true);
-            previousForm.setVisible(true);
-            previousForm.requestFocus();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+            if(confirmation == JOptionPane.YES_OPTION){ 
+                this.dispose();
+                previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        });
     }//GEN-LAST:event_formWindowClosing
 
     /**

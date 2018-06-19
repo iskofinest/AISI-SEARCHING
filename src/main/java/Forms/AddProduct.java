@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
@@ -64,9 +65,15 @@ public class AddProduct extends javax.swing.JFrame {
         txtSupplierName.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                Supplier supplier = list.get(txtSupplierName.getSelectedIndex());
-                txtContactDetails.setText(supplier.getContactDetails());
-                txtContactPerson.setText(supplier.getContactPerson());
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Supplier supplier = list.get(txtSupplierName.getSelectedIndex());
+                        System.out.println("SELECTED INDEX: " + txtSupplierName.getSelectedIndex());
+                        txtContactDetails.setText(supplier.getContactDetails());
+                        txtContactPerson.setText(supplier.getContactPerson());
+                    }
+                });
             }
             
         });

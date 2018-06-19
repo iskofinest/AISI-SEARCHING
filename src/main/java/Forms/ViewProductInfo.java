@@ -22,6 +22,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
@@ -495,158 +496,182 @@ public class ViewProductInfo extends javax.swing.JFrame {
 
     private void btnMoreSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoreSupplierActionPerformed
         // TODO add your handling code here:
-        setEnabled(false);
-        new Suppliers(this, "SUPPLIERS FOR " + product.getName(), 
-                SupplierService.getSupplierForProduct(product)).setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            setEnabled(false);
+            new Suppliers(this, "SUPPLIERS FOR " + product.getName(), 
+                    SupplierService.getSupplierForProduct(product)).setVisible(true);
+        });
     }//GEN-LAST:event_btnMoreSupplierActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        String filePath = "";
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            filePath = selectedFile.getAbsolutePath();
-            ExcelReportService.printSingleProduct(filePath, product);
-        }
+        SwingUtilities.invokeLater(() -> {
+            String filePath = "";
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                filePath = selectedFile.getAbsolutePath();
+                ExcelReportService.printSingleProduct(filePath, product);
+            }
+        });
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        if(btnEdit.getText().equals("Edit")) {
-            btnBack.setText("Cancel");
-            btnEdit.setText("Done!");
-            btnPrint.setEnabled(false);
-            btnDelete.setEnabled(false);
-            enableFields(true);
-            
-        } else {
-            btnEdit.setText("Edit");
-            btnBack.setText("Back");
-            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update product?", "CONFIRM ADD", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-                Transactions transaction = product.getTransaction();
-                transaction = product.getTransaction();
-                transaction.setReferenceNumber(txtReference.getText());
-                product.setTransaction(transaction);
-                product.setName(txtItem.getText());
-                product.setBrand(txtBrand.getText());
-                product.setModel(txtModel.getText());
-                product.setQuantity(Integer.parseInt(txtQuantity.getText()));
-                product.setUnit(txtUnit.getText());
-                product.setDescription(txtDescription.getText());
-                product.setProduct_date(txtProductDate.getDate());
-                product.setOriginalPrice(BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText())));
-                product.setCurrency(txtCurrency.getSelectedItem().toString());
-                product.setAgent(txtAgent.getText());
-                if(ProductService.updateProduct(product)) {
-//                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
-//                        NetworkHandlerService.serverSendMessage("reload");
-//                    } else {
-//                        NetworkHandlerService.clientSendMessage("reload");
-//                    }
-                    JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
-                    ProductTable.productsTableForm.reloadTable();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Item failed to update!", "UPDATE FAILED", 1);
-                }
-            } else initializeData();
-            btnPrint.setEnabled(true);
-            btnDelete.setEnabled(true);
-            enableFields(false);
-            btnBack.setText("Back");
-        }
+        SwingUtilities.invokeLater(() -> {
+            if(btnEdit.getText().equals("Edit")) {
+                btnBack.setText("Cancel");
+                btnEdit.setText("Done!");
+                btnPrint.setEnabled(false);
+                btnDelete.setEnabled(false);
+                enableFields(true);
+
+            } else {
+                btnEdit.setText("Edit");
+                btnBack.setText("Back");
+                if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update product?", "CONFIRM ADD", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                    Transactions transaction = product.getTransaction();
+                    transaction = product.getTransaction();
+                    transaction.setReferenceNumber(txtReference.getText());
+                    product.setTransaction(transaction);
+                    product.setName(txtItem.getText());
+                    product.setBrand(txtBrand.getText());
+                    product.setModel(txtModel.getText());
+                    product.setQuantity(Integer.parseInt(txtQuantity.getText()));
+                    product.setUnit(txtUnit.getText());
+                    product.setDescription(txtDescription.getText());
+                    product.setProduct_date(txtProductDate.getDate());
+                    product.setOriginalPrice(BigDecimal.valueOf(Double.parseDouble(txtOrigPrice.getText())));
+                    product.setCurrency(txtCurrency.getSelectedItem().toString());
+                    product.setAgent(txtAgent.getText());
+                    if(ProductService.updateProduct(product)) {
+    //                    if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+    //                        NetworkHandlerService.serverSendMessage("reload");
+    //                    } else {
+    //                        NetworkHandlerService.clientSendMessage("reload");
+    //                    }
+                        JOptionPane.showMessageDialog(null, "Item successfully updated!", "UPDATE SUCCESS", 1);
+                        ProductTable.productsTableForm.reloadTable();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Item failed to update!", "UPDATE FAILED", 1);
+                    }
+                } else initializeData();
+                btnPrint.setEnabled(true);
+                btnDelete.setEnabled(true);
+                enableFields(false);
+                btnBack.setText("Back");
+            }
+        });
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete"+" "+"'"+lblItem.getText()+"'"+" "+"product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
-            if(ProductService.deleteProduct(product)) {
-//            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
-//                NetworkHandlerService.serverSendMessage("reload");
-//            } else {
-//                NetworkHandlerService.clientSendMessage("reload");
-//            }
-            JOptionPane.showMessageDialog(null, lblItem.getText()+" "+ "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
-            ProductTable.productsTableForm.reloadTable();
-            ProductTable.productsTableForm.setEnabled(true);
-            ProductTable.productsTableForm.setVisible(true);
-            ProductTable.productsTableForm.requestFocus();
-            dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, lblItem.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+        SwingUtilities.invokeLater(() -> {
+            if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete"+" "+"'"+lblItem.getText()+"'"+" "+"product?", "CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
+                if(ProductService.deleteProduct(product)) {
+    //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) {
+    //                NetworkHandlerService.serverSendMessage("reload");
+    //            } else {
+    //                NetworkHandlerService.clientSendMessage("reload");
+    //            }
+                JOptionPane.showMessageDialog(null, lblItem.getText()+" "+ "Product Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+                ProductTable.productsTableForm.reloadTable();
+                ProductTable.productsTableForm.setEnabled(true);
+                ProductTable.productsTableForm.setVisible(true);
+                ProductTable.productsTableForm.requestFocus();
+                dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, lblItem.getText() + " Unable to Delete!!", "DELETE FAILED", 0);
+                }
             }
-        }
+        });
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        if(btnBack.getText().equals("Back")) {
-            dispose();
-            if(previousForm != null) {
-                previousForm.setEnabled(true);
-                previousForm.setVisible(true);
-                previousForm.requestFocus();
-            }else {
-                ProductTable.productsTableForm.setEnabled(true);
+        SwingUtilities.invokeLater(() -> {
+            if(btnBack.getText().equals("Back")) {
+                dispose();
+                if(previousForm != null) {
+                    previousForm.setEnabled(true);
+                    previousForm.setVisible(true);
+                    previousForm.requestFocus();
+                }else {
+                    ProductTable.productsTableForm.setEnabled(true);
+                }
+            } else {
+                btnBack.setText("Back");
+                btnEdit.setText("Edit");
+                btnPrint.setEnabled(true);
+                btnDelete.setEnabled(true);
+                initializeData();
+                enableFields(false);   
             }
-        } else {
-            btnBack.setText("Back");
-            btnEdit.setText("Edit");
-            btnPrint.setEnabled(true);
-            btnDelete.setEnabled(true);
-            initializeData();
-            enableFields(false);   
-        }
+        });
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
-        if(confirmation == JOptionPane.YES_OPTION){ 
-            this.dispose();
-            previousForm.setEnabled(true);
-            previousForm.setVisible(true);
-            previousForm.requestFocus();
-        }else{
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
+        SwingUtilities.invokeLater(() -> {
+            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.ERROR_MESSAGE);
+            if(confirmation == JOptionPane.YES_OPTION){ 
+                this.dispose();
+                previousForm.setEnabled(true);
+                previousForm.setVisible(true);
+                previousForm.requestFocus();
+            }else{
+                setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        });
     }//GEN-LAST:event_formWindowClosing
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
         // TODO add your handling code here:
-        btnPrint.setBackground(Color.WHITE);
-        btnPrint.setForeground(Color.BLACK);
+        SwingUtilities.invokeLater(() -> {
+            btnPrint.setBackground(Color.WHITE);
+            btnPrint.setForeground(Color.BLACK);
+        });
         
     }//GEN-LAST:event_btnPrintMouseEntered
 
     private void btnPrintMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseExited
         // TODO add your handling code here:
-        btnPrint.setBackground(Color.BLACK);
-        btnPrint.setForeground(Color.GREEN);
+        SwingUtilities.invokeLater(() -> {
+            btnPrint.setBackground(Color.BLACK);
+            btnPrint.setForeground(Color.GREEN);
+        });
     }//GEN-LAST:event_btnPrintMouseExited
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
         // TODO add your handling code here:
-        btnEdit.setBackground(Color.WHITE);
-        btnEdit.setForeground(Color.BLACK);
+        SwingUtilities.invokeLater(() -> {
+            btnEdit.setBackground(Color.WHITE);
+            btnEdit.setForeground(Color.BLACK);
+        });
     }//GEN-LAST:event_btnEditMouseEntered
 
     private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
         // TODO add your handling code here:
-        btnEdit.setBackground(Color.BLACK);
-        btnEdit.setForeground(Color.GREEN);
+        SwingUtilities.invokeLater(() -> {
+            btnEdit.setBackground(Color.BLACK);
+            btnEdit.setForeground(Color.GREEN);
+        });
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
         // TODO add your handling code here:
-        btnDelete.setBackground(Color.WHITE);
-        btnDelete.setForeground(Color.BLACK);
+        SwingUtilities.invokeLater(() -> {
+            btnDelete.setBackground(Color.WHITE);
+            btnDelete.setForeground(Color.BLACK);
+        });
     }//GEN-LAST:event_btnDeleteMouseEntered
 
     private void btnDeleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseExited
         // TODO add your handling code here:
-        btnDelete.setBackground(Color.BLACK);
-        btnDelete.setForeground(Color.GREEN);
+       SwingUtilities.invokeLater(() -> {
+            btnDelete.setBackground(Color.BLACK);
+            btnDelete.setForeground(Color.GREEN);
+       });
         
     }//GEN-LAST:event_btnDeleteMouseExited
 

@@ -30,7 +30,8 @@ public class JSONService {
     private static boolean connected = false;
     private static File file;
     private static JSONObject object;
-    private static String path = "extra-resources\\databaseconfig.json";
+//    private static String path = "extra-resources\\databaseconfig.json";
+    private static String path = "C:\\Users\\AISI-IVY\\Downloads\\Developers Folder\\06-18-2018\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
     
     public static JSONObject getJSONFile() {
         JSONObject p = new JSONObject();
