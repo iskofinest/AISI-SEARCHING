@@ -1,1 +1,1 @@
-{"hibernate.connection.url":"jdbc:mysql:\/\/192.168.8.48:3306\/absoluteindustrialsolutionsincorporated?zeroDateTimeBehavior=convertToNull","hibernate.connection.password":"aisioffice","hibernate.connection.username":"aisioffice"}
+{"hibernate.connection.url":"jdbc:mysql:\/\/localhost:3306\/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull","hibernate.connection.password":"","hibernate.connection.username":"root"}

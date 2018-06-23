@@ -164,9 +164,20 @@ public class ProductsTable extends javax.swing.JFrame {
     
     // reload product data table for update
     public void reloadTable() {
-        productList = ProductService.getAllProducts(start, max);
-        DefaultTableModel model = new DefaultTableModel(productList, columns);
-        dataTable.setModel(model);
+        if(productsTableMode) {
+            productList = ProductService.getAllProducts(start, max);
+            DefaultTableModel model = new DefaultTableModel(productList, columns);
+            dataTable.setModel(model);
+        } else {
+            String[] userColumn = new String[]{"Employee ID", "Username", "Authority", "Last Name", "First Name", "Middle Name", "Contact", "E-mail", "Address"};
+            userList = UserService.getAllUsers();
+            DefaultTableModel model = new DefaultTableModel(userList, userColumn);
+            dataTable.setModel(model);
+            System.out.println("User Table RELOADED!!!");
+            btnUserView.setEnabled(false);
+            btnProductView.setEnabled(true);
+            enableSearchFields(false);
+        }
     }
     
     
@@ -670,14 +681,7 @@ public class ProductsTable extends javax.swing.JFrame {
         // TODO add your handling code here:
         SwingUtilities.invokeLater(() -> {
             productsTableMode = false;
-            String[] userColumn = new String[]{"Employee ID", "Username", "Authority", "Last Name", "First Name", "Middle Name", "Contact", "E-mail", "Address"};
-            userList = UserService.getAllUsers();
-            DefaultTableModel model = new DefaultTableModel(userList, userColumn);
-            dataTable.setModel(model);
-            System.out.println("User Table RELOADED!!!");
-            btnUserView.setEnabled(false);
-            btnProductView.setEnabled(true);
-            enableSearchFields(false);
+            reloadTable();
         });
     }//GEN-LAST:event_btnUserViewActionPerformed
 
@@ -687,6 +691,7 @@ public class ProductsTable extends javax.swing.JFrame {
             enableSearchFields(true);
             btnUserView.setEnabled(true);
             btnProductView.setEnabled(false);
+            productsTableMode = true;
             reloadTable();
         });
     }//GEN-LAST:event_btnProductViewActionPerformed
@@ -699,17 +704,30 @@ public class ProductsTable extends javax.swing.JFrame {
                 start = 0;
                 btnPrevious.setEnabled(false);
             } else {
+                if(productsTableMode) {
+                    if(searching){
+                        searchProducts();
+                    } else {
+                        reloadTable();
+                    }
+                } else {
+                    reloadTable();
+                }
+            }
+            if(productsTableMode) {
                 if(searching){
                     searchProducts();
                 } else {
                     reloadTable();
                 }
-            }
-            if(searching){
-                searchProducts();
             } else {
                 reloadTable();
             }
+//            if(searching){
+//                searchProducts();
+//            } else {
+//                reloadTable();
+//            }
             btnNext.setEnabled(true);
         });
     }//GEN-LAST:event_btnPreviousActionPerformed

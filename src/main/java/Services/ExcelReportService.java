@@ -119,7 +119,7 @@ public class ExcelReportService{
         data[7] = String.valueOf(product.getOriginalPrice());
         data[8] = product.getAgent();
         data[9] = ((Supplier) product.getSuppliers().toArray()[0]).getName().trim();
-        data[10] = ((Supplier) product.getSuppliers().toArray()[0]).getContactPerson().trim();
+        data[10] = product.getContactPerson().trim();
         data[11] = ((Supplier) product.getSuppliers().toArray()[0]).getContactDetails().trim();
         
         HSSFWorkbook workbook = new HSSFWorkbook();

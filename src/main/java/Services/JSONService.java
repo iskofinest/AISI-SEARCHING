@@ -31,7 +31,7 @@ public class JSONService {
     private static File file;
     private static JSONObject object;
 //    private static String path = "extra-resources\\databaseconfig.json";
-    private static String path = "C:\\Users\\AISI-IVY\\Downloads\\Developers Folder\\06-18-2018\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
+    private static String path = "D:\\Downloads\\Developers folder\\netbeans project\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
     
     public static JSONObject getJSONFile() {
         JSONObject p = new JSONObject();
@@ -68,6 +68,24 @@ public class JSONService {
         JLabel lblPassword = new JLabel("PASSWORD:  ");
         lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         JTextField txtPassword = new JTextField(30);
+        try {
+            JSONParser parser = new JSONParser();
+            File file = new File(path);
+            file = new File(path);
+            p = (JSONObject) parser.parse(new FileReader(file));
+            String url = p.get("hibernate.connection.url").toString();
+            System.out.println(url.lastIndexOf("//") + ": last index");
+            String dbName = url.substring(url.lastIndexOf("/") + 1, url.indexOf("?"));
+            String hostIP = url.substring(url.indexOf("//") + 2, url.lastIndexOf(":"));
+            String username = p.get("hibernate.connection.username").toString();
+            String password = p.get("hibernate.connection.password").toString();
+            txtDbName.setText(dbName);
+            txtHostIP.setText(hostIP);
+            txtUsername.setText(username);
+            txtPassword.setText(password);
+        } catch (Exception ex) {
+            Logger.getLogger(HibernateUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         configPanel.add(lblDbName);
         configPanel.add(txtDbName);
         configPanel.add(lblHostIP);

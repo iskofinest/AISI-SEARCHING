@@ -107,6 +107,9 @@ public class Product implements Serializable{
     @Column(name="agent")
     private String agent;
     
+    @Column(name="contact_person")
+    private String contactPerson;
+    
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(
 //        name = "product_supplier", 
@@ -131,7 +134,7 @@ public class Product implements Serializable{
     
     public Product(){}
 
-    public Product(String name, String category, String description, String brand, String model, int quantity, String unit, Date product_date, String factor, BigDecimal originalPrice, BigDecimal sellingPrice, String currency, String agent) {
+    public Product(String name, String category, String description, String brand, String model, int quantity, String unit, Date product_date, String factor, BigDecimal originalPrice, BigDecimal sellingPrice, String currency, String agent, String contactPerson) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -145,8 +148,9 @@ public class Product implements Serializable{
         this.sellingPrice = sellingPrice;
         this.currency = currency;
         this.agent = agent;
+        this.contactPerson = contactPerson;
     }    
-    public Product(String name, String description, String brand, String model, int quantity, String unit, Date product_date, BigDecimal originalPrice, String currency, String agent) {
+    public Product(String name, String description, String brand, String model, int quantity, String unit, Date product_date, BigDecimal originalPrice, String currency, String agent, String contactPerson) {
         this.name = name;
         this.description = description;
         this.brand = brand;
@@ -157,6 +161,7 @@ public class Product implements Serializable{
         this.originalPrice = originalPrice;
         this.currency = currency;
         this.agent = agent;
+        this.contactPerson = contactPerson;
     }    
 
     public int getId() {
@@ -279,7 +284,13 @@ public class Product implements Serializable{
         this.suppliers = suppliers;
     }
 
-    
+    public String getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
     
     @Override
     public String toString() {
@@ -291,8 +302,5 @@ public class Product implements Serializable{
         }
         return product;
     }
-
-    
-    
     
 }

@@ -66,9 +66,9 @@ public class Supplier implements Serializable{
     
     public Supplier(){}
     
-    public Supplier(String name, String contactPerson, String contactDetails) {
+    public Supplier(String name, String contactDetails) {
         this.name = name;
-        this.contactPerson = contactPerson;
+//        this.contactPerson = contactPerson;
         this.contactDetails = contactDetails;
     }
 

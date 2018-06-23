@@ -47,7 +47,8 @@ public class ViewSupplier extends javax.swing.JFrame {
     private void initializeData() {
         lblSupplierName.setText(supplier.getName());
         txtSupplier.setText(supplier.getName());
-        txtContactPerson.setText(supplier.getContactPerson());
+        
+//        txtContactPerson.setText(supplier.getContactPerson());
         txtContactDetails.setText(supplier.getContactDetails());
         products = supplier.getProducts().toArray();
         initializeProductTable(products);
@@ -62,7 +63,7 @@ public class ViewSupplier extends javax.swing.JFrame {
     }
     
     private void enableFields(boolean enability) {
-        txtContactPerson.setEditable(enability);
+//        txtContactPerson.setEditable(enability);
         txtContactDetails.setEditable(enability);
         txtSupplier.setEditable(enability);
     }
@@ -84,9 +85,7 @@ public class ViewSupplier extends javax.swing.JFrame {
         productTable = new javax.swing.JTable();
         btnOK = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtContactPerson = new javax.swing.JTextField();
         txtSupplier = new javax.swing.JTextField();
         lblSupplierName = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -104,9 +103,9 @@ public class ViewSupplier extends javax.swing.JFrame {
 
         bg_panel.setBackground(new java.awt.Color(0, 0, 0));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
 
-        productTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        productTable.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         productTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,18 +159,9 @@ public class ViewSupplier extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("CONTACT PERSON :");
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("SUPPLIER :");
-
-        txtContactPerson.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        txtContactPerson.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtContactPerson.setToolTipText("");
-        txtContactPerson.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         txtSupplier.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtSupplier.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -188,7 +178,7 @@ public class ViewSupplier extends javax.swing.JFrame {
         txtContactDetails.setColumns(20);
         txtContactDetails.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         txtContactDetails.setRows(5);
-        txtContactDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtContactDetails.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         jScrollPane1.setViewportView(txtContactDetails);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -200,7 +190,7 @@ public class ViewSupplier extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(380, Short.MAX_VALUE)
                 .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,19 +203,13 @@ public class ViewSupplier extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSupplier)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -234,12 +218,9 @@ public class ViewSupplier extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtContactPerson, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -329,7 +310,7 @@ public class ViewSupplier extends javax.swing.JFrame {
             } else {
                 if(JOptionPane.showConfirmDialog(null, "Are you sure you want to update?", "CONFIRM UPDATE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
                     supplier.setName(txtSupplier.getText().trim());
-                    supplier.setContactPerson(txtContactPerson.getText().trim());
+//                    supplier.setContactPerson(txtContactPerson.getText().trim());
                     supplier.setContactDetails(txtContactDetails.getText().trim());
                     if(SupplierService.updateSupplier(supplier)) {
                         JOptionPane.showMessageDialog(null, "Supplier Successfully Updated!", "UPDATE SUCCESS", 1);
@@ -438,7 +419,6 @@ public class ViewSupplier extends javax.swing.JFrame {
     private javax.swing.JPanel bg_panel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnOK;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -448,7 +428,6 @@ public class ViewSupplier extends javax.swing.JFrame {
     private javax.swing.JLabel lblSupplierName;
     private javax.swing.JTable productTable;
     private javax.swing.JTextArea txtContactDetails;
-    private javax.swing.JTextField txtContactPerson;
     private javax.swing.JTextField txtSupplier;
     // End of variables declaration//GEN-END:variables
 }

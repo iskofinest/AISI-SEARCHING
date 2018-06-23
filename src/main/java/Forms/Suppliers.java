@@ -167,7 +167,7 @@ public class Suppliers extends javax.swing.JFrame {
             if(evt.getClickCount() == 2) {
                 JTable source = (JTable)evt.getSource();
                 int row = source.rowAtPoint( evt.getPoint() );
-                ViewSupplier viewSupplier = new ViewSupplier(this, Integer.parseInt(suppliers[row][3]));
+                ViewSupplier viewSupplier = new ViewSupplier(this, Integer.parseInt(suppliers[row][2]));
                 setEnabled(false);
                 viewSupplier.setVisible(true);
             }

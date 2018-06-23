@@ -43,13 +43,13 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.8.42:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>-->
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/absoluteindustrialsolutions?zeroDateTimeBehavior=convertToNull</property>
 <!--    <property name="hibernate.connection.url">jdbc:mysql://192.168.254.119:3306/absoluteindustrialsolutionsincorporated?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">aisioffice</property>
-    <property name="hibernate.connection.password">aisioffice</property>-->
-    <property name="hibernate.connection.url"></property>
-    <property name="hibernate.connection.username"></property>
+-->    <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"></property>
+<!--    <property name="hibernate.connection.url"></property>
+    <property name="hibernate.connection.username"></property>
+    <property name="hibernate.connection.password"></property>-->
   
      <!--JDBC connection pool (user the built in)--> 
   <property name="connection.pool_size">1</property>
@@ -62,7 +62,7 @@ Contributor(s):
   
   <!--<property name="hbm2ddl.auto">update</property>-->
   <property name="hbm2ddl.auto">update</property>
-  <!--<property name="hbm2ddl.auto">create-drop</property>-->
+<!--  <property name="hbm2ddl.auto">create</property>-->
   
    <!--Mention here all the model classes along with their package name-->  
   <mapping class="Entities.Users"/>

@@ -49,7 +49,7 @@ public class ProductTable {
         this.sellingPrice = product.getSellingPrice();
         this.agent = product.getAgent();
         this.supplierName = ((Supplier)product.getSupplier().toArray()[0]).getName();
-        this.contactPerson = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+        this.contactPerson = product.getContactPerson();
         this.contactDetails = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
     }
 

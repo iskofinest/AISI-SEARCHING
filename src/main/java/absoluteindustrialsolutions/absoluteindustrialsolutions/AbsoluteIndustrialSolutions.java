@@ -5,13 +5,23 @@
  */
 package absoluteindustrialsolutions.absoluteindustrialsolutions;
 
+import Entities.Product;
+import Entities.Supplier;
+import Entities.Transactions;
 import Forms.Login;
+import Services.ProductService;
 import Services.ReadDataService;
+import Utilities.HibernateUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 
 /**
@@ -40,9 +50,26 @@ public class AbsoluteIndustrialSolutions {
 //        }
         
 //        ProductTable.session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        
+//        Product product = new Product("name", 
+//            "description",
+//            "brand",
+//            "model",
+//                1,
+//                "pcs",
+//                new Date(),
+//                BigDecimal.valueOf(1000),
+//                "PHP",
+//                "agent",
+//                "contactPerson"
+//        );
+//        Transactions transaction = new Transactions("sample");
+//        Supplier supplier = new Supplier("name", "contact details");
+//        ProductService.saveProduct(transaction, product, supplier);
+//        SessionFactory session = HibernateUtil.getSessionFactory();
+//        session.close();
         Login login = new Login();
         login.setVisible(true);
-        System.out.println("sl;dfkjalskdfj");
         
     }
     

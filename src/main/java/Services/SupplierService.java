@@ -21,14 +21,13 @@ public class SupplierService {
     
     public static String[][] getSupplierForProduct(Product product) {
         Object[] suppliersList = product.getSupplier().toArray();
-        String[][] suppliers = new String[suppliersList.length][4];
+        String[][] suppliers = new String[suppliersList.length][3];
         
         for(int i=0; i<suppliersList.length; i++) {
             Supplier supplier = (Supplier)suppliersList[i];
             suppliers[i][0] = supplier.getName();
-            suppliers[i][1] = supplier.getContactPerson();
-            suppliers[i][2] = supplier.getContactDetails();
-            suppliers[i][3] = String.valueOf(supplier.getId());
+            suppliers[i][1] = supplier.getContactDetails();
+            suppliers[i][2] = String.valueOf(supplier.getId());
         }
         return suppliers;
     }

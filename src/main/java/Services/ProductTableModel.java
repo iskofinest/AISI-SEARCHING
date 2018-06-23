@@ -122,9 +122,7 @@ public class ProductTableModel extends AbstractTableModel{
                 break;
                 
             case 15:
-                if(product.getSupplier().size() > 0) {
-                    object = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
-                } else object = "";
+                    object = product.getContactPerson();
                 break;
                 
             case 16:

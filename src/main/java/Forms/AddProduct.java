@@ -71,7 +71,6 @@ public class AddProduct extends javax.swing.JFrame {
                         Supplier supplier = list.get(txtSupplierName.getSelectedIndex());
                         System.out.println("SELECTED INDEX: " + txtSupplierName.getSelectedIndex());
                         txtContactDetails.setText(supplier.getContactDetails());
-                        txtContactPerson.setText(supplier.getContactPerson());
                     }
                 });
             }
@@ -545,8 +544,8 @@ public class AddProduct extends javax.swing.JFrame {
             String contactDetails = txtContactDetails.getText().trim();
             Transactions transaction = new Transactions();
             transaction.setReferenceNumber(reference);
-            Supplier supplier = new Supplier(supplierName, contactPerson, contactDetails);
-            Product product = new Product(name,description, brand, model, quantity, unit, product_date, originalPrice, currency, agent);
+            Supplier supplier = new Supplier(supplierName, contactDetails);
+            Product product = new Product(name,description, brand, model, quantity, unit, product_date, originalPrice, currency, agent, contactPerson);
             if(ProductService.saveProduct(transaction, product, supplier)) {
                 JOptionPane.showMessageDialog(null, "Save Successful");
                 ProductTable.productsTableForm.reloadTable();

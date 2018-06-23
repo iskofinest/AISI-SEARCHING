@@ -62,7 +62,7 @@ public class ProductService {
                 data[i][8] = product.getAgent();
                 data[i][12] = product.getId() + "";  
                 data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-                data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+                data[i][10] = product.getContactPerson();
                 data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
                 System.out.println("CURRENCY: " + product.getCurrency());
             }catch(ArrayIndexOutOfBoundsException ex){
@@ -185,7 +185,7 @@ public class ProductService {
             data[i][7] = product.getOriginalPrice().toString();
             data[i][8] = product.getAgent();
             data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-            data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+            data[i][10] = product.getContactPerson();
             data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
             data[i][12] = product.getId() + "";
         }
@@ -291,6 +291,7 @@ public class ProductService {
             Set<Product> products = transactions.getProducts();
             Set<Supplier> suppliers = product.getSupplier();
             supplier = isSupplierExist(supplier, session);
+            supplier.setContactPerson("sample");
             suppliers.add(supplier);
             System.out.println(transactions.toString());
             products.forEach(e-> System.out.println("TransactionServices: " + e.toString()));
@@ -386,7 +387,7 @@ public class ProductService {
                 data[i][7] = currency + " " +  product.getOriginalPrice().toString();
                 data[i][8] = product.getAgent();
                 data[i][9] = ((Supplier)product.getSupplier().toArray()[0]).getName();
-                data[i][10] = ((Supplier)product.getSupplier().toArray()[0]).getContactPerson();
+                data[i][10] = product.getContactPerson();
                 data[i][11] = ((Supplier)product.getSupplier().toArray()[0]).getContactDetails();
                 data[i][12] = product.getId() + ""; 
             }catch(ArrayIndexOutOfBoundsException ex){
