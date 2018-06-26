@@ -114,6 +114,13 @@ public class ProductsTable extends javax.swing.JFrame {
                                     txtSearchReference.getText().trim().equals("") && txtSearchUnit.getText().trim().equals("") &&
                                     txtSearchSupplierName.getText().trim().equals("")) {
                                 listCount = ProductService.countAllProduct();
+                                if(listCount < 28) {
+                                    btnPrevious.setEnabled(false);
+                                    btnNext.setEnabled(false);
+                                } else {
+                                    btnPrevious.setEnabled(false);
+                                    btnNext.setEnabled(true);
+                                }
                                 reloadTable();
                                 searching = false;
                             } else {
@@ -127,6 +134,9 @@ public class ProductsTable extends javax.swing.JFrame {
                                 if(listCount < 28) {
                                     btnPrevious.setEnabled(false);
                                     btnNext.setEnabled(false);
+                                } else {
+                                    btnPrevious.setEnabled(false);
+                                    btnNext.setEnabled(true);
                                 }
                                 searching = true;
                                 searchProducts();
@@ -633,8 +643,11 @@ public class ProductsTable extends javax.swing.JFrame {
     //<editor-fold desc="OBJECT RESPONSIVE METHODS" defaultstate="collapsed">
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        SwingUtilities.invokeLater(() -> {
-            int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
+//        SwingUtilities.invokeLater(() -> {
+//            
+//        });
+//        
+int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WARNING",JOptionPane.YES_OPTION,JOptionPane.QUESTION_MESSAGE);
             if(confirmation == JOptionPane.YES_OPTION){
     //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
     //            else NetworkHandlerService.closeConnection();
@@ -645,8 +658,6 @@ public class ProductsTable extends javax.swing.JFrame {
             }else{
                 setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             }    
-        });
-        
     }//GEN-LAST:event_formWindowClosing
 
     private void printMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMenuActionPerformed
