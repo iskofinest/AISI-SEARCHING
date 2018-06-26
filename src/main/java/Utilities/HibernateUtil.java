@@ -43,7 +43,7 @@ public class HibernateUtil {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
             javax.swing.JOptionPane.showMessageDialog(null, ex.toString(), "ERROR", 0);
-            JSONService.setJSONFile();
+//            JSONService.setJSONFile();
             throw new ExceptionInInitializerError(ex);
         }
     }

@@ -67,27 +67,34 @@ public class ExcelReportService{
         for(int rowNumber=0; rowNumber<productData.length; rowNumber++) {
             sheetRow = sheet.createRow(rowNumber+1);
             String[] values = productData[rowNumber];
+            System.out.println("");
+            System.out.println("");
             for(int column=1; column<=values.length-1; column++) {
-                HSSFCell cell = sheetRow.createCell(column-1, CellType.STRING);
-                System.out.println(values[column-1]);
-                String value = values[column-1].replace("\n", "");
-                System.out.println(value);
-                String message="", temp="";
-                while(value.contains(" ")) {
-                    temp = value.substring(0, value.indexOf(" ")) + " ";
-                    if(temp.length()>40) {
-                        message += "\n" + temp;
-                    } else {
-                        message += temp;
+                try {
+                    System.out.println("");
+                    HSSFCell cell = sheetRow.createCell(column-1, CellType.STRING);
+                    System.out.println("value "  + values[column-1]);
+                    String value = values[column-1].replace("\n", "");
+                    System.out.println(value);
+                    String message="", temp="";
+                    while(value.contains(" ")) {
+                        temp = value.substring(0, value.indexOf(" ")) + " ";
+                        if(temp.length()>40) {
+                            message += "\n" + temp;
+                        } else {
+                            message += temp;
+                        }
+                        value = value.substring(value.indexOf(" ")+1);
                     }
-                    value = value.substring(value.indexOf(" ")+1);
+                    message += value;
+                    cell.setCellValue(message);
+                    HSSFCellStyle style = cell.getCellStyle();
+                    style.setWrapText(true);
+                    style.setAlignment(HorizontalAlignment.LEFT);
+                    style.setVerticalAlignment(VerticalAlignment.CENTER);
+                } catch (NullPointerException nullPointerException) {
+                    System.out.println(nullPointerException.toString() + " on " + (column-1));
                 }
-                message += value;
-                cell.setCellValue(message);
-                HSSFCellStyle style = cell.getCellStyle();
-                style.setWrapText(true);
-                style.setAlignment(HorizontalAlignment.LEFT);
-                style.setVerticalAlignment(VerticalAlignment.CENTER);
 
             }
         }

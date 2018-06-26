@@ -8,6 +8,7 @@ package Forms;
 import Entities.ProductTable;
 import Entities.Users;
 import Services.UserService;
+import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -204,8 +205,16 @@ public class ViewUserInfo extends javax.swing.JFrame {
 
         btnViewPassword.setBackground(new java.awt.Color(0, 0, 0));
         btnViewPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnViewPassword.setForeground(new java.awt.Color(0, 153, 51));
+        btnViewPassword.setForeground(new java.awt.Color(0, 204, 0));
         btnViewPassword.setText("View Password");
+        btnViewPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnViewPasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnViewPasswordMouseExited(evt);
+            }
+        });
         btnViewPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewPasswordActionPerformed(evt);
@@ -214,8 +223,16 @@ public class ViewUserInfo extends javax.swing.JFrame {
 
         btnEdit.setBackground(new java.awt.Color(0, 0, 0));
         btnEdit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(0, 153, 51));
+        btnEdit.setForeground(new java.awt.Color(51, 204, 0));
         btnEdit.setText("Edit");
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+        });
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -228,8 +245,16 @@ public class ViewUserInfo extends javax.swing.JFrame {
 
         btnDelete.setBackground(new java.awt.Color(0, 0, 0));
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDelete.setForeground(new java.awt.Color(0, 153, 0));
+        btnDelete.setForeground(new java.awt.Color(51, 204, 0));
         btnDelete.setText("Delete");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseExited(evt);
+            }
+        });
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -354,7 +379,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
                         .addComponent(btnViewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelete)))
-                .addGap(22, 22, 22))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout bg_PanelLayout = new javax.swing.GroupLayout(bg_Panel);
@@ -371,7 +396,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
             .addGroup(bg_PanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(5, 5, 5))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -551,6 +576,43 @@ public class ViewUserInfo extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnViewPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewPasswordMouseEntered
+        // TODO add your handling code here:
+        btnViewPassword.setBackground(Color.WHITE);
+        btnViewPassword.setForeground(Color.BLACK);
+        
+    }//GEN-LAST:event_btnViewPasswordMouseEntered
+
+    private void btnViewPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewPasswordMouseExited
+        // TODO add your handling code here:
+        btnViewPassword.setBackground(Color.BLACK);
+        btnViewPassword.setForeground(Color.GREEN);
+    }//GEN-LAST:event_btnViewPasswordMouseExited
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        // TODO add your handling code here:
+       btnEdit.setBackground(Color.WHITE);
+       btnEdit.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
+        // TODO add your handling code here:
+        btnDelete.setBackground(Color.WHITE);
+        btnDelete.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btnDeleteMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        // TODO add your handling code here:
+       btnEdit.setBackground(Color.BLACK);
+       btnEdit.setForeground(Color.GREEN);
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnDeleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseExited
+        // TODO add your handling code here:
+        btnDelete.setBackground(Color.BLACK);
+        btnDelete.setForeground(Color.GREEN);
+    }//GEN-LAST:event_btnDeleteMouseExited
 
     /**
      * @param args the command line arguments

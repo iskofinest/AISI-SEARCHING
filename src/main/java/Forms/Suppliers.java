@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Suppliers extends javax.swing.JFrame {
 
     String[][] suppliers;
-    String columns[] = new String[]{"SUPPLIER NAME", "CONTACT PERSON", "CONTACT DETAILS"};
+    String columns[] = new String[]{"SUPPLIER NAME", "CONTACT DETAILS"};
     javax.swing.JFrame previousForm;
     
     /**

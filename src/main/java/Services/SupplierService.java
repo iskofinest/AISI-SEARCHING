@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.jboss.logging.Logger;
 
 /**
  *
@@ -18,6 +19,8 @@ import org.hibernate.Transaction;
  */
 public class SupplierService {
     
+    
+    private final static Logger logger = Logger.getLogger(SupplierService.class.getName());
     
     public static String[][] getSupplierForProduct(Product product) {
         Object[] suppliersList = product.getSupplier().toArray();
@@ -42,6 +45,7 @@ public class SupplierService {
     
     public static boolean updateSupplier(Supplier supplier) {
         boolean saved = false;
+        logger.log(Logger.Level.FATAL,saved);
         try{
             Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();

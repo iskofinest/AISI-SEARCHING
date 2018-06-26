@@ -6,6 +6,7 @@
 package Services;
 
 import Entities.Product;
+import Entities.ProductTable;
 import Entities.Supplier;
 import Entities.Transactions;
 import java.util.HashSet;
@@ -438,6 +439,16 @@ public class ProductService {
         System.out.println("COUNT MULTIPLE FIELDS: " + count);
         return count;
     }
+    
+    
+    
+    public static List<Transaction> getByReference(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        return session.createQuery("select reference_number from transaction order by reference_number").list();
+    }
+    
+    
+//    public static List<Transaction> 
     
     
   

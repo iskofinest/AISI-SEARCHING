@@ -38,6 +38,8 @@ public class Supplier implements Serializable{
     public static final String CONTACT_PERSON = "ContactPerson";
     public static final String CONTACT_DETAILS = "ContactDetails";
     
+    private static final long serialVersionUID = 1L;
+    
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

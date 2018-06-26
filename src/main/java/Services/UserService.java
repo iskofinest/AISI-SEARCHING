@@ -177,4 +177,13 @@ public class UserService {
         return passwordChanged;
     }
     
+    public static int countAllUsers() {
+        String hql="select count(*) from  Users";
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        Query query= session.createQuery(hql);
+        int count= Integer.parseInt(String.valueOf(query.list().get(0)));
+        session.close();
+        return count;
+    }
+    
 }

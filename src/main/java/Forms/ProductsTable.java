@@ -15,6 +15,7 @@ import Entities.Transactions;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.UserService;
+import com.sun.istack.internal.logging.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -639,7 +640,8 @@ public class ProductsTable extends javax.swing.JFrame {
     //            if(ProductTable.currentUser.getAuthority().equals("ADMIN")) NetworkHandlerService.closeAllServerConnections();
     //            else NetworkHandlerService.closeConnection();
                 ProductTable.currentUser = null;
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                System.exit(0);
                 this.dispose();
             }else{
                 setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -679,9 +681,17 @@ public class ProductsTable extends javax.swing.JFrame {
 
     private void btnUserViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserViewActionPerformed
         // TODO add your handling code here:
+        
         SwingUtilities.invokeLater(() -> {
+            listCount = UserService.countAllUsers();
+            start = 0;
             productsTableMode = false;
             reloadTable();
+            System.err.println(listCount);
+            if(listCount<28){
+               btnPrevious.setEnabled(false);
+               btnNext.setEnabled(false);
+            }
         });
     }//GEN-LAST:event_btnUserViewActionPerformed
 
@@ -692,6 +702,11 @@ public class ProductsTable extends javax.swing.JFrame {
             btnUserView.setEnabled(true);
             btnProductView.setEnabled(false);
             productsTableMode = true;
+            listCount = ProductService.countAllProduct();
+            if(listCount>28){
+                btnNext.setEnabled(true);
+            }
+//            start = 0;
             reloadTable();
         });
     }//GEN-LAST:event_btnProductViewActionPerformed
@@ -744,6 +759,7 @@ public class ProductsTable extends javax.swing.JFrame {
                 reloadTable();
             }
             System.out.println(listCount + ": TOTAL LIST COUNT");
+           
         });
     }//GEN-LAST:event_btnNextActionPerformed
 
