@@ -478,6 +478,11 @@ public class CreateAccount extends javax.swing.JFrame {
         btnCreateAccount.setForeground(new java.awt.Color(0, 102, 102));
         btnCreateAccount.setText("CREATE ACCOUNT");
         btnCreateAccount.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnCreateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCreateAccountMouseEntered(evt);
+            }
+        });
         btnCreateAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreateAccountActionPerformed(evt);
@@ -690,6 +695,10 @@ public class CreateAccount extends javax.swing.JFrame {
              }
          });
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCreateAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateAccountMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCreateAccountMouseEntered
        
     
     /**

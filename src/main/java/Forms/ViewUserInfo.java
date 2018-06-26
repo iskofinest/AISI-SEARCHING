@@ -519,7 +519,7 @@ public class ViewUserInfo extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             if(JOptionPane.showConfirmDialog(null, "Are you sure you want to delete "+" "+user.getFirstName()+" "+user.getLastName(),"CONFIRM DELETE", JOptionPane.OK_CANCEL_OPTION, 3) == 0) {
                 if(UserService.deleteUser(user)) {
-                    JOptionPane.showMessageDialog(null, lblName.getText()+" "+ "Useer Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
+                    JOptionPane.showMessageDialog(null, lblName.getText()+" "+ "User Successfully Deleted!!", "DELETE SUCCESSFUL", 1);
                     ProductTable.productsTableForm.reloadTable();
                     ProductTable.productsTableForm.setEnabled(true);
                     ProductTable.productsTableForm.requestFocus();

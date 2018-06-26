@@ -8,10 +8,10 @@ package Services;
 import Utilities.HibernateUtil;
 import java.awt.GridLayout;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -30,7 +30,7 @@ public class JSONService {
     private static boolean connected = false;
     private static File file;
     private static JSONObject object;
-    private static String path = "D:\\databaseconfig.json";
+    private static String path = "extra-resources\\databaseconfig.json";
 //    private static String path = "D:\\Downloads\\Developers folder\\netbeans project\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
     
     public static JSONObject getJSONFile() {
@@ -71,7 +71,12 @@ public class JSONService {
         try {
             JSONParser parser = new JSONParser();
             File file = new File(path);
-            file = new File(path);
+            file.canExecute();
+            file.canRead();
+            file.canWrite();
+            file.setExecutable(true);
+            file.setWritable(true);
+            file.setReadable(true);
             p = (JSONObject) parser.parse(new FileReader(file));
             String url = p.get("hibernate.connection.url").toString();
             System.out.println(url.lastIndexOf("//") + ": last index");
