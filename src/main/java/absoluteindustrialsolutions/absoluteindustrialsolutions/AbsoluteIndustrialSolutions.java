@@ -15,6 +15,7 @@ import Utilities.HibernateUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.logging.Level;
@@ -71,6 +72,20 @@ public class AbsoluteIndustrialSolutions {
         Login login = new Login();
         login.setVisible(true);
         
+//        try {
+//            String path = "D:\\sample.txt";
+//            File file = new File(path);
+////            File file = new File ( "C:\\1.txt" );
+//            if(file.createNewFile()) {
+//                System.out.println("file created");
+//            } else {
+//                System.out.println("file existed");
+//            }
+//        } catch (IOException ex) {
+//            System.out.println("some shit occurred");
+//            Logger.getLogger(AbsoluteIndustrialSolutions.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
     }
     
 }

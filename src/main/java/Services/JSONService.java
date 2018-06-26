@@ -30,8 +30,8 @@ public class JSONService {
     private static boolean connected = false;
     private static File file;
     private static JSONObject object;
-//    private static String path = "extra-resources\\databaseconfig.json";
-    private static String path = "D:\\Downloads\\Developers folder\\netbeans project\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
+    private static String path = "D:\\databaseconfig.json";
+//    private static String path = "D:\\Downloads\\Developers folder\\netbeans project\\AISI-SEARCHING\\target\\extra-resources\\databaseconfig.json";
     
     public static JSONObject getJSONFile() {
         JSONObject p = new JSONObject();

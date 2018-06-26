@@ -27,14 +27,14 @@ public class HibernateUtil {
         
         
         try {
-//            JSONObject jsonConfigFile = JSONService.getJSONFile();
-//            Properties properties = new Properties();
-//            properties.setProperty("hibernate.connection.url", String.valueOf(jsonConfigFile.get("hibernate.connection.url")));
-//            properties.setProperty("hibernate.connection.username", String.valueOf(jsonConfigFile.get("hibernate.connection.username")));
-//            properties.setProperty("hibernate.connection.password", String.valueOf(jsonConfigFile.get("hibernate.connection.password")));
+            JSONObject jsonConfigFile = JSONService.getJSONFile();
+            Properties properties = new Properties();
+            properties.setProperty("hibernate.connection.url", String.valueOf(jsonConfigFile.get("hibernate.connection.url")));
+            properties.setProperty("hibernate.connection.username", String.valueOf(jsonConfigFile.get("hibernate.connection.username")));
+            properties.setProperty("hibernate.connection.password", String.valueOf(jsonConfigFile.get("hibernate.connection.password")));
             
             Configuration configuration = new Configuration().configure(); // configuration // settings // from // hibernate.cfg.xml
-//            configuration.setProperties(properties);
+            configuration.setProperties(properties);
             StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
             serviceRegistryBuilder.applySettings(configuration.getProperties());
             ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
@@ -43,7 +43,7 @@ public class HibernateUtil {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
             javax.swing.JOptionPane.showMessageDialog(null, ex.toString(), "ERROR", 0);
-//            JSONService.setJSONFile();
+            JSONService.setJSONFile();
             throw new ExceptionInInitializerError(ex);
         }
     }
