@@ -442,13 +442,51 @@ public class ProductService {
     
     
     
-    public static List<Transaction> getByReference(){
+    public static List<String> getReference(){
         Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
-        return session.createQuery("select reference_number from transaction order by reference_number").list();
+        List list = session.createQuery("SELECT DISTINCT referenceNumber FROM Transactions").list();
+        session.close();
+        return list;
+    }
+    
+    public static List<String> getAllSupplierName(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        List list = session.createQuery("SELECT DISTINCT name FROM Supplier").list();
+        session.close();
+        return list;
+    }
+    
+    //TODO get all Item names
+    public static List<String> getItem(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        List list = session.createQuery("SELECT DISTINCT name FROM Product").list();
+        session.close();
+        return list;
+    }
+    
+    public static List<String> getAllBrands(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        List list = session.createQuery("SELECT DISTINCT brand FROM Product").list();
+        session.close();
+        return list;
     }
     
     
-//    public static List<Transaction> 
+    public static List<String> getAllUnit(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        List list = session.createQuery("SELECT DISTINCT unit FROM Product").list();
+        session.close();
+        return list;
+    }
+    
+    public static List<String> getAllDescription(){
+        Session session = Utilities.HibernateUtil.getSessionFactory().openSession();
+        List list = session.createQuery("SELECT DISTINCT description FROM Product").list();
+        session.close();
+        return list;
+    }
+    
+    
     
     
   

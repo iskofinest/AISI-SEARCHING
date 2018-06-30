@@ -6,24 +6,20 @@
 package Forms;
 
 //<editor-fold desc="IMPORTS" defaultstate="collapsed">
-import Entities.Product;
 import Entities.ProductTable;
-import Entities.Supplier;
-import Entities.Transactions;
 //import Mapper.ExcelReportServiceMapper;
 //import Network.NetworkHandlerService;
 import Services.ExcelReportService;
 import Services.ProductService;
 import Services.UserService;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -32,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 //</editor-fold>
 
 /**
@@ -43,6 +40,7 @@ public class ProductsTable extends javax.swing.JFrame {
     //<editor-fold desc="VARIABLE DECLARATIONS" defaultstate="collapsed">
     JTextField searchFields[];
     JTextComponent [] textField;
+    JComboBox [] comboBox;
     String month[] = {"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"};
     String day[] = {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
     String[] columns = new String[]{"REFERENCE", "ITEM", "DESCRIPTION", "BRAND", "MODEL", 
@@ -53,10 +51,12 @@ public class ProductsTable extends javax.swing.JFrame {
     boolean isAdmin = false;
     boolean productsTableMode = true;
     boolean searching = false;
+    boolean noRecordsFound = false;
     int start = 0;
     int max = 28;
     int listCount = 0;
     JFrame thisForm;
+    
     //</editor-fold>
     
     /**
@@ -68,6 +68,11 @@ public class ProductsTable extends javax.swing.JFrame {
         initComponents();
         initializeData();
         thisForm = this;
+        AutoCompleteDecorator.decorate(txtSearchSupplierName);
+        AutoCompleteDecorator.decorate(txtSearchReference);
+        AutoCompleteDecorator.decorate(txtSearchItemName);
+        AutoCompleteDecorator.decorate(txtSearchBrand);
+        AutoCompleteDecorator.decorate(txtSearchUnit);
         printMenu.setIcon(new javax.swing.ImageIcon("extra-resources\\print.png"));
         setIconImage(new javax.swing.ImageIcon("extra-resources\\absIcon.png").getImage());
         btnLogout.setIcon(new javax.swing.ImageIcon("extra-resources\\iconLogOut.png"));
@@ -84,6 +89,8 @@ public class ProductsTable extends javax.swing.JFrame {
             jMenuBar1.remove(btnView);
             btnAddAccountUser.setVisible(isAdmin);
         }
+        
+      
     }
 
     
@@ -99,54 +106,142 @@ public class ProductsTable extends javax.swing.JFrame {
         reloadTable();  // FOR UPDATING THE TABLE
         ProductTable.productsTableForm = this;   // SAVING THIS FORM TO THE CONSTANT HANDLER
         dataTable.setDefaultEditor(Object.class, null); // DISABLING THE JTABLE EDIT
-        searchFields = new JTextField[]{txtSearchReference, txtSearchItemName, txtSearchBrand, txtSearchUnit, txtSearchSupplierName};
+        //todo comboBox for searchFields.
+        comboBox = new JComboBox[]{txtSearchReference,txtSearchItemName,txtSearchSupplierName,txtSearchBrand,txtSearchUnit};
         btnPrevious.setEnabled(false);
         listCount = ProductService.countAllProduct();
         btnNext.setEnabled(listCount > 28);
-        for(JTextField searchField : searchFields) {
-            searchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                            if( txtSearchBrand.getText().trim().equals("") && txtSearchItemName.getText().trim().equals("") &&
-                                    txtSearchReference.getText().trim().equals("") && txtSearchUnit.getText().trim().equals("") &&
-                                    txtSearchSupplierName.getText().trim().equals("")) {
-                                listCount = ProductService.countAllProduct();
-                                if(listCount < 28) {
-                                    btnPrevious.setEnabled(false);
-                                    btnNext.setEnabled(false);
-                                } else {
-                                    btnPrevious.setEnabled(false);
-                                    btnNext.setEnabled(true);
-                                }
-                                reloadTable();
-                                searching = false;
-                            } else {
-                                String reference = txtSearchReference.getText().trim();
-                                String name = txtSearchItemName.getText().trim();
-                                String brand = txtSearchBrand.getText().trim();
-                                String unit = txtSearchUnit.getText().trim();
-                                String supplier = txtSearchSupplierName.getText().trim();
-                                start = 0;
-                                listCount = ProductService.countMultipleFields(reference, name, brand, unit, supplier);
-                                if(listCount < 28) {
-                                    btnPrevious.setEnabled(false);
-                                    btnNext.setEnabled(false);
-                                } else {
-                                    btnPrevious.setEnabled(false);
-                                    btnNext.setEnabled(true);
-                                }
-                                searching = true;
-                                searchProducts();
-                            }
-                        }
-                    }
-                });
-            }
-        });
+        
+        for (JComboBox comboSearch : comboBox) {
+           comboSearch.getEditor().getEditorComponent().addKeyListener(new java.awt.event.KeyAdapter() {
+               public void keyPressed(java.awt.event.KeyEvent evt){
+                   SwingUtilities.invokeLater(new Runnable() {
+                       @Override
+                       public void run() {
+                           
+                             if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                                 String searchItemName="", searchReference="", searchBrand = "",searchUnit="", searchSupplierName= "";
+                                 if(txtSearchItemName.getSelectedIndex() > -1) {
+                                     searchItemName = txtSearchItemName.getSelectedItem().toString().trim();
+                                     
+                                 }
+                                 if(txtSearchReference.getSelectedIndex() > -1) {
+                                     searchReference = txtSearchReference.getSelectedItem().toString().trim();
+                                     
+                                 }
+                                 if(txtSearchBrand.getSelectedIndex() > -1) {
+                                     searchBrand = txtSearchBrand.getSelectedItem().toString().trim();
+                                 }
+                                 if(txtSearchUnit.getSelectedIndex() > -1) {
+                                      searchUnit = txtSearchUnit.getSelectedItem().toString().trim();
+                                 }
+                                 if(txtSearchSupplierName.getSelectedIndex() > -1) {
+                                     searchSupplierName = txtSearchSupplierName.getSelectedItem().toString().trim();
+                                 }
+                                    if( searchItemName.equals("") && searchReference.equals("") && 
+                                        searchUnit.equals("") && searchSupplierName.equals("") && searchBrand.equals("")) {
+                                        listCount = ProductService.countAllProduct();
+                                        if(listCount < 28) {
+                                            btnPrevious.setEnabled(false);
+                                            btnNext.setEnabled(false);
+                                        } else {
+                                            btnPrevious.setEnabled(false);
+                                            btnNext.setEnabled(true);
+                                        }
+                                        reloadTable();
+                                        searching = false;
+                               } else {
+                                    String itemName="", reference="", brand="",unit="", supplierName= "";
+                                    if(txtSearchItemName.getSelectedIndex() > -1) {
+                                        itemName = txtSearchItemName.getSelectedItem().toString().trim();
+                                    }
+                                    if(txtSearchReference.getSelectedIndex() > -1) {
+                                        reference = txtSearchReference.getSelectedItem().toString().trim();
+                                    }
+                                    if(txtSearchUnit.getSelectedIndex() > -1) {
+                                         unit = txtSearchUnit.getSelectedItem().toString().trim();
+                                    }
+                                    if(txtSearchBrand.getSelectedIndex() > -1) {
+                                         brand = txtSearchBrand.getSelectedItem().toString().trim();
+                                    }
+                                    if(txtSearchSupplierName.getSelectedIndex() > -1) {
+                                        supplierName = txtSearchSupplierName.getSelectedItem().toString().trim();
+                                    }
+                                 
+                                    if(listCount < 28) {
+                                        btnPrevious.setEnabled(false);
+                                        btnNext.setEnabled(false);
+                                    } else {
+                                        btnPrevious.setEnabled(false);
+                                        btnNext.setEnabled(true);
+                                    }
+                                    start = 0;
+                                    listCount = ProductService.countMultipleFields(reference, itemName, brand, unit, supplierName);
+                                    searching = true;
+                                    searchProducts();
+                               }
+                             }
+                           
+                       }
+                   });
+                   
+               }
+               
+               
+            });
         }
+        
+        
+        
+//        for(JTextField searchField : searchFields) {
+//            searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+//            public void keyPressed(java.awt.event.KeyEvent evt) {
+//                SwingUtilities.invokeLater(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//                            if( txtSearchItemName.getSelectedItem().toString().trim().equals("") &&
+//                                    txtSearchReference.getSelectedItem().toString().trim().equals("") && 
+//                                    txtSearchUnit.getText().trim().equals("") &&
+//                                    txtSearchSupplierName.getSelectedItem().toString().trim().equals("")) {
+//                                listCount = ProductService.countAllProduct();
+//                                if(listCount < 28) {
+//                                    btnPrevious.setEnabled(false);
+//                                    btnNext.setEnabled(false);
+//                                } else {
+//                                    btnPrevious.setEnabled(false);
+//                                    btnNext.setEnabled(true);
+//                                }
+//                                reloadTable();
+//                                searching = false;
+//                            } else {
+////                                String reference = txtSearchReference.getText().trim();
+//                                String reference = txtSearchReference.getSelectedItem().toString().trim();
+////                                String name = txtSearchItemName.getText().trim();
+//                                String name = txtSearchItemName.getSelectedItem().toString().trim();
+////                                String brand = txtSearchBrand.getText().trim();
+//                                String brand = txtSearchBrand.getSelectedItem().toString().trim();
+//                                String unit = txtSearchUnit.getText().trim();
+////                                String supplier = txtSearchSupplierName.getText().trim();
+//                                String supplier = txtSearchSupplierName.getSelectedItem().toString();
+//                                start = 0;
+//                                listCount = ProductService.countMultipleFields(reference, name, brand, unit, supplier);
+//                                if(listCount < 28) {
+//                                    btnPrevious.setEnabled(false);
+//                                    btnNext.setEnabled(false);
+//                                } else {
+//                                    btnPrevious.setEnabled(false);
+//                                    btnNext.setEnabled(true);
+//                                }
+//                                searching = true;
+//                                searchProducts();
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//        }
         
     }
     
@@ -176,6 +271,30 @@ public class ProductsTable extends javax.swing.JFrame {
     public void reloadTable() {
         if(productsTableMode) {
             productList = ProductService.getAllProducts(start, max);
+            if(!ProductTable.initialized) {
+                ProductTable.references = ProductService.getReference();
+                ProductTable.suppliers = ProductService.getAllSupplierName();
+                ProductTable.itemNames = ProductService.getItem();
+                ProductTable.brands = ProductService.getAllBrands();
+                ProductTable.units = ProductService.getAllUnit();
+                for(String[] product : productList) {
+                    if(!ProductTable.references.contains(product[0])) {
+                        ProductTable.references.add(product[0]);
+                    }
+                    if(!ProductTable.suppliers.contains(product[9])) {
+                        ProductTable.suppliers.add(product[9]);
+                    }
+                    if(!ProductTable.itemNames.contains(product[1])) {
+                        ProductTable.itemNames.add(product[1]);
+                    }
+                    if(!ProductTable.brands.contains(product[3])) {
+                        ProductTable.brands.add(product[3]);
+                    }
+                    if(!ProductTable.units.contains(product[5])) {
+                        ProductTable.units.add(product[5]);
+                    }
+                }
+            }
             DefaultTableModel model = new DefaultTableModel(productList, columns);
             dataTable.setModel(model);
         } else {
@@ -188,21 +307,71 @@ public class ProductsTable extends javax.swing.JFrame {
             btnProductView.setEnabled(true);
             enableSearchFields(false);
         }
+        
+        //supplier
+        txtSearchSupplierName.setModel(new DefaultComboBoxModel(ProductTable.suppliers.toArray()));
+        
+        //item
+        txtSearchItemName.setModel(new DefaultComboBoxModel(ProductTable.itemNames.toArray()));
+        
+        //brand
+        txtSearchBrand.setModel(new DefaultComboBoxModel(ProductTable.brands.toArray()));
+        
+        //reference
+        txtSearchReference.setModel(new DefaultComboBoxModel(ProductTable.references.toArray()));
+        
+        //unit
+        txtSearchUnit.setModel(new DefaultComboBoxModel(ProductTable.units.toArray()));
+         
+        txtSearchReference.setSelectedIndex(-1);        
+        txtSearchSupplierName.setSelectedIndex(-1);        
+        txtSearchItemName.setSelectedIndex(-1);
+        txtSearchBrand.setSelectedIndex(-1);
+        txtSearchItemName.setSelectedIndex(-1);
+        txtSearchUnit.setSelectedIndex(-1);
     }
     
     
     
     private void searchProducts() {
-        String reference = txtSearchReference.getText().trim();
-        String name = txtSearchItemName.getText().trim();
-        String brand = txtSearchBrand.getText().trim();
-        String unit = txtSearchUnit.getText().trim();
-        String supplier = txtSearchSupplierName.getText().trim();
-        productList = ProductService.searchMultipleFields(reference, name, brand, unit, supplier, start);
+    
+        String itemName="", reference="", brand="",unit="", supplierName= "";
+        if(txtSearchItemName.getSelectedIndex() > -1) {
+            itemName = txtSearchItemName.getSelectedItem().toString().trim();
+        }
+        if(txtSearchReference.getSelectedIndex() > -1) {
+            reference = txtSearchReference.getSelectedItem().toString().trim();
+        }
+        if(txtSearchUnit.getSelectedIndex() > -1) {
+             unit = txtSearchUnit.getSelectedItem().toString().trim();
+        }
+        if(txtSearchBrand.getSelectedIndex() > -1) {
+             brand = txtSearchBrand.getSelectedItem().toString().trim();
+        }
+        if(txtSearchSupplierName.getSelectedIndex() > -1) {
+            supplierName = txtSearchSupplierName.getSelectedItem().toString().trim();
+        }
+//        String reference = txtSearchReference.getText().trim();
+//        String reference = txtSearchReference.getSelectedItem().toString().trim();
+////        String name = txtSearchItemName.getText().trim();
+//        String name = txtSearchItemName.getSelectedItem().toString();
+////        String brand = txtSearchBrand.getText().trim();
+//        String brand = txtSearchBrand.getSelectedItem().toString().trim();
+//        String unit = txtSearchUnit.getText().trim();
+////        String supplier = txtSearchSupplierName.getText().trim();
+//        String supplier = txtSearchSupplierName.getSelectedItem().toString();
+        productList = ProductService.searchMultipleFields(reference, itemName, brand, unit, supplierName, start);
 //        TableModel model = new ProductTableModel(productList);
 //        dataTable.setModel(model);
+        if(productList.length == 0){
+            System.err.println("Record not found");
+            System.err.println("Records not found: "+productList.length);
+            JOptionPane.showConfirmDialog(null,"Record not found.","Error Message",JOptionPane.YES_OPTION,0);
+        }
         
 //        productList = ProductService.getQueryList(searchtxt);
+        
+      
         DefaultTableModel model = new DefaultTableModel(productList, columns);
         dataTable.setModel(model);
     }
@@ -243,13 +412,13 @@ public class ProductsTable extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        txtSearchBrand = new javax.swing.JTextField();
-        txtSearchItemName = new javax.swing.JTextField();
-        txtSearchReference = new javax.swing.JTextField();
-        txtSearchSupplierName = new javax.swing.JTextField();
-        txtSearchUnit = new javax.swing.JTextField();
         btnNext = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
+        txtSearchSupplierName = new javax.swing.JComboBox<>();
+        txtSearchBrand = new javax.swing.JComboBox<>();
+        txtSearchReference = new javax.swing.JComboBox<>();
+        txtSearchItemName = new javax.swing.JComboBox<>();
+        txtSearchUnit = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -346,21 +515,6 @@ public class ProductsTable extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        txtSearchBrand.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSearchBrand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txtSearchItemName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSearchItemName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txtSearchReference.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSearchReference.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txtSearchSupplierName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSearchSupplierName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txtSearchUnit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtSearchUnit.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         btnNext.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         btnNext.setText("NEXT");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -376,6 +530,26 @@ public class ProductsTable extends javax.swing.JFrame {
                 btnPreviousActionPerformed(evt);
             }
         });
+
+        txtSearchSupplierName.setEditable(true);
+        txtSearchSupplierName.setToolTipText("Ctrl+A and Delete Button to delete Text");
+        txtSearchSupplierName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchSupplierNameKeyPressed(evt);
+            }
+        });
+
+        txtSearchBrand.setEditable(true);
+        txtSearchBrand.setToolTipText("Ctrl+A and Delete Button to delete Text");
+
+        txtSearchReference.setEditable(true);
+        txtSearchReference.setToolTipText("Ctrl+A and Delete Button to delete Text");
+
+        txtSearchItemName.setEditable(true);
+        txtSearchItemName.setToolTipText("Ctrl+A and Delete Button to delete Text");
+
+        txtSearchUnit.setEditable(true);
+        txtSearchUnit.setToolTipText("Ctrl+A and Delete Button to delete Text");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -400,13 +574,13 @@ public class ProductsTable extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(txtSearchItemName)
-                .addComponent(txtSearchReference)
-                .addComponent(txtSearchBrand)
-                .addComponent(txtSearchSupplierName)
-                .addComponent(txtSearchUnit)
                 .addComponent(btnNext)
-                .addComponent(btnPrevious))
+                .addComponent(btnPrevious)
+                .addComponent(txtSearchSupplierName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchReference, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchItemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -544,7 +718,7 @@ public class ProductsTable extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout bgPanelLayout = new javax.swing.GroupLayout(bgPanel);
@@ -563,6 +737,7 @@ public class ProductsTable extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Options");
+        jMenu1.setToolTipText("Ctrl+Shitf+A and BackSpace to delete Text");
 
         btnAddProduct.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         btnAddProduct.setText("Add Product");
@@ -822,6 +997,14 @@ int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WA
         // TODO add your handling code here:
         
     }//GEN-LAST:event_dataTableMouseEntered
+
+    private void txtSearchSupplierNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchSupplierNameKeyPressed
+        // TODO add your handling code here:
+        
+      if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+          searchProducts();
+      }
+    }//GEN-LAST:event_txtSearchSupplierNameKeyPressed
     
     
 //    private void setIcon() {
@@ -905,11 +1088,11 @@ int confirmation = JOptionPane.showConfirmDialog(null,"Do you want to exit.","WA
     private javax.swing.JLabel lblTime;
     private javax.swing.JDialog myUsersModal;
     private javax.swing.JMenuItem printMenu;
-    private javax.swing.JTextField txtSearchBrand;
-    private javax.swing.JTextField txtSearchItemName;
-    private javax.swing.JTextField txtSearchReference;
-    private javax.swing.JTextField txtSearchSupplierName;
-    private javax.swing.JTextField txtSearchUnit;
+    private javax.swing.JComboBox<String> txtSearchBrand;
+    private javax.swing.JComboBox<String> txtSearchItemName;
+    private javax.swing.JComboBox<String> txtSearchReference;
+    private javax.swing.JComboBox<String> txtSearchSupplierName;
+    private javax.swing.JComboBox<String> txtSearchUnit;
     // End of variables declaration//GEN-END:variables
 //</editor-fold>
 }

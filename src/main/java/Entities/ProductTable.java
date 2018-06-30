@@ -8,6 +8,7 @@ package Entities;
 import Forms.ProductsTable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,8 @@ public class ProductTable {
 //    public static Session session;
     public static ProductsTable productsTableForm;
     public static Thread networkThread;
+    public static List<String> references, suppliers, itemNames, brands, units;
+    public static boolean initialized = false;
     String reference;
     String name;
     String category = "";

@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 public class HibernateUtil {
  
     private static final SessionFactory sessionFactory;
+    private static final String message = "Unable to connect into the database.";
     
     static {
         
@@ -42,7 +43,8 @@ public class HibernateUtil {
         } catch (Throwable ex) {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
-            javax.swing.JOptionPane.showMessageDialog(null, ex.toString(), "ERROR", 0);
+//            javax.swing.JOptionPane.showMessageDialog(null, ex.toString(), "ERROR", 0);
+            javax.swing.JOptionPane.showMessageDialog(null, message, "ERROR", 0);
             JSONService.setJSONFile();
             throw new ExceptionInInitializerError(ex);
         }

@@ -70,6 +70,7 @@
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Options"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ctrl+Shitf+A and BackSpace to delete Text"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="btnAddProduct">
@@ -377,58 +378,18 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtSearchItemName" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtSearchReference" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtSearchBrand" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtSearchSupplierName" alignment="3" max="32767" attributes="0"/>
-                              <Component id="txtSearchUnit" alignment="3" max="32767" attributes="0"/>
                               <Component id="btnNext" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnPrevious" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSearchSupplierName" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="txtSearchBrand" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSearchReference" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                              <Component id="txtSearchItemName" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSearchUnit" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="txtSearchBrand">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="14" style="1"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtSearchItemName">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="14" style="1"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtSearchReference">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="14" style="1"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtSearchSupplierName">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="14" style="1"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtSearchUnit">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="14" style="1"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="btnNext">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -450,6 +411,69 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreviousActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="txtSearchSupplierName">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value="Ctrl+A and Delete Button to delete Text"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchSupplierNameKeyPressed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="txtSearchBrand">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value="Ctrl+A and Delete Button to delete Text"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="txtSearchReference">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value="Ctrl+A and Delete Button to delete Text"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="txtSearchItemName">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value="Ctrl+A and Delete Button to delete Text"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="txtSearchUnit">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="true"/>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
+                        <Property name="toolTipText" type="java.lang.String" value="Ctrl+A and Delete Button to delete Text"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -551,7 +575,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="1" pref="497" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" pref="496" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>

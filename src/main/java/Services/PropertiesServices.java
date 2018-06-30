@@ -22,9 +22,7 @@ public class PropertiesServices {
         try {
             Properties prop = new Properties();
             outputStream = new FileOutputStream("config.properties");
-            
-            
-            
+                   
         } catch(Exception ex) {
             System.out.println(ex.toString());
         }
