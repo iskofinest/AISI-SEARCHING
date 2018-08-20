@@ -17,10 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 
-/**
- *
- * @author Jovanie
- */
 public class CreateAccount extends javax.swing.JFrame {
 
     /**

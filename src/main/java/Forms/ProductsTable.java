@@ -123,7 +123,6 @@ public class ProductsTable extends javax.swing.JFrame {
                                  String searchItemName="", searchReference="", searchBrand = "",searchUnit="", searchSupplierName= "";
                                  if(txtSearchItemName.getSelectedIndex() > -1) {
                                      searchItemName = txtSearchItemName.getSelectedItem().toString().trim();
-                                     
                                  }
                                  if(txtSearchReference.getSelectedIndex() > -1) {
                                      searchReference = txtSearchReference.getSelectedItem().toString().trim();
@@ -294,6 +293,7 @@ public class ProductsTable extends javax.swing.JFrame {
                         ProductTable.units.add(product[5]);
                     }
                 }
+                ProductTable.initialized = true;
             }
             DefaultTableModel model = new DefaultTableModel(productList, columns);
             dataTable.setModel(model);
